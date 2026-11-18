@@ -1,0 +1,8 @@
+# versions used to produce the results in the notebooks
+numpy==2.5.4
+pandas==3.0.6
+scipy==1.18.1
+scikit-learn==1.9.1
+matplotlib==3.11.2
+# only for re-running the PDF table extraction in srp_data/raw
+pymupdf
