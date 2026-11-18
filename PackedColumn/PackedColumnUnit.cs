@@ -93,9 +93,6 @@ namespace PackedColumn
             {
                 if (Ports.Count() > 0) return;     // guard against a second Initialize
 
-                Name = "PackedColumn";
-                Description = "Packed column (Onda mass transfer model)";
-
                 Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "GasIn", "Gas inlet (bottom)", CapeOpenPortDirection.Inlet));
                 Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "LiquidIn", "Liquid inlet (top)", CapeOpenPortDirection.Inlet));
                 Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "GasOut", "Gas outlet (top)", CapeOpenPortDirection.Outlet));
