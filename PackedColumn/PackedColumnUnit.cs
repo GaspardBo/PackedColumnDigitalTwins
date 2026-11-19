@@ -1,7 +1,8 @@
+using CAPEOPEN100;
 using Microsoft.Win32;
 using Mose.CapeOpenToolkit.UnitProxy;
-using CAPEOPEN100;
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -11,7 +12,9 @@ namespace PackedColumn
 {
     // =====================================================================
     //  PackedColumnUnit.cs
-    //  CAPE-OPEN packed column model built on the Mose toolkit
+    //  CAPE-OPEN packed column model built on the Mose toolkit.
+    //  the PackedColumnUnit class is the CAPE-OPEN unit object which interfaces with the process simulator and the packed column model class.
+    //  OnEdit shows a dialog for editing the column parameters, OnCalculate runs the model and writes the results to the output streams and result parameters, and ICapeUnitReport.ProduceReport returns a text report of the last calculation.
     //  
     //  Authors: Amogh Krishnanand Atreya & Gaspard Bouchard
     //  =====================================================================
@@ -22,6 +25,7 @@ namespace PackedColumn
     [ClassInterface(ClassInterfaceType.None)]
     public class PackedColumnUnit : CapeOpenUnitSimple, ICapeUnitReport
     {
+        // Logging settings
         private const string LogPath = @"C:\tmp\PackedColumn.log";
         private const bool VerboseLog = true;
 
@@ -34,6 +38,7 @@ namespace PackedColumn
         // -----------------------------------------------------------------
         //  Parameter table: name, description (with units), min, max, default
         // -----------------------------------------------------------------
+        // TODO: Add unit column
         private sealed class ParamDef
         {
             public string Name, Description;
@@ -68,7 +73,6 @@ namespace PackedColumn
         protected override void OnInitialize()
         {
             Log("OnInitialize called");
-            Log("AA Test vERSION 1.0");
             try
             {
                 if (_model == null)
@@ -108,9 +112,37 @@ namespace PackedColumn
         protected override void OnEdit()
         {
             Log("OnEdit called");
-            MessageBox.Show(_lastSummary, "PackedColumn",
-                MessageBoxButtons.OK, MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+            try
+            {
+                var fields = InputParams.Select(p => new EditField
+                {
+                    Name = p.Name,
+                    Description = p.Description,
+                    Min = p.Min,
+                    Max = p.Max,
+                    Value = P(p.Name)
+                }).ToList();
+
+                // show the edit dialog, and if OK is pressed, update the parameters
+                using (var dlg = new ColumnEditForm("Packed Column", fields, BuildReport(ReportSummary)))
+                {
+                    if (dlg.ShowDialog() != DialogResult.OK) return;
+
+                    foreach (EditField f in dlg.Fields)
+                    {
+                        if (P(f.Name) != f.Value)            // update changed fields only
+                        {
+                            SetDoubleValueSettings(f.Name, f.Value);
+                            Log("Parameter " + f.Name + " set to " + f.Value);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log("Error in OnEdit: " + ex);
+                throw;
+            }
         }
 
         // =================================================================
@@ -165,6 +197,7 @@ namespace PackedColumn
                     Holdup = 0.5 // example value
                 };
 
+                // Update the result parameters with the calculated values
                 Publish("Result_HETP_m", _res.HETP);
                 Publish("Result_YOut", _res.YOut);
                 Publish("Result_XOut", _res.XOut);
@@ -188,6 +221,7 @@ namespace PackedColumn
         // =================================================================
 
         // Define the report types
+        // TODO: add more report types if needed, such as a detailed report with the column profile, etc.
         private const string ReportSummary = "Summary";
         private string _selectedReport = ReportSummary;
 
@@ -209,7 +243,7 @@ namespace PackedColumn
         void ICapeUnitReport.ProduceReport(ref string message)
         {
             Log("ProduceReport");
-            message = BuildReport(_selectedReport);   // from my earlier answer
+            message = BuildReport(_selectedReport);  
         }
 
         private sealed class ColumnResults //this class could be moved to the unit model
@@ -248,7 +282,10 @@ namespace PackedColumn
 
             return sb.ToString();
         }
-        
+
+        // =================================================================
+        //  Helper methods
+        // =================================================================
 
         private static CapeOpenFlashType FlashTP { get { return CapeOpenFlashType.TP; } }
 
@@ -278,6 +315,7 @@ namespace PackedColumn
             return duplicate ? matObject.DuplicatedObject : matObject;
         }
 
+        // Helper method get double parameter values
         private double P(string name) { return GetDoubleValueSettings(name); }
 
         private double GetDoubleValueSettings(string settingName)
@@ -292,7 +330,7 @@ namespace PackedColumn
             setting.Value = value;
         }
 
-        /// <summary>Write a result into its parameter; never fails the calculation.</summary>
+        // Writes a result to its corresponding parameter and logs it. Exceptions are caught and logged, but not rethrown, to avoid breaking the unit.
         private void Publish(string name, double value)
         {
             try { SetDoubleValueSettings(name, value); }
