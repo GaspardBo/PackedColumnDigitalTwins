@@ -35,13 +35,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CAPE-OPENv1-0-0, Version=1.0.0.0, Culture=neutral, PublicKeyToken=10a1040e6624c81d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\..\..\..\Program Files\Common Files\CAPE-OPEN\Reference Assemblies\CAPE-OPENv1-0-0.dll</HintPath>
+    <Reference Include="Interop.CAPEOPEN100">
+      <HintPath>lib\Interop.CAPEOPEN100.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Mose.CapeOpenToolkit.UntitProxy">
-      <HintPath>..\..\..\..\Downloads\CapeOpenWizardAndSamples (1)\CapeOpenWizardAndSamople\Wizard\Mose.CapeOpenToolkit.UntitProxy.dll</HintPath>
+    <Reference Include="Mose.CapeOpenToolkit.UntitProxy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Mose.CapeOpenToolkit.UntitProxy.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

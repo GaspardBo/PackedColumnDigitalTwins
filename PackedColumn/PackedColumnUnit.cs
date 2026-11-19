@@ -1,7 +1,7 @@
 using Microsoft.Win32;
 using Mose.CapeOpenToolkit.UnitProxy;
+using CAPEOPEN100;
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -20,13 +20,16 @@ namespace PackedColumn
     [ProgId("PackedColumn.PackedColumnUnit")]
     [Guid("052BE404-4FA4-40FD-AB55-1D7DF7D3234F")]
     [ClassInterface(ClassInterfaceType.None)]
-    public class PackedColumnUnit : CapeOpenUnitSimple
+    public class PackedColumnUnit : CapeOpenUnitSimple, ICapeUnitReport
     {
         private const string LogPath = @"C:\tmp\PackedColumn.log";
         private const bool VerboseLog = true;
 
         // Last calculation summary, shown in the Edit dialog
         private string _lastSummary = "No calculation has been run yet.";
+
+        // Column model object, created in OnInitialize and used in OnCalculate
+        private PackedColumnModel _model = null;
 
         // -----------------------------------------------------------------
         //  Parameter table: name, description (with units), min, max, default
@@ -65,20 +68,33 @@ namespace PackedColumn
         protected override void OnInitialize()
         {
             Log("OnInitialize called");
+            Log("AA Test vERSION 1.0");
             try
             {
-                if (Ports.Count() > 0) return;     // guard against a second stream declaration
+                if (_model == null)
+                    _model = new PackedColumnModel();
 
-                // Add ports
-                Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "GasIn", "Gas inlet (bottom)", CapeOpenPortDirection.Inlet));
-                Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "LiquidIn", "Liquid inlet (top)", CapeOpenPortDirection.Inlet));
-                Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "GasOut", "Gas outlet (top)", CapeOpenPortDirection.Outlet));
-                Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "LiquidOut", "Liquid outlet (bottom)", CapeOpenPortDirection.Outlet));
 
-                // Add parameters
-                foreach (ParamDef p in InputParams.Concat(ResultParams))
-                    Parameters.Add(DoubleParameter.Create(p.Name, p.Description,
-                        CapeOpenParameterMode.ReadWrite, p.Min, p.Max, p.Default));
+                if (Ports.Count() == 0)
+                {     // guard against a second stream declaration
+
+                    // Add ports
+                    Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "GasIn", "Gas inlet (bottom)", CapeOpenPortDirection.Inlet));
+                    Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "LiquidIn", "Liquid inlet (top)", CapeOpenPortDirection.Inlet));
+                    Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "GasOut", "Gas outlet (top)", CapeOpenPortDirection.Outlet));
+                    Ports.Add(CapeOpenUnitPort.Create(CapeOpenPortType.Material, "LiquidOut", "Liquid outlet (bottom)", CapeOpenPortDirection.Outlet));
+
+                    // Add input parameters
+                    foreach (ParamDef p in InputParams)
+                        Parameters.Add(DoubleParameter.Create(p.Name, p.Description,
+                            CapeOpenParameterMode.ReadWrite, p.Min, p.Max, p.Default));
+
+                    // Add result parameters
+                    foreach (ParamDef p in ResultParams)
+                        Parameters.Add(DoubleParameter.Create(p.Name, p.Description,
+                            CapeOpenParameterMode.Read, p.Min, p.Max, p.Default));
+
+                }
 
                 Log("OnInitialize finished (" + Ports.Count() + " ports)");
             }
@@ -102,6 +118,7 @@ namespace PackedColumn
         // =================================================================
         protected override void OnCalculate()
         {
+            _res.Valid = false;
             Log("OnCalculate called");
             try
             {
@@ -129,19 +146,32 @@ namespace PackedColumn
                 // eg. Check(Gout > 0 && Lout > 0, "Negative outlet flow, check the specification.");
 
                 // ---------- 7. write outlets ----------
-                // eg. WriteOutlet(gasOut, Ptop, Tg, Gout, yOutVec);
+                WriteOutlet(gasOut, 10, 10, 10, new double[] { 0, 0.01, 0.99 });
+                WriteOutlet(liqOut, 10, 10, 10, new double[] { 0.9, 0.1, 0 });
 
 
                 // ---------- 8. publish results ----------
-                // todo, review publish function and report generation
-                // eg. Publish("Result_HG_m", PackedColumnModel.holdup);
+                _res = new ColumnResults
+                {
+                    Valid = true,
+                    Gin = Gin,
+                    Lin = Lin,
+                    Tg = Tg,
+                    Tl = Tl,
+                    Pg = Pg,
+                    HETP = 1.0, // example value
+                    YOut = 0.01, // example value
+                    XOut = 0.1, // example value
+                    Holdup = 0.5 // example value
+                };
 
+                Publish("Result_HETP_m", _res.HETP);
+                Publish("Result_YOut", _res.YOut);
+                Publish("Result_XOut", _res.XOut);
+                Publish("Result_Holdup_m3", _res.Holdup);
 
-                //update summary and log
-                var sb = new StringBuilder();
-                // eg. sb.AppendLine(mode == 0 ? "Mode: rating" : "Mode: design");
-                
-                _lastSummary = sb.ToString();
+                _lastSummary = BuildReport(ReportSummary);
+
                 if (VerboseLog) Log(_lastSummary);
                 Log("OnCalculate finished");
             }
@@ -152,6 +182,73 @@ namespace PackedColumn
                 throw;
             }
         }
+
+        // =================================================================
+        //  CAPE-OPEN reporting
+        // =================================================================
+
+        // Define the report types
+        private const string ReportSummary = "Summary";
+        private string _selectedReport = ReportSummary;
+
+        // ICapeUnitReport.reports : names of the available reports
+        object ICapeUnitReport.reports
+        {
+            get { Log("get_reports"); return new string[] { ReportSummary }; }
+        }
+
+
+        // ICapeUnitReport.selectedReport
+        string ICapeUnitReport.selectedReport
+        {
+            get { Log("get_selectedReport"); return _selectedReport; }
+            set { Log("set_selectedReport " + value); _selectedReport = value; }
+        }
+
+        // ICapeUnitReport.ProduceReport
+        void ICapeUnitReport.ProduceReport(ref string message)
+        {
+            Log("ProduceReport");
+            message = BuildReport(_selectedReport);   // from my earlier answer
+        }
+
+        private sealed class ColumnResults //this class could be moved to the unit model
+        {
+            public bool Valid;
+            public double Gin, Lin, Tg, Tl, Pg;
+            public double HETP, YOut, XOut, Holdup;
+        }
+        private ColumnResults _res = new ColumnResults();
+
+        private string BuildReport(string which)
+        {
+            var ci = System.Globalization.CultureInfo.InvariantCulture;
+            var sb = new StringBuilder();
+            sb.AppendLine("PACKED COLUMN REPORT");
+            sb.AppendLine("====================");
+            if (!_res.Valid)
+            {
+                sb.AppendLine("No successful calculation yet.");
+                return sb.ToString();
+            }
+
+            sb.AppendLine("Geometry");
+            sb.AppendLine(string.Format(ci, "  Packed height     : {0,12:G6} m", P("ColHeight_m")));
+            sb.AppendLine(string.Format(ci, "  Column diameter   : {0,12:G6} m", P("ColDiameter_m")));
+            sb.AppendLine();
+            sb.AppendLine("Inlets");
+            sb.AppendLine(string.Format(ci, "  Gas flow          : {0,12:G6} mol/s", _res.Gin));
+            sb.AppendLine(string.Format(ci, "  Liquid flow       : {0,12:G6} mol/s", _res.Lin));
+            sb.AppendLine();
+            sb.AppendLine("Results");
+            sb.AppendLine(string.Format(ci, "  HETP              : {0,12:G6} m", _res.HETP));
+            sb.AppendLine(string.Format(ci, "  y_out             : {0,12:G6}", _res.YOut));
+            sb.AppendLine(string.Format(ci, "  x_out             : {0,12:G6}", _res.XOut));
+            sb.AppendLine(string.Format(ci, "  Holdup            : {0,12:G6} m3", _res.Holdup));
+
+            return sb.ToString();
+        }
+        
 
         private static CapeOpenFlashType FlashTP { get { return CapeOpenFlashType.TP; } }
 

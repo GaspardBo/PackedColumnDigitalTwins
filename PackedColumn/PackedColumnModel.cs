@@ -22,7 +22,10 @@ namespace PackedColumn
     // =====================================================================
 
     /// <summary>Packing description (from the manufacturer's datasheet).</summary>
-    public class PackingData
+    /// 
+
+
+    public class Packing
     {
         /// <summary>Total (geometric) specific area a_t, m2/m3.</summary>
         public double SpecificArea = 200.0;
@@ -49,6 +52,17 @@ namespace PackedColumn
         public double Diffusivity = 1e-5;   // m2/s, solute diffusivity in this phase
     }
 
+    public class PackingData
+    {
+        public int i = 0;
+
+        public double KGFactor { get; internal set; }
+        public double KLFactor { get; internal set; }
+        public double AreaFactor { get; internal set; }
+        public double CriticalSurfaceTension { get; internal set; }
+        public double SpecificArea { get; internal set; }
+        public double NominalSize { get; internal set; }
+    }
     public class OndaResult
     {
         public double WettedAreaOnda;   // a_w from Onda, m2/m3
@@ -78,7 +92,7 @@ namespace PackedColumn
         }
     }
 
-    public static class PackedColumnModel
+    public class PackedColumnModel
     {
         public const double R = 8.314462618;   // J/(mol K)
         public const double G = 9.80665;       // m/s2
