@@ -152,3 +152,32 @@ After successful unregistration, the unit operation should no longer be discover
 - Avoid registering multiple copies of the same CLSID from different locations.
 - Close the PME before replacing or unregistering the DLL.
 - Ensure that all MOSE Toolkit and other required dependencies are available at runtime.
+
+## Billet model
+The billet model is an interpretable empirical model for the hydraulic and mass transfer behaviour of packed columns. It uses a set of 6 constants to fit different packings.
+### Inputs:
+#### Packing inputs
+- $C_S$ loading point constant
+- $C_{Fl}$ flooding point constant
+- $C_h$ liquid holdup constant
+- $C_{P,0}$ pressure drop constant
+- $C_{L}$ liquid mass transfer constant
+- $C_V$ gas mass transfer constant
+- $d_p$ nominal packing size [$m$]
+- $N$ packing element density [$m^{-3}$]
+- $a$ specific surface area [$m^2 \ m^{-3}$]
+- $\varepsilon$ void fraction 
+
+#### Column inputs
+- $d$ diameter $m$
+- $H$ packing height $m$
+
+#### Stream and material inputs
+- $L$ Mass flow of liquid [$kg \ s^{-1}$]
+- $V$ Mass flow of gas or vapour [$kg \ s^{-1}$]
+- $M_L$ Molar mass of liquid [$kg \ kmol^{-1}$]
+- $M_V$ Molar mass of gas or vapour [$kg \ kmol^{-1}$]
+- $\rho_L$, $\rho_V$ liquid and gas density [$kg \ m^{-3}$]
+- $\mu_L$, $\mu_V$ liquid and gas viscosity [$Pa \ s$]
+- $\sigma_L$ liquid surface tension [$kg \ s^{-2}$] 
+- $D_L$, $D_V$ liquid and gas diffusivities [$m^2 \ s^{-1}$]
