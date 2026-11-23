@@ -1,11 +1,12 @@
 using System;
+using System.Drawing.Text;
 using System.Text;
 
 namespace PackedColumn
 {
     // =====================================================================
     //  PackedColumnModel.cs
-    //  Pure maths, no CAPE-OPEN / toolkit dependencies, so it can be unit
+    //  No CAPE-OPEN / toolkit dependencies so it can be unit
     //  tested in a console project and reused elsewhere.
     //
     //  All quantities are SI:
@@ -15,273 +16,444 @@ namespace PackedColumn
     //    viscosity  Pa s             diffusivity m2/s
     //    surface tension N/m         molar mass kg/mol
     //
-    //  The correlation structure below is Onda, Takeuchi & Okumoto (1968)
-    //  as it is usually presented in textbooks. CHECK the constants and
-    //  exponents against the original paper / your textbook before using
-    //  results for design work.
+    //  The model uses the updated version of the Billet & Schultes, 1999 correlation to predict mass transport and hydraulic properties of packed columns. 
     // =====================================================================
-
-    /// <summary>Packing description (from the manufacturer's datasheet).</summary>
-    /// 
-
-
-    public class Packing
-    {
-        /// <summary>Total (geometric) specific area a_t, m2/m3.</summary>
-        public double SpecificArea = 200.0;
-        /// <summary>Nominal packing size d_p, m.</summary>
-        public double NominalSize = 0.025;
-        /// <summary>Critical surface tension of the packing material sigma_c, N/m.
-        /// Typical textbook values (verify): ceramic ~0.061, steel ~0.075,
-        /// carbon ~0.056, plastic ~0.033.</summary>
-        public double CriticalSurfaceTension = 0.075;
-
-        // Calibration factors: tune these against manufacturer HETP / HTU data.
-        public double AreaFactor = 1.0;   // multiplies Onda's wetted area
-        public double KLFactor = 1.0;     // multiplies k_L
-        public double KGFactor = 1.0;     // multiplies k_G
-    }
-
-    /// <summary>Phase properties (constant values for now).</summary>
-    public class FluidProps
-    {
-        public double Density = 1.0;        // kg/m3
-        public double Viscosity = 1e-5;     // Pa s
-        public double SurfaceTension = 0.0; // N/m (liquid only)
-        public double MolarMass = 0.029;    // kg/mol
-        public double Diffusivity = 1e-5;   // m2/s, solute diffusivity in this phase
-    }
-
-    public class PackingData
-    {
-        public int i = 0;
-
-        public double KGFactor { get; internal set; }
-        public double KLFactor { get; internal set; }
-        public double AreaFactor { get; internal set; }
-        public double CriticalSurfaceTension { get; internal set; }
-        public double SpecificArea { get; internal set; }
-        public double NominalSize { get; internal set; }
-    }
-    public class OndaResult
-    {
-        public double WettedAreaOnda;   // a_w from Onda, m2/m3
-        public double EffectiveArea;    // a_w * AreaFactor, m2/m3
-        public double WettedFraction;   // a_w / a_t
-        public double Kl;               // m/s
-        public double Kg;               // mol/(m2 s Pa)
-        public double Hg;               // m
-        public double Hl;               // m
-        public double StrippingFactor;  // S = m G / L
-        public double Hog;              // m
-        public double Hetp;             // m
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine("a_w (Onda)   = " + WettedAreaOnda.ToString("G6") + " m2/m3  (a_w/a_t = " + WettedFraction.ToString("G4") + ")");
-            sb.AppendLine("a_eff        = " + EffectiveArea.ToString("G6") + " m2/m3");
-            sb.AppendLine("k_L          = " + Kl.ToString("G6") + " m/s");
-            sb.AppendLine("k_G          = " + Kg.ToString("G6") + " mol/(m2 s Pa)");
-            sb.AppendLine("H_G          = " + Hg.ToString("G6") + " m");
-            sb.AppendLine("H_L          = " + Hl.ToString("G6") + " m");
-            sb.AppendLine("S = mG/L     = " + StrippingFactor.ToString("G6"));
-            sb.AppendLine("H_OG         = " + Hog.ToString("G6") + " m");
-            sb.AppendLine("HETP         = " + Hetp.ToString("G6") + " m");
-            return sb.ToString();
-        }
-    }
 
     public class PackedColumnModel
     {
-        public const double R = 8.314462618;   // J/(mol K)
-        public const double G = 9.80665;       // m/s2
+        public BilletSchultesModel BilletSchultes { get; private set; }
 
-        // -----------------------------------------------------------------
-        //  Onda: wetted area, k_L, k_G  ->  H_G, H_L, H_OG
-        // -----------------------------------------------------------------
-        /// <param name="gasMolarFlux">Superficial gas molar flux, mol/(m2 s)</param>
-        /// <param name="liqMolarFlux">Superficial liquid molar flux, mol/(m2 s)</param>
-        /// <param name="pressurePa">Column pressure, Pa</param>
-        /// <param name="temperatureK">Temperature, K</param>
-        /// <param name="henryM">Equilibrium slope m in y* = m x (dimensionless)</param>
-        public static OndaResult Onda(PackingData pk, FluidProps gas, FluidProps liq,
-                                      double gasMolarFlux, double liqMolarFlux,
-                                      double pressurePa, double temperatureK, double henryM)
+        public void SetColumnSpecs(double columnDiameter, double packingHeight)
         {
-            Require(pk.SpecificArea > 0, "Packing specific area must be > 0");
-            Require(pk.NominalSize > 0, "Packing nominal size must be > 0");
-            Require(liq.SurfaceTension > 0, "Liquid surface tension must be > 0");
-            Require(gasMolarFlux > 0, "Gas molar flux must be > 0");
-            Require(liqMolarFlux > 0, "Liquid molar flux must be > 0");
-            Require(pressurePa > 0 && temperatureK > 0, "P and T must be > 0");
+            var m = BilletSchultes;
+            m.ColumnDiameter = columnDiameter;
+            m.PackingHeight = packingHeight;
+            m.LiquidSuperficialVelocity = null;
+            m.GasSuperficialVelocity = null;
+            _hasBeenCalculated = false;  // reset calculation flag
+        }
 
-            double at = pk.SpecificArea;
-            double dp = pk.NominalSize;
-            double Gw = gasMolarFlux * gas.MolarMass;   // kg/(m2 s)
-            double Lw = liqMolarFlux * liq.MolarMass;   // kg/(m2 s)
+        public void SetPackingParameters(double ap, double eps, double cs, double cfi, double ch, double cp0)
+        {
+            var m = BilletSchultes;
+            m.SpecificSurfaceArea = ap;
+            m.VoidFraction = eps;
+            m.CS = cs; m.CFI = cfi; m.Ch = ch; m.CP0 = cp0;
+            _hasBeenCalculated = false;  // reset calculation flag
+        }
 
-            // --- wetted area (Onda) ---
-            double expo = 1.45
-                * Math.Pow(pk.CriticalSurfaceTension / liq.SurfaceTension, 0.75)
-                * Math.Pow(Lw / (at * liq.Viscosity), 0.1)
-                * Math.Pow(Lw * Lw * at / (liq.Density * liq.Density * G), -0.05)
-                * Math.Pow(Lw * Lw / (liq.Density * liq.SurfaceTension * at), 0.2);
-            double wetFrac = 1.0 - Math.Exp(-expo);
-            double awOnda = wetFrac * at;
-            double aEff = awOnda * pk.AreaFactor;
+        public void SetOperatingConditions(
+            double rhoL, double etaL, double liquidMassFlow,
+            double rhoV, double etaV, double gasMassFlow)
+        {
+            if (rhoL <= 0 || rhoV <= 0)
+                throw new ArgumentException("Phase densities must be > 0.");
 
-            // --- liquid-side coefficient, m/s ---
-            double kL = 0.0051
-                * Math.Pow(Lw / (awOnda * liq.Viscosity), 2.0 / 3.0)
-                * Math.Pow(liq.Viscosity / (liq.Density * liq.Diffusivity), -0.5)
-                * Math.Pow(at * dp, 0.4)
-                / Math.Pow(liq.Density / (liq.Viscosity * G), 1.0 / 3.0);
-            kL *= pk.KLFactor;
+            var m = BilletSchultes;
+            m.LiquidDensity = rhoL;
+            m.LiquidViscosity = etaL;
+            m.GasDensity = rhoV;
+            m.GasViscosity = etaV;
 
-            // --- gas-side coefficient, mol/(m2 s Pa) ---
-            // Onda: k_G R T / (a_t D_G) = K (Gw/(a_t mu_G))^0.7 (mu_G/(rho_G D_G))^(1/3) (a_t d_p)^-2
-            double K = dp >= 0.015 ? 5.23 : 2.0;
-            double kG = K
-                * Math.Pow(Gw / (at * gas.Viscosity), 0.7)
-                * Math.Pow(gas.Viscosity / (gas.Density * gas.Diffusivity), 1.0 / 3.0)
-                * Math.Pow(at * dp, -2.0)
-                * at * gas.Diffusivity / (R * temperatureK);
-            kG *= pk.KGFactor;
+            m.LiquidMassFlowRate = liquidMassFlow;
+            m.GasMassFlowRate = gasMassFlow;
+            m.LiquidVolumetricFlowRate = liquidMassFlow / rhoL;   // m3/s
+            m.GasVolumetricFlowRate = gasMassFlow / rhoV;
+            m.LiquidSuperficialVelocity = null;                   // force re-derivation
+            m.GasSuperficialVelocity = null;
+            _hasBeenCalculated = false;
+        }
 
-            // --- heights of transfer units ---
-            double cL = liq.Density / liq.MolarMass;                 // mol/m3
-            double Hg = gasMolarFlux / (kG * aEff * pressurePa);
-            double Hl = liqMolarFlux / (kL * aEff * cL);
-            double S = henryM * gasMolarFlux / liqMolarFlux;
-            double Hog = Hg + S * Hl;
+        private bool _hasBeenCalculated = false;
 
-            return new OndaResult
+        public ColumnResults Results { get; private set; } = new ColumnResults();
+
+        public PackedColumnModel()
+        {
+            BilletSchultes = new BilletSchultesModel();
+        }
+
+        public void Calculate()
+        {
+            if (BilletSchultes == null)
             {
-                WettedAreaOnda = awOnda,
-                EffectiveArea = aEff,
-                WettedFraction = wetFrac,
-                Kl = kL,
-                Kg = kG,
-                Hg = Hg,
-                Hl = Hl,
-                StrippingFactor = S,
-                Hog = Hog,
-                Hetp = Hetp(Hog, S)
-            };
-        }
+                throw new InvalidOperationException("BilletSchultes model is not initialized.");
+            }
 
-        // -----------------------------------------------------------------
-        //  HETP from H_OG (for distillation-type conversions)
-        // -----------------------------------------------------------------
-        public static double Hetp(double hog, double lambda)
-        {
-            if (Math.Abs(lambda - 1.0) < 1e-8 || lambda <= 0) return hog;
-            return hog * Math.Log(lambda) / (lambda - 1.0);
-        }
+            var b = BilletSchultes;
 
-        // -----------------------------------------------------------------
-        //  N_OG, dilute system with straight equilibrium line y* = m x
-        //  (Colburn).  Works for absorption and stripping.
-        // -----------------------------------------------------------------
-        public static double NogColburn(double S, double yIn, double yOut, double xIn, double m)
-        {
-            double num = yIn - m * xIn;
-            double den = yOut - m * xIn;
-            Require(num * den > 0, "No driving force: gas outlet/inlet are on opposite sides of equilibrium.");
-            double ratio = num / den;
-            if (Math.Abs(S - 1.0) < 1e-8) return ratio - 1.0;
-            double arg = (1.0 - S) * ratio + S;
-            Require(arg > 0, "Specified separation is not achievable (check S and targets).");
-            return Math.Log(arg) / (1.0 - S);
-        }
+            // Perform calculations using the Billet & Schultes model
+            b.CalculateHydraulics();
 
-        /// <summary>Inverse of NogColburn: gas outlet composition for a given N_OG (rating).</summary>
-        public static double YOutFromNog(double S, double nog, double yIn, double xIn, double m)
-        {
-            double num = yIn - m * xIn;
-            double ratio;   // (yOut - m xIn) / (yIn - m xIn)
-            if (Math.Abs(S - 1.0) < 1e-8) ratio = 1.0 / (1.0 + nog);
-            else ratio = (1.0 - S) / (Math.Exp(nog * (1.0 - S)) - S);
-            return m * xIn + num * ratio;
-        }
 
-        // -----------------------------------------------------------------
-        //  N_OG by numerical integration: any equilibrium curve, concentrated
-        //  solutions.  N_OG = Int (1-y)lm / ((1-y)(y-y*)) dy, yOut -> yIn
-        //  Operating line in mole ratios:  X = Xin + (Gs/Ls)(Y - Yout)
-        // -----------------------------------------------------------------
-        /// <param name="gs">Solute-free gas flow (flux), same units as ls</param>
-        /// <param name="ls">Solute-free liquid flow (flux)</param>
-        /// <param name="yEq">Equilibrium: gas mole fraction y* as a function of liquid mole fraction x</param>
-        public static double NogNumeric(double gs, double ls, double yIn, double yOut, double xIn,
-                                        Func<double, double> yEq, int intervals = 200)
-        {
-            if (intervals % 2 == 1) intervals++;
-            double Yout = yOut / (1.0 - yOut);
-            double Xin = xIn / (1.0 - xIn);
-            double h = (yIn - yOut) / intervals;
-
-            Func<double, double> f = y =>
+            Results = new ColumnResults
             {
-                double Y = y / (1.0 - y);
-                double X = Xin + (gs / ls) * (Y - Yout);
-                double x = X / (1.0 + X);
-                double ys = yEq(x);
-                if (Math.Abs(y - ys) < 1e-14)
-                    throw new InvalidOperationException("Pinch: operating and equilibrium lines touch at y = " + y);
-                double lnTerm = Math.Log((1.0 - ys) / (1.0 - y));
-                if (Math.Abs(lnTerm) < 1e-14) return 1.0 / ((1.0 - y) * (y - ys)) * (1.0 - y);
-                return 1.0 / ((1.0 - y) * lnTerm);
+                Calculated = true,
+                IsFlooded = b.IsFlooded,
+                PressureDropPerHeight = b.PressureDropPerHeight ?? double.NaN,
+                PressureDrop = b.PressureDrop ?? double.NaN,
+                LiquidHoldup = b.LiquidHoldup ?? double.NaN,
+                LoadingVelocity = b.LoadingGasVelocity ?? double.NaN,
+                FloodingVelocity = b.FloodingGasVelocity ?? double.NaN,
+                PercentFlood = b.FloodingPercentage ?? double.NaN,
+                GasVelocity = b.GasSuperficialVelocity ?? double.NaN,
+                LiquidVelocity = b.LiquidSuperficialVelocity ?? double.NaN,
+                GasMassFlowOut = b.GasMassFlowRate ?? double.NaN,
+                LiquidMassFlowOut = b.GasMassFlowRate ?? double.NaN,
             };
 
-            double sum = f(yOut) + f(yIn);
-            for (int i = 1; i < intervals; i++)
-                sum += f(yOut + i * h) * (i % 2 == 1 ? 4.0 : 2.0);
-            return sum * h / 3.0;
+            _hasBeenCalculated = true;
         }
 
-        // -----------------------------------------------------------------
-        //  Packed height for a required separation (design)
-        // -----------------------------------------------------------------
-        public static double RequiredHeight(double hog, double nog) { return hog * nog; }
-
-        // -----------------------------------------------------------------
-        //  Self test: call from a throwaway console project.
-        //  Checks (1) Colburn vs numerical integration, (2) inverse formula,
-        //  (3) prints an Onda result for typical air/water-like inputs.
-        // -----------------------------------------------------------------
-        public static string SelfTest()
+        public override string ToString()
         {
+            if (!_hasBeenCalculated) // check if results are available
+            {
+                return "This is a PackedColumnModel instance. No calculations have been performed yet.";
+            }
+
+            // generate a string representation of the model results
             var sb = new StringBuilder();
-
-            // (1) Dilute linear case: numerical N_OG must match Colburn
-            double m = 1.5, yIn = 0.001, yOut = 0.0001, xIn = 0.0;
-            double gOverL = 0.4;                         // G/L -> S = m G/L = 0.6
-            double S = m * gOverL;
-            double nogC = NogColburn(S, yIn, yOut, xIn, m);
-            double nogN = NogNumeric(gOverL, 1.0, yIn, yOut, xIn, x => m * x);
-            sb.AppendLine("N_OG Colburn = " + nogC.ToString("G6") + " | numeric = " + nogN.ToString("G6") +
-                          " | diff = " + (100 * (nogN - nogC) / nogC).ToString("F3") + " %");
-
-            // (2) Inverse
-            double back = YOutFromNog(S, nogC, yIn, xIn, m);
-            sb.AppendLine("y_out from N_OG = " + back.ToString("G6") + " (target " + yOut.ToString("G6") + ")");
-
-            // (3) Onda with illustrative numbers (NOT a validated design case)
-            var pk = new PackingData { SpecificArea = 200, NominalSize = 0.025, CriticalSurfaceTension = 0.075 };
-            var gas = new FluidProps { Density = 1.2, Viscosity = 1.8e-5, MolarMass = 0.029, Diffusivity = 1.5e-5 };
-            var liq = new FluidProps { Density = 1000, Viscosity = 1.0e-3, SurfaceTension = 0.072, MolarMass = 0.018, Diffusivity = 1.5e-9 };
-            var res = Onda(pk, gas, liq, gasMolarFlux: 20.0, liqMolarFlux: 50.0,
-                           pressurePa: 101325, temperatureK: 298.15, henryM: 1.5);
-            sb.AppendLine("--- Onda, illustrative inputs ---");
-            sb.Append(res.ToString());
+            sb.AppendLine("Packed Column Model Results:");
+            sb.AppendLine($"Liquid Holdup: {BilletSchultes.LiquidHoldup}");
             return sb.ToString();
         }
+    }
 
-        private static void Require(bool ok, string message)
+    public class BilletSchultesModel
+    {
+        // ============================================================
+        // 1. MATERIAL PROPERTIES (Retrieved from CAPE-OPEN PME)
+        // ============================================================
+
+        // Operating conditions
+        public double? Temperature { get; set; }          // T [K]
+        public double? Pressure { get; set; }             // P [Pa]
+
+        // Liquid properties
+        public double? LiquidDensity { get; set; }        // rho_L [kg/m3]
+        public double? LiquidViscosity { get; set; }      // eta_L [Pa.s]
+        public double? LiquidKinematicViscosity { get; set; } // nu_L [m2/s]
+        public double? LiquidSurfaceTension { get; set; } // sigma_L [N/m]
+        public double? LiquidDiffusivity { get; set; }    // D_L [m2/s]
+        public double? LiquidMolecularWeight { get; set; }// M_L [kg/kmol]
+
+        // Gas / vapour properties
+        public double? GasDensity { get; set; }           // rho_V [kg/m3]
+        public double? GasViscosity { get; set; }         // eta_V [Pa.s]
+        public double? GasKinematicViscosity { get; set; }// nu_V [m2/s]
+        public double? GasDiffusivity { get; set; }       // D_V [m2/s]
+        public double? GasMolecularWeight { get; set; }   // M_V [kg/kmol]
+
+        // ============================================================
+        // 2. COLUMN SPECIFICATIONS AND OPERATING CONDITIONS
+        // ============================================================
+
+        public double? ColumnDiameter { get; set; }      // d [m]
+
+        // User-defined packing height (rating mode)
+        public double? PackingHeight { get; set; }        // H [m]
+
+        // Column cross-sectional area
+        public double? ColumnCrossSectionArea { get; set; } // A [m2]
+
+        // Liquid and gas flow rates
+        public double? LiquidMassFlowRate { get; set; }   // kg/s
+        public double? GasMassFlowRate { get; set; }      // kg/s
+
+        public double? LiquidMolarFlowRate { get; set; }  // L [kmol/h]
+        public double? GasMolarFlowRate { get; set; }     // V [kmol/h]
+
+        public double? LiquidVolumetricFlowRate { get; set; } // m3/s
+        public double? GasVolumetricFlowRate { get; set; }    // m3/s
+
+        // Superficial velocities
+        public double? LiquidSuperficialVelocity { get; set; } // u_L [m/s]
+        public double? GasSuperficialVelocity { get; set; }    // u_V [m/s]
+
+        // ============================================================
+        // 3. PACKING SPECIFICATIONS
+        // ============================================================
+
+        public string PackingName { get; set; }
+        public string PackingType { get; set; } // Random or Structured
+
+        public double? PackingSize { get; set; }         // Nominal size [m]
+        public double? SpecificSurfaceArea { get; set; } // a [m2/m3]
+        public double? VoidFraction { get; set; }        // epsilon [-]
+        public double? PackingElementDensity { get; set; } // N [1/m3]
+
+        // Billet and Schultes packing-specific constants
+        public double? CS { get; set; }                  // C_S
+        public double? CFI { get; set; }                 // C_FI
+        public double? Ch { get; set; }                  // C_h
+        public double? CP0 { get; set; }                 // C_P,0
+        public double? CL { get; set; }                  // C_L
+        public double? CV { get; set; }                  // C_V
+
+        // ============================================================
+        // 4. EQUILIBRIUM AND SEPARATION PARAMETERS
+        // ============================================================
+
+        public double? EquilibriumSlope { get; set; }    // m_yx
+
+        public double? StrippingFactor { get; set; }     // lambda
+
+        // Gas and liquid mole fractions
+        public double? GasMoleFractionInlet { get; set; }    // y_in
+        public double? GasMoleFractionOutlet { get; set; }   // y_out
+
+        public double? LiquidMoleFractionInlet { get; set; } // x_in
+        public double? LiquidMoleFractionOutlet { get; set; }// x_out
+
+        // Equilibrium mole fractions
+        public double? GasEquilibriumMoleFraction { get; set; }    // y*
+        public double? LiquidEquilibriumMoleFraction { get; set; } // x*
+
+        // ============================================================
+        // 5. CALCULATED GEOMETRIC AND HYDRAULIC VARIABLES
+        // ============================================================
+
+        public double? HydraulicDiameter { get; set; }   // d_h [m]
+
+        public double? EffectiveInterfacialArea { get; set; } // a_ph [m2/m3]
+
+        public double? RelativeInterfacialArea { get; set; }  // a_ph / a
+
+        public double? LiquidHoldup { get; set; }        // h_L [-]
+
+        public double? LiquidHoldupAtLoading { get; set; } // h_L,S
+        public double? LiquidHoldupAtFlooding { get; set; }// h_L,FI
+
+        public double? EffectiveLiquidVelocity { get; set; } // u_bar_L [m/s]
+
+        public double? ReynoldsNumberLiquid { get; set; } // Re_L
+        public double? ReynoldsNumberGas { get; set; }    // Re_V
+
+        public double? FroudeNumberLiquid { get; set; }   // Fr_L
+
+        public double? GasCapacityFactor { get; set; }   // F_V
+
+        public double? ResistanceCoefficient { get; set; } // psi_L
+
+        // ============================================================
+        // 6. MASS TRANSFER VARIABLES
+        // ============================================================
+
+        // Mass transfer coefficients
+        public double? LiquidMassTransferCoefficient { get; set; } // beta_L [m/s]
+        public double? GasMassTransferCoefficient { get; set; }    // beta_V [m/s]
+
+        // Volumetric mass transfer coefficients
+        public double? LiquidVolumetricMassTransferCoefficient { get; set; } // beta_L * a_ph [1/s]
+        public double? GasVolumetricMassTransferCoefficient { get; set; }    // beta_V * a_ph [1/s]
+
+        // Individual heights of transfer units
+        public double? HTULiquid { get; set; }           // HTU_L [m]
+        public double? HTUGas { get; set; }              // HTU_V [m]
+
+        // Overall heights of transfer units
+        public double? HTUOverallLiquid { get; set; }    // HTU_OL [m]
+        public double? HTUOverallGas { get; set; }       // HTU_OV [m]
+
+        // Number of transfer units
+        public double? NTULiquid { get; set; }           // NTU_OL
+        public double? NTUGas { get; set; }              // NTU_OV
+
+        // ============================================================
+        // 7. HYDRAULIC PERFORMANCE AND COLUMN LIMITS
+        // ============================================================
+
+        public double? PressureDrop { get; set; }        // delta_p [Pa]
+        public double? PressureDropPerHeight { get; set; } // delta_p/H [Pa/m]
+
+        // Loading point
+        public double? LoadingGasVelocity { get; set; }  // u_V,S [m/s]
+
+        // Flooding point
+        public double? FloodingGasVelocity { get; set; } // u_V,FI [m/s]
+
+        // Percentage of flooding
+        public double? FloodingPercentage { get; set; }  // [%]
+
+        // ============================================================
+        // 8. ADDITIONAL MODEL CALCULATIONS
+        // ============================================================
+
+        public double? OverallMassTransferCoefficient { get; set; } // K_O
+
+        public double? MassTransferEfficiency { get; set; }
+
+        // Gravitational acceleration
+        public double GravitationalAcceleration { get; set; } = 9.80665; // g [m/s2]
+
+        // ============================================================
+        // Calculation methods
+        // ============================================================
+
+        public bool IsFlooded { get; private set; }
+
+        // Hydraulic area ratio a_h/a. This is NOT the mass-transfer area a_ph,
+        // so it is not written to EffectiveInterfacialArea.
+        public double? HydraulicAreaRatio { get; private set; }
+
+        // Water reference properties used in the flood-point hold-up.
+        // Values taken from the Python notebook; confirm they are the ones you want.
+        const double RhoWater = 1000.0;
+        const double EtaWater = 8.02e-4;
+
+        double _eps, _ap, _dPart, _fs, _rhoL, _etaL, _rhoV, _etaV, _uL, _uV, _g;
+        double _cs, _cfi, _ch, _cp;
+        double _psi, _htLpDp, _htFpDp;
+
+        static double Req(double? v, string name) =>
+            v ?? throw new InvalidOperationException($"{name} is required but not set.");
+
+        void ResolveInputs()
         {
-            if (!ok) throw new InvalidOperationException(message);
+            _eps = Req(VoidFraction, nameof(VoidFraction));
+            _ap = Req(SpecificSurfaceArea, nameof(SpecificSurfaceArea));
+            _rhoL = Req(LiquidDensity, nameof(LiquidDensity));
+            _etaL = Req(LiquidViscosity, nameof(LiquidViscosity));
+            _rhoV = Req(GasDensity, nameof(GasDensity));
+            _etaV = Req(GasViscosity, nameof(GasViscosity));
+            _cs = Req(CS, nameof(CS));
+            _cfi = Req(CFI, nameof(CFI));
+            _ch = Req(Ch, nameof(Ch));
+            _cp = Req(CP0, nameof(CP0));
+            _g = GravitationalAcceleration;
+
+            double d = Req(ColumnDiameter, nameof(ColumnDiameter));
+            ColumnCrossSectionArea = Math.PI * d * d / 4.0;      // always calculated from the diameter
+            double area = ColumnCrossSectionArea.Value;
+
+            // calculate superficial velocities from volumetric flow rates if they are provided
+            if (LiquidVolumetricFlowRate.HasValue)
+                LiquidSuperficialVelocity = LiquidVolumetricFlowRate.Value / area;
+            if (GasVolumetricFlowRate.HasValue)
+                GasSuperficialVelocity = GasVolumetricFlowRate.Value / area;
+
+            _uL = Req(LiquidSuperficialVelocity, nameof(LiquidSuperficialVelocity));
+            _uV = Req(GasSuperficialVelocity, nameof(GasSuperficialVelocity));
+
+            if (_uL <= 0 || _uV <= 0)
+                throw new InvalidOperationException("Superficial velocities must be > 0.");
+
+            _dPart = 6 * (1 - _eps) / _ap;
+            _fs = 1 / (1 + 4 / (_ap * d));
+            _psi = (_uL * _rhoL) / (_uV * _rhoV) * Math.Sqrt(_rhoV / _rhoL);
+
+            ReynoldsNumberLiquid = _uL * _rhoL / (_ap * _etaL);
+            FroudeNumberLiquid = _uL * _uL * _ap / _g;
+            ReynoldsNumberGas = _uV * _dPart * _rhoV / ((1 - _eps) * _etaV) * _fs;
+        }
+
+        public void CalculateGeometricParameters()
+        {
+            double eps = Req(VoidFraction, nameof(VoidFraction));
+            double ap = Req(SpecificSurfaceArea, nameof(SpecificSurfaceArea));
+            HydraulicDiameter = 4 * eps / ap;       // dh = 4*eps/a
+        }
+
+        public void CalculateLoadingAndFlooding()
+        {
+            ResolveInputs();
+
+            // hold-up at loading, used inside the pressure drop (no Ch)
+            _htLpDp = Math.Pow(12 * _etaL * _ap * _ap * _uL / (_rhoL * _g), 1.0 / 3);
+
+            bool low = _psi <= 0.4;
+            double nLp = low ? -0.326 : -0.723;
+            double nFp = low ? -0.194 : -0.708;
+
+            // loading point
+            double xiLp = _g / (_cs * _cs *
+                Math.Pow(_psi * Math.Pow(_etaL / _etaV, 0.4), 2 * nLp));
+            LoadingGasVelocity = Math.Sqrt(_g / xiLp) * (_eps - _htLpDp)
+                * Math.Sqrt(_htLpDp / _ap) * Math.Sqrt(_rhoL / _rhoV);
+
+            // flood point
+            _htFpDp = 0.3741 * _eps * Math.Pow(_etaL * RhoWater / (_rhoL * EtaWater), 0.05);
+            double xiFp = _g / (_cfi * _cfi *
+                Math.Pow(_psi * Math.Pow(_etaL / _etaV, 0.2), 2 * nFp));
+            FloodingGasVelocity = Math.Sqrt(2 * _g / xiFp) * Math.Pow(_eps - _htFpDp, 1.5)
+                / Math.Sqrt(_eps) * Math.Sqrt(_htFpDp / _ap) * Math.Sqrt(_rhoL / _rhoV);
+
+            FloodingPercentage = 100 * _uV / FloodingGasVelocity;
+            IsFlooded = _uV > FloodingGasVelocity;
+        }
+
+        public void CalculateLiquidHoldup()
+        {
+            if (FloodingGasVelocity is null) CalculateLoadingAndFlooding();
+            if (IsFlooded) { LiquidHoldup = null; return; }
+
+            double reL = ReynoldsNumberLiquid.Value;
+            double frL = FroudeNumberLiquid.Value;
+
+            double ahAp = reL < 5
+                ? _ch * Math.Pow(reL, 0.15) * Math.Pow(frL, 0.1)
+                : 0.85 * _ch * Math.Pow(reL, 0.25) * Math.Pow(frL, 0.1);
+            HydraulicAreaRatio = ahAp;
+
+            double hLs = Math.Pow(12 * _etaL * _ap * _ap * _uL / (_rhoL * _g), 1.0 / 3)
+                         * Math.Pow(ahAp, 2.0 / 3);
+            double hFl = 2.2 * hLs;
+            LiquidHoldupAtLoading = hLs;
+            LiquidHoldupAtFlooding = hFl;
+
+            LiquidHoldup = _uV <= LoadingGasVelocity
+                ? hLs
+                : hLs + (hFl - hLs) * Math.Pow(_uV / FloodingGasVelocity.Value, 13);
+        }
+
+        public void CalculatePressureDrop()
+        {
+            if (FloodingGasVelocity is null) CalculateLoadingAndFlooding();
+            if (IsFlooded) { PressureDropPerHeight = null; PressureDrop = null; return; }
+
+            double htDp = _uV <= LoadingGasVelocity
+                ? _htLpDp
+                : _htLpDp + (_htFpDp - _htLpDp) * Math.Pow(_uV / FloodingGasVelocity.Value, 13);
+
+            double reG = ReynoldsNumberGas.Value;
+            double reL = ReynoldsNumberLiquid.Value;
+            double shape = 64 / reG + 1.8 / Math.Pow(reG, 0.08);
+
+            double xiD = _cp * shape;
+            double dpDry = xiD * _ap / Math.Pow(_eps, 3) * _uV * _uV / 2 * _rhoV / _fs;
+
+            double w = Math.Exp(reL / 200) * Math.Pow(htDp / _htLpDp, 0.3);
+            double xiW = _cp * w * shape * Math.Pow((_eps - htDp) / _eps, 1.5);
+            double dpWet = dpDry * (xiW / xiD) * Math.Pow(_eps / (_eps - htDp), 3);
+
+            PressureDropPerHeight = dpWet;                       // Pa/m
+            if (PackingHeight.HasValue) PressureDrop = dpWet * PackingHeight.Value;  // Pa
+        }
+
+        // convenience entry point
+        public void CalculateHydraulics()
+        {
+            CalculateGeometricParameters();
+            CalculateLoadingAndFlooding();
+            CalculateLiquidHoldup();
+            CalculatePressureDrop();
         }
     }
+}
+
+public class ColumnResults
+{
+    public bool Calculated;
+    public bool IsFlooded;
+    public double PressureDropPerHeight;   // Pa/m
+    public double PressureDrop;            // Pa
+    public double LiquidHoldup;            // -
+    public double LoadingVelocity;         // m/s
+    public double FloodingVelocity;        // m/s
+    public double PercentFlood;            // %
+    public double GasVelocity;             // m/s
+    public double LiquidVelocity;          // m/s
+    public double GasMassFlowOut;          // kg/s
+    public double LiquidMassFlowOut;       // kg/s
 }

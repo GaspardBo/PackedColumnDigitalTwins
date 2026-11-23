@@ -2,10 +2,12 @@ using CAPEOPEN100;
 using Microsoft.Win32;
 using Mose.CapeOpenToolkit.UnitProxy;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace PackedColumn
@@ -19,12 +21,17 @@ namespace PackedColumn
     //  Authors: Amogh Krishnanand Atreya & Gaspard Bouchard
     //  =====================================================================
 
+    // CAPE-OPEN unit metadata, used for registration and in the simulator's unit selection dialog
     [ComVisible(true)]
     [ProgId("PackedColumn.PackedColumnUnit")]
     [Guid("052BE404-4FA4-40FD-AB55-1D7DF7D3234F")]
     [ClassInterface(ClassInterfaceType.None)]
+
     public class PackedColumnUnit : CapeOpenUnitSimple, ICapeUnitReport
     {
+        // import the Win32 API function to get the foreground window handle, used for setting the owner of the edit dialog
+        [DllImport("user32.dll")] private static extern IntPtr GetForegroundWindow();
+
         // Logging settings
         private const string LogPath = @"C:\tmp\PackedColumn.log";
         private const bool VerboseLog = true;
@@ -109,40 +116,68 @@ namespace PackedColumn
             }
         }
 
+        // Helper class to wrap a Win32 window handle for use with ShowDialog in On Edit
+
+        private sealed class WinHandle : IWin32Window
+        {
+            public IntPtr Handle { get; private set; }
+            public WinHandle(IntPtr h) { Handle = h; }
+        }
         protected override void OnEdit()
         {
-            Log("OnEdit called");
-            try
+            Log("OnEdit called, apartment=" + Thread.CurrentThread.GetApartmentState());
+
+            // Gather everything on the calling thread
+            var fields = InputParams.Select(p => new EditField
             {
-                var fields = InputParams.Select(p => new EditField
-                {
-                    Name = p.Name,
-                    Description = p.Description,
-                    Min = p.Min,
-                    Max = p.Max,
-                    Value = P(p.Name)
-                }).ToList();
+                Name = p.Name,
+                Description = p.Description,
+                Min = p.Min,
+                Max = p.Max,
+                Value = P(p.Name)
+            }).ToList();
+            string report = BuildReport(ReportSummary);
 
-                // show the edit dialog, and if OK is pressed, update the parameters
-                using (var dlg = new ColumnEditForm("Packed Column", fields, BuildReport(ReportSummary)))
-                {
-                    if (dlg.ShowDialog() != DialogResult.OK) return;
+            IntPtr owner = GetForegroundWindow();          // Aspen's active window
+            if (owner == IntPtr.Zero)
+                owner = Process.GetCurrentProcess().MainWindowHandle;
 
-                    foreach (EditField f in dlg.Fields)
+            bool accepted = false;
+            Exception error = null;
+
+            var t = new Thread(() =>
+            {
+                try
+                {
+                    using (var dlg = new ColumnEditForm("Packed Column", fields, report))
                     {
-                        if (P(f.Name) != f.Value)            // update changed fields only
-                        {
-                            SetDoubleValueSettings(f.Name, f.Value);
-                            Log("Parameter " + f.Name + " set to " + f.Value);
-                        }
+                        accepted = dlg.ShowDialog(new WinHandle(owner)) == DialogResult.OK;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Log("Error in OnEdit: " + ex);
-                throw;
-            }
+                catch (Exception ex) { error = ex; }
+            });
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+            t.Join();                                      
+
+            if (error != null) { Log("Error in OnEdit: " + error); throw error; }
+
+            // Write back on the calling thread
+            if (accepted)
+                foreach (EditField f in fields)
+                    if (P(f.Name) != f.Value)
+                    {
+                        SetDoubleValueSettings(f.Name, f.Value);
+                        Log("Parameter " + f.Name + " set to " + f.Value);
+                        Status = CapeOpenValidationStatus.NotYetValidated;  // force revalidation
+                    }
+
+            UpdateModelSpecs();  // update the model with the new parameters
+        }
+
+        public override bool Validate(ref string message)
+        {
+            return base.Validate(ref message);
         }
 
         // =================================================================
@@ -150,7 +185,6 @@ namespace PackedColumn
         // =================================================================
         protected override void OnCalculate()
         {
-            _res.Valid = false;
             Log("OnCalculate called");
             try
             {
@@ -171,37 +205,23 @@ namespace PackedColumn
                 Check(Gin > 0, "Gas inlet flow must be > 0."); // check input validity
 
                 // ---------- 4. calculation ----------
-                // todo call model calculation
+                UpdateModelOCs(gasIn, liqIn);
+                _model.Calculate();
+                var res = _model.Results;
 
                 // ---------- 6. check material and energy balances & other eg pressure drop ----------
                 // todo add checks
-                // eg. Check(Gout > 0 && Lout > 0, "Negative outlet flow, check the specification.");
+                Check(res.GasMassFlowOut > 0 && res.LiquidMassFlowOut > 0, "Negative outlet flow, check the specification.");
 
                 // ---------- 7. write outlets ----------
-                WriteOutlet(gasOut, 10, 10, 10, new double[] { 0, 0.01, 0.99 });
-                WriteOutlet(liqOut, 10, 10, 10, new double[] { 0.9, 0.1, 0 });
+                WriteOutlet(gasOut, 10, 273.15, res.GasMassFlowOut, new double[] { 0, 0.01, 0.99 });
+                WriteOutlet(liqOut, 10, 273.15, res.LiquidMassFlowOut, new double[] { 0.9, 0.1, 0 });
 
 
-                // ---------- 8. publish results ----------
-                _res = new ColumnResults
-                {
-                    Valid = true,
-                    Gin = Gin,
-                    Lin = Lin,
-                    Tg = Tg,
-                    Tl = Tl,
-                    Pg = Pg,
-                    HETP = 1.0, // example value
-                    YOut = 0.01, // example value
-                    XOut = 0.1, // example value
-                    Holdup = 0.5 // example value
-                };
+                // ---------- 8. publish results 
 
                 // Update the result parameters with the calculated values
-                Publish("Result_HETP_m", _res.HETP);
-                Publish("Result_YOut", _res.YOut);
-                Publish("Result_XOut", _res.XOut);
-                Publish("Result_Holdup_m3", _res.Holdup);
+                Publish("Result_Holdup_m3", res.LiquidHoldup);
 
                 _lastSummary = BuildReport(ReportSummary);
 
@@ -215,6 +235,37 @@ namespace PackedColumn
                 throw;
             }
         }
+
+        // =================================================================
+        // Column model handling
+        // =================================================================
+
+        public void UpdateModelSpecs()
+        {
+            Log("UpdateModel called");
+            if (_model == null) return;
+
+            _model.SetColumnSpecs(columnDiameter: P("ColDiameter_m"), packingHeight: P("ColHeight_m"));
+            // _model.SetPackingParameters();
+            return;
+        }
+
+        public void UpdateModelOCs(CapeOpenThermoMaterialObject gasIn, CapeOpenThermoMaterialObject liqIn)
+        {
+            if (_model == null) return;
+
+            ICapeThermoMaterialObject g = gasIn.ConnectedObject;
+            ICapeThermoMaterialObject l = liqIn.ConnectedObject;
+
+            _model.SetOperatingConditions(
+                rhoL: PhaseProp(l, "density", "Liquid", "mass"),
+                etaL: PhaseProp(l, "viscosity", "Liquid", null),
+                liquidMassFlow: PhaseMassFlow(l, "Liquid"),
+                rhoV: PhaseProp(g, "density", "Vapor", "mass"),
+                etaV: PhaseProp(g, "viscosity", "Vapor", null),
+                gasMassFlow: PhaseMassFlow(g, "Vapor"));
+        }
+
 
         // =================================================================
         //  CAPE-OPEN reporting
@@ -246,39 +297,21 @@ namespace PackedColumn
             message = BuildReport(_selectedReport);  
         }
 
-        private sealed class ColumnResults //this class could be moved to the unit model
-        {
-            public bool Valid;
-            public double Gin, Lin, Tg, Tl, Pg;
-            public double HETP, YOut, XOut, Holdup;
-        }
-        private ColumnResults _res = new ColumnResults();
 
         private string BuildReport(string which)
         {
             var ci = System.Globalization.CultureInfo.InvariantCulture;
+            var res = _model.Results;
             var sb = new StringBuilder();
             sb.AppendLine("PACKED COLUMN REPORT");
             sb.AppendLine("====================");
-            if (!_res.Valid)
+            if (!res.Calculated)
             {
                 sb.AppendLine("No successful calculation yet.");
                 return sb.ToString();
             }
 
-            sb.AppendLine("Geometry");
-            sb.AppendLine(string.Format(ci, "  Packed height     : {0,12:G6} m", P("ColHeight_m")));
-            sb.AppendLine(string.Format(ci, "  Column diameter   : {0,12:G6} m", P("ColDiameter_m")));
-            sb.AppendLine();
-            sb.AppendLine("Inlets");
-            sb.AppendLine(string.Format(ci, "  Gas flow          : {0,12:G6} mol/s", _res.Gin));
-            sb.AppendLine(string.Format(ci, "  Liquid flow       : {0,12:G6} mol/s", _res.Lin));
-            sb.AppendLine();
-            sb.AppendLine("Results");
-            sb.AppendLine(string.Format(ci, "  HETP              : {0,12:G6} m", _res.HETP));
-            sb.AppendLine(string.Format(ci, "  y_out             : {0,12:G6}", _res.YOut));
-            sb.AppendLine(string.Format(ci, "  x_out             : {0,12:G6}", _res.XOut));
-            sb.AppendLine(string.Format(ci, "  Holdup            : {0,12:G6} m3", _res.Holdup));
+            sb.Append(_model.ToString());
 
             return sb.ToString();
         }
@@ -286,6 +319,14 @@ namespace PackedColumn
         // =================================================================
         //  Helper methods
         // =================================================================
+
+        static double First(object o, string what)
+        {
+            double[] a = o as double[];
+            if (a == null || a.Length == 0 || double.IsNaN(a[0]))
+                throw new InvalidOperationException("Material returned no value for " + what + ".");
+            return a[0];
+        }
 
         private static CapeOpenFlashType FlashTP { get { return CapeOpenFlashType.TP; } }
 
@@ -313,6 +354,21 @@ namespace PackedColumn
             if (matObject == null)
                 throw new InvalidOperationException("Port " + portName + " is not connected.");
             return duplicate ? matObject.DuplicatedObject : matObject;
+        }
+
+        static double PhaseProp(ICapeThermoMaterialObject mat, string prop, string phase, string basis)
+        {
+            mat.CalcProp(new string[] { prop }, new string[] { phase }, "Mixture");
+            return First(mat.GetProp(prop, phase, null, "Mixture", basis), prop + " (" + phase + ")");
+        }
+
+        static double PhaseMassFlow(ICapeThermoMaterialObject mat, string phase)
+        {
+            // total mass flow, kg/s, times the phase's mass fraction
+            double total = First(mat.GetProp("totalFlow", "Overall", null, null, "mass"), "totalFlow");
+            mat.CalcProp(new string[] { "phaseFraction" }, new string[] { phase }, "Mixture");
+            double frac = First(mat.GetProp("phaseFraction", phase, null, "Mixture", "mass"), "phaseFraction (" + phase + ")");
+            return total * frac;
         }
 
         // Helper method get double parameter values
@@ -346,6 +402,7 @@ namespace PackedColumn
             }
             catch { /* never let logging break the unit */ }
         }
+
 
         //COM registration and unregistration for Cape-Open
         [ComRegisterFunction]
