@@ -1,0 +1,40 @@
+{
+    "id": "PR_50_P",
+    "identity": {
+        "name": "Pall Ring Plastic No. 50",
+        "manufacturer": null,
+        "family": "PALL_RING",
+        "material": "Plastic",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 6765,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 111.1,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.919,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.816,
+            "CFI": 1.757,
+            "Ch": 0.593,
+            "CP0": 0.698,
+            "CL": 1.239,
+            "CV": 0.368
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

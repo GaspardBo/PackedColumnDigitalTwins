@@ -1,0 +1,40 @@
+{
+    "id": "RR_38_M",
+    "identity": {
+        "name": "Raschig Ralu Ring Metal No. 38",
+        "manufacturer": "Raschig",
+        "family": "RALU_RING",
+        "material": "Metal",
+        "nominalSize": 38
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 14500,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 135,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.965,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.629,
+            "CFI": 1.679,
+            "Ch": 0.644,
+            "CP0": 1.003,
+            "CL": 1.277,
+            "CV": 0.341
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

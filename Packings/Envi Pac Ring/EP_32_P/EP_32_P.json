@@ -1,0 +1,40 @@
+{
+    "id": "EP_32_P",
+    "identity": {
+        "name": "Envimac Envi Pac Ring Plastic No. 32",
+        "manufacturer": "Envimac",
+        "family": "ENVI_PAC_RING",
+        "material": "Plastic",
+        "nominalSize": 32
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 53000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 138.9,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.936,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.944,
+            "CFI": 2.012,
+            "Ch": 1.039,
+            "CP0": 0.549,
+            "CL": 1.517,
+            "CV": 0.459
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

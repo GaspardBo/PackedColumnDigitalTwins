@@ -1,0 +1,40 @@
+{
+    "id": "RSR_0_5_M",
+    "identity": {
+        "name": "Raschig Super-Ring Metal No. 0.5",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_SUPER_RING",
+        "material": "Metal",
+        "nominalSize": 0.5
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 145000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 250,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.975,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.35,
+            "CFI": 2.2,
+            "Ch": 0.62,
+            "CP0": 0.78,
+            "CL": 1.45,
+            "CV": 0.43
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

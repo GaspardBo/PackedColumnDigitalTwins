@@ -1,0 +1,40 @@
+{
+    "id": "NP_25_P_fn6",
+    "identity": {
+        "name": "NOR PAC Ring Plastic No. 25 (fn 6)",
+        "manufacturer": null,
+        "family": "NOR_PAC_RING",
+        "material": "Plastic",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 50000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 202.0,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.953,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.277,
+            "CFI": 2.472,
+            "Ch": 0.601,
+            "CP0": 0.397,
+            "CL": 0.883,
+            "CV": 0.366
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

@@ -1,3 +1,4 @@
+using PackingLibrary;
 using System;
 using System.Drawing.Text;
 using System.Text;
@@ -33,12 +34,13 @@ namespace PackedColumn
             _hasBeenCalculated = false;  // reset calculation flag
         }
 
-        public void SetPackingParameters(double ap, double eps, double cs, double cfi, double ch, double cp0)
+        public void SetPacking(Packing packing)
         {
             var m = BilletSchultes;
-            m.SpecificSurfaceArea = ap;
-            m.VoidFraction = eps;
-            m.CS = cs; m.CFI = cfi; m.Ch = ch; m.CP0 = cp0;
+            var c = packing.BilletSchultes.Constants;
+            m.SpecificSurfaceArea = packing.SpecificSurfaceArea;
+            m.VoidFraction = packing.VoidFraction;
+            m.CS = c.CS ; m.CFI = c.CFI; m.Ch = c.Ch; m.CP0 = c.CP0;
             _hasBeenCalculated = false;  // reset calculation flag
         }
 

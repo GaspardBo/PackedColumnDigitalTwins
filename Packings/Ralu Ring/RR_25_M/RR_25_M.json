@@ -1,0 +1,40 @@
+{
+    "id": "RR_25_M",
+    "identity": {
+        "name": "Raschig Ralu Ring Metal No. 25",
+        "manufacturer": "Raschig",
+        "family": "RALU_RING",
+        "material": "Metal",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 51000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 215,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.96,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.627,
+            "CFI": 2.083,
+            "Ch": 0.714,
+            "CP0": 0.957,
+            "CL": 1.44,
+            "CV": 0.336
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

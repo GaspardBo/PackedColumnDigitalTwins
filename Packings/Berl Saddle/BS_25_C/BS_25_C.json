@@ -1,0 +1,40 @@
+{
+    "id": "BS_25_C",
+    "identity": {
+        "name": "Berl Saddle Ceramic No. 25",
+        "manufacturer": null,
+        "family": "BERL_SADDLE",
+        "material": "Ceramic",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 80080,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 260.0,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.68,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.62,
+            "CP0": null,
+            "CL": 1.246,
+            "CV": 0.387
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

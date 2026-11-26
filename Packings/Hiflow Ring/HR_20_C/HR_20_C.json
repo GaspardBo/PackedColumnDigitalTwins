@@ -1,0 +1,40 @@
+{
+    "id": "HR_20_C",
+    "identity": {
+        "name": "Rauschert Hiflow Ring Ceramic No. 20",
+        "manufacturer": "Rauschert",
+        "family": "HIFLOW_RING",
+        "material": "Ceramic",
+        "nominalSize": 20
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 121314,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 286.2,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.758,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.875,
+            "CFI": 2.41,
+            "Ch": 1.167,
+            "CP0": 0.628,
+            "CL": 1.744,
+            "CV": 0.465
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

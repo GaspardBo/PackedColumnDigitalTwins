@@ -1,0 +1,40 @@
+{
+    "id": "RSR_2_P",
+    "identity": {
+        "name": "Raschig Super-Ring Plastic No. 2",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_SUPER_RING",
+        "material": "Plastic",
+        "nominalSize": 2
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 9000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 100,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.96,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.326,
+            "CFI": 2.096,
+            "Ch": 0.72,
+            "CP0": 0.377,
+            "CL": 1.25,
+            "CV": 0.337
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

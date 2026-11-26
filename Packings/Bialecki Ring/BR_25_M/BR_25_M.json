@@ -1,0 +1,40 @@
+{
+    "id": "BR_25_M",
+    "identity": {
+        "name": "Bialecki Ring Metal No. 25",
+        "manufacturer": null,
+        "family": "BIALECKI_RING",
+        "material": "Metal",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 48533,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 210.0,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.956,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.521,
+            "CFI": 1.856,
+            "Ch": 0.692,
+            "CP0": 0.891,
+            "CL": 1.461,
+            "CV": 0.331
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

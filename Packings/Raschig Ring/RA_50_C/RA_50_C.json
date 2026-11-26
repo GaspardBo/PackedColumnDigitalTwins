@@ -1,0 +1,40 @@
+{
+    "id": "RA_50_C",
+    "identity": {
+        "name": "Raschig Raschig Ring Ceramic No. 50",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_RING",
+        "material": "Ceramic",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 5990,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 95.0,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.83,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.482,
+            "CFI": 1.547,
+            "Ch": null,
+            "CP0": null,
+            "CL": 1.416,
+            "CV": 0.21
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

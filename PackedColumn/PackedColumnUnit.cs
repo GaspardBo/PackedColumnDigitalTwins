@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using PackingLibrary;
 
 namespace PackedColumn
 {
@@ -32,6 +33,34 @@ namespace PackedColumn
         // import the Win32 API function to get the foreground window handle, used for setting the owner of the edit dialog
         [DllImport("user32.dll")] private static extern IntPtr GetForegroundWindow();
 
+        // Resolves dependency DLLs (System.Memory, etc.) from this DLL's folder.
+        static PackedColumnUnit()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += ResolveFromUnitFolder;
+        }
+
+        private static Assembly ResolveFromUnitFolder(object sender, ResolveEventArgs args)
+        {
+            var requested = new AssemblyName(args.Name);
+
+            // skip resource satellite lookups
+            if (requested.Name.EndsWith(".resources", StringComparison.OrdinalIgnoreCase))
+                return null;
+
+            string dir = System.IO.Path.GetDirectoryName(typeof(PackedColumnUnit).Assembly.Location);
+            string path = System.IO.Path.Combine(dir, requested.Name + ".dll");
+
+            if (!System.IO.File.Exists(path))
+                return null;
+
+            // already loaded (any version)? reuse it
+            foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
+                if (string.Equals(a.GetName().Name, requested.Name, StringComparison.OrdinalIgnoreCase))
+                    return a;
+
+            return Assembly.LoadFrom(path);
+        }
+
         // Logging settings
         private const string LogPath = @"C:\tmp\PackedColumn.log";
         private const bool VerboseLog = true;
@@ -41,6 +70,24 @@ namespace PackedColumn
 
         // Column model object, created in OnInitialize and used in OnCalculate
         private PackedColumnModel _model = null;
+
+        // Packing library created in OnInitialize
+        private PackingManager _packingManager = null;
+        private string _defaultLibraryPath = ComputeDefaultLibraryPath();
+
+        // relative to the DLL location
+        private static string ComputeDefaultLibraryPath()
+        {
+            string dllDir = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            return System.IO.Path.GetFullPath(
+                System.IO.Path.Combine(dllDir, @"..\..\..\Packings\library.json"));
+        }
+        private string _loadedLibraryPath = null;
+
+        // packing related fields
+        private string _packingFamily = null;
+        private string _packingName = null;
+        private Packing _selectedPacking = null;
 
         // -----------------------------------------------------------------
         //  Parameter table: name, description (with units), min, max, default
@@ -74,6 +121,8 @@ namespace PackedColumn
             D("Result_Holdup_m3",     "Result: holdup volume, m3", 0, 1e12, 0),
         };
 
+
+
         // =================================================================
         //  CAPE-OPEN lifecycle
         // =================================================================
@@ -85,6 +134,7 @@ namespace PackedColumn
                 if (_model == null)
                     _model = new PackedColumnModel();
 
+                try { EnsurePackingLibrary(); } catch { }
 
                 if (Ports.Count() == 0)
                 {     // guard against a second stream declaration
@@ -104,6 +154,15 @@ namespace PackedColumn
                     foreach (ParamDef p in ResultParams)
                         Parameters.Add(DoubleParameter.Create(p.Name, p.Description,
                             CapeOpenParameterMode.Read, p.Min, p.Max, p.Default));
+
+                    // Add packing library path
+                    Parameters.Add(OptionParameter.Create(
+                        "PackingLibraryPath",
+                        "Path to the packing library JSON file",
+                        CapeOpenParameterMode.ReadWrite,
+                        null,      // possible option (null)
+                        false,
+                        _defaultLibraryPath )); //default value
 
                 }
 
@@ -127,6 +186,9 @@ namespace PackedColumn
         {
             Log("OnEdit called, apartment=" + Thread.CurrentThread.GetApartmentState());
 
+            // ensure packing library is loaded
+            EnsurePackingLibrary();
+
             // Gather everything on the calling thread
             var fields = InputParams.Select(p => new EditField
             {
@@ -143,15 +205,18 @@ namespace PackedColumn
                 owner = Process.GetCurrentProcess().MainWindowHandle;
 
             bool accepted = false;
+            Packing chosen = null;
             Exception error = null;
 
             var t = new Thread(() =>
             {
                 try
                 {
-                    using (var dlg = new ColumnEditForm("Packed Column", fields, report))
+                    using (var dlg = new ColumnEditForm("Packed Column", fields, report,
+                                                        _packingManager, _packingFamily, _packingName))
                     {
                         accepted = dlg.ShowDialog(new WinHandle(owner)) == DialogResult.OK;
+                        if (accepted) chosen = dlg.SelectedPacking;
                     }
                 }
                 catch (Exception ex) { error = ex; }
@@ -172,6 +237,14 @@ namespace PackedColumn
                         Status = CapeOpenValidationStatus.NotYetValidated;  // force revalidation
                     }
 
+            if (accepted && chosen != null)
+            {
+                _selectedPacking = chosen;
+                _packingFamily = chosen.Identity.Family;
+                _packingName = chosen.Identity.Name;
+                Status = CapeOpenValidationStatus.NotYetValidated;
+            }
+
             UpdateModelSpecs();  // update the model with the new parameters
         }
 
@@ -188,6 +261,9 @@ namespace PackedColumn
             Log("OnCalculate called");
             try
             {
+                // Ensure packing library is up to date
+                EnsurePackingLibrary();
+
                 // ---------- 1. streams ----------
                 // inlets: duplicates (as in your mixer); outlets: the real objects
                 var gasIn = GetMaterialObject("GasIn");
@@ -246,7 +322,7 @@ namespace PackedColumn
             if (_model == null) return;
 
             _model.SetColumnSpecs(columnDiameter: P("ColDiameter_m"), packingHeight: P("ColHeight_m"));
-            // _model.SetPackingParameters();
+            _model.SetPacking(_selectedPacking);
             return;
         }
 
@@ -265,7 +341,6 @@ namespace PackedColumn
                 etaV: PhaseProp(g, "viscosity", "Vapor", null),
                 gasMassFlow: PhaseMassFlow(g, "Vapor"));
         }
-
 
         // =================================================================
         //  CAPE-OPEN reporting
@@ -319,6 +394,29 @@ namespace PackedColumn
         // =================================================================
         //  Helper methods
         // =================================================================
+
+        // Check packing library
+        private void EnsurePackingLibrary()
+        {
+            string path = GetStringValueSettings("PackingLibraryPath");
+
+            if (_packingManager != null && path == _loadedLibraryPath)
+                return;   // already loaded from this path
+
+            try
+            {
+                _packingManager = PackingManager.Load(path);
+                _loadedLibraryPath = path;
+                Log("Packing library loaded from " + path);
+            }
+            catch (Exception ex)
+            {
+                _packingManager = null;
+                _loadedLibraryPath = null;
+                Log("Failed to load packing library from " + path + ": " + ex.Message);
+                throw new InvalidOperationException("Could not load packing library: " + path, ex);
+            }
+        }
 
         static double First(object o, string what)
         {
@@ -383,6 +481,18 @@ namespace PackedColumn
         private void SetDoubleValueSettings(string settingName, double value)
         {
             DoubleParameter setting = (DoubleParameter)(Parameters.GetParameterByName(settingName));
+            setting.Value = value;
+        }
+
+        private string GetStringValueSettings(string name)
+        {
+            var setting = (OptionParameter)Parameters.GetParameterByName(name);
+            return setting.Value;
+        }
+
+        private void SetStringValueSettings(string name, string value)
+        {
+            var setting = (OptionParameter)Parameters.GetParameterByName(name);
             setting.Value = value;
         }
 

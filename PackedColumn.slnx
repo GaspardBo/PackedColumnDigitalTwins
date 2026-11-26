@@ -1,4 +1,6 @@
 <Solution>
   <Project Path="PackedColumn/PackedColumn.csproj" Id="0f859afc-fa72-4875-beae-2aa0fb32a22b" />
   <Project Path="PackedColumnTester/PackedColumnTester.csproj" Id="65c98d1d-54da-4cc3-b978-b3fd8faeb0c5" />
+  <Project Path="PackingLibrary/PackingLibrary.csproj" Id="d30437de-24d0-4075-8dbc-fc2ec4040ef1" />
+  <Project Path="PackingLibTest/PackingLibTest.csproj" Id="a7782403-31f0-4f66-b1db-699873a112e2" />
 </Solution>

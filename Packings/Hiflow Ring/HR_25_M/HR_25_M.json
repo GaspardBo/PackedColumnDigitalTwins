@@ -1,0 +1,40 @@
+{
+    "id": "HR_25_M",
+    "identity": {
+        "name": "Rauschert Hiflow Ring Metal No. 25",
+        "manufacturer": "Rauschert",
+        "family": "HIFLOW_RING",
+        "material": "Metal",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 40790,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 202.9,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.962,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.918,
+            "CFI": 2.177,
+            "Ch": 0.799,
+            "CP0": 0.689,
+            "CL": 1.641,
+            "CV": 0.402
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

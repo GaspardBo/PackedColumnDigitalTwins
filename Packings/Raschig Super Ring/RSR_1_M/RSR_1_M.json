@@ -1,0 +1,40 @@
+{
+    "id": "RSR_1_M",
+    "identity": {
+        "name": "Raschig Super-Ring Metal No. 1",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_SUPER_RING",
+        "material": "Metal",
+        "nominalSize": 1
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 32000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 160,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.98,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.491,
+            "CFI": 2.2,
+            "Ch": 0.75,
+            "CP0": 0.5,
+            "CL": 1.29,
+            "CV": 0.44
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

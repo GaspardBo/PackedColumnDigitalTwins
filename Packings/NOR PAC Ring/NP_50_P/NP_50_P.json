@@ -1,0 +1,40 @@
+{
+    "id": "NP_50_P",
+    "identity": {
+        "name": "NOR PAC Ring Plastic No. 50",
+        "manufacturer": null,
+        "family": "NOR_PAC_RING",
+        "material": "Plastic",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 7330,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 86.8,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.947,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.959,
+            "CFI": 1.786,
+            "Ch": 0.651,
+            "CP0": 0.35,
+            "CL": 1.08,
+            "CV": 0.322
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

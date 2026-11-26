@@ -1,0 +1,40 @@
+{
+    "id": "GR_30_M_PMK",
+    "identity": {
+        "name": "Glitsch Ring Metal No. 30 PMK",
+        "manufacturer": "Glitsch",
+        "family": "GLITSCH_RING",
+        "material": "Metal",
+        "nominalSize": 30
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 29200,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 180.5,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.975,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.694,
+            "CFI": 1.9,
+            "Ch": 0.93,
+            "CP0": 0.851,
+            "CL": 1.92,
+            "CV": 0.45
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}
