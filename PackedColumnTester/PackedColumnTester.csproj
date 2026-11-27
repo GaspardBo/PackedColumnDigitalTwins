@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PackedColumn\PackedColumn.csproj" />
+    <ProjectReference Include="..\PackingLibrary\PackingLibrary.csproj" />
   </ItemGroup>
 
 </Project>

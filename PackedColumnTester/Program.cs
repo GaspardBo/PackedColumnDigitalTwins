@@ -1,10 +1,20 @@
 ﻿using PackedColumn;
+using PackingLibrary;
 using System.Globalization;
 
+/*
 string path = args.Length > 0 ? args[0] : "C:\\Users\\bouch\\source\\repos\\PackedColumn\\reference.csv";
 int result = ParityTest.Run(path);
 Console.ReadKey();   // keeps the window open, remove if running from a terminal
 return result;
+*/
+
+PackedColumnModel model = new PackedColumnModel();
+PackingManager packingManager = PackingManager.Load("C:\\Users\\bouch\\source\\repos\\PackedColumn\\Packings\\library.json");
+
+Console.WriteLine($"Packing library loaded with {packingManager.Count} packings");
+
+
 public static class ParityTest
 {
     const double Tol = 1e-8;   // relative

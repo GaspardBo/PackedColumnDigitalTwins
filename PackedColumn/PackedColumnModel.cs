@@ -40,7 +40,7 @@ namespace PackedColumn
             var c = packing.BilletSchultes.Constants;
             m.SpecificSurfaceArea = packing.SpecificSurfaceArea;
             m.VoidFraction = packing.VoidFraction;
-            m.CS = c.CS ; m.CFI = c.CFI; m.Ch = c.Ch; m.CP0 = c.CP0;
+            m.CS = c.CS; m.CFI = c.CFI; m.Ch = c.Ch; m.CP0 = c.CP0; m.CL = c.CL; m.CV = c.CV;
             _hasBeenCalculated = false;  // reset calculation flag
         }
 
@@ -66,6 +66,22 @@ namespace PackedColumn
             _hasBeenCalculated = false;
         }
 
+        private double _L, _V;
+        private bool _massTransfer;
+        public void SetMassTransfer(double L_mol, double V_mol, double m, double yIn, double xIn,
+                            double sigma, double dL, double dV)
+        {
+            var b = BilletSchultes;
+            _L = L_mol; _V = V_mol; _massTransfer = true;
+            b.EquilibriumSlope = m;
+            b.GasMoleFractionInlet = yIn;
+            b.LiquidMoleFractionInlet = xIn;
+            b.LiquidSurfaceTension = sigma;
+            b.LiquidDiffusivity = dL;
+            b.GasDiffusivity = dV;
+            _hasBeenCalculated = false;
+        }
+
         private bool _hasBeenCalculated = false;
 
         public ColumnResults Results { get; private set; } = new ColumnResults();
@@ -87,6 +103,13 @@ namespace PackedColumn
             // Perform calculations using the Billet & Schultes model
             b.CalculateHydraulics();
 
+            if(_massTransfer && !b.IsFlooded)
+            {
+                b.CalculateMassTransferCoefficients();
+                b.CalculateHTU(_L, _V);
+                b.CalculateSeparationPerformance(_L, _V);
+            }
+
 
             Results = new ColumnResults
             {
@@ -101,7 +124,15 @@ namespace PackedColumn
                 GasVelocity = b.GasSuperficialVelocity ?? double.NaN,
                 LiquidVelocity = b.LiquidSuperficialVelocity ?? double.NaN,
                 GasMassFlowOut = b.GasMassFlowRate ?? double.NaN,
-                LiquidMassFlowOut = b.GasMassFlowRate ?? double.NaN,
+                LiquidMassFlowOut = b.LiquidMassFlowRate ?? double.NaN,
+                GasMoleFractionOutlet = b.GasMoleFractionOutlet ?? double.NaN,
+                LiquidMoleFractionOutlet = b.LiquidMoleFractionOutlet ?? double.NaN,
+                NTUGas = b.NTUGas ?? double.NaN,
+                NTULiquid = b.NTULiquid ?? double.NaN,
+                GasSuperficialVelocity = b.GasSuperficialVelocity ?? double.NaN,
+                LiquidSuperficialVelocity = b.LiquidSuperficialVelocity ?? double.NaN,
+                GasVolumetricMTC = b.GasVolumetricMassTransferCoefficient ?? double.NaN,
+                LiquidVolumetricMTC = b.LiquidVolumetricMassTransferCoefficient ?? double.NaN,
             };
 
             _hasBeenCalculated = true;
@@ -433,6 +464,66 @@ namespace PackedColumn
             if (PackingHeight.HasValue) PressureDrop = dpWet * PackingHeight.Value;  // Pa
         }
 
+        public void CalculateMassTransferCoefficients()
+        {
+            if (FloodingGasVelocity == null) CalculateLoadingAndFlooding();
+            if (LiquidHoldup == null) CalculateLiquidHoldup();
+            if (IsFlooded || LiquidHoldup == null) return;
+
+            double dh = 4 * _eps / _ap;
+            double hL = LiquidHoldup.Value;
+            double cl = Req(CL, nameof(CL)), cv = Req(CV, nameof(CV));
+            double dL = Req(LiquidDiffusivity, nameof(LiquidDiffusivity));
+            double dV = Req(GasDiffusivity, nameof(GasDiffusivity));
+            double sigma = Req(LiquidSurfaceTension, nameof(LiquidSurfaceTension));
+            double nuV = _etaV / _rhoV;
+
+            double betaL = cl * Math.Pow(12, -1.0 / 6) * Math.Sqrt(_uL / hL) * Math.Sqrt(dL / dh);
+            double betaV = cv / Math.Sqrt(_eps - hL) * Math.Sqrt(_ap / dh) * dV
+                           * Math.Pow(_uV / (_ap * nuV), 0.75) * Math.Pow(nuV / dV, 1.0 / 3);
+
+            double aphOverA = 1.5 * Math.Pow(_ap * dh, -0.5)
+                            * Math.Pow(_uL * dh * _rhoL / _etaL, -0.2)
+                            * Math.Pow(_uL * _uL * _rhoL * dh / sigma, 0.75)
+                            * Math.Pow(_uL * _uL / (_g * dh), -0.45);
+
+            RelativeInterfacialArea = aphOverA;
+            EffectiveInterfacialArea = aphOverA * _ap;       // a_ph, m2/m3
+            LiquidMassTransferCoefficient = betaL;
+            LiquidVolumetricMassTransferCoefficient = LiquidMassTransferCoefficient * EffectiveInterfacialArea;
+            GasMassTransferCoefficient = betaV;
+            GasVolumetricMassTransferCoefficient = GasMassTransferCoefficient * EffectiveInterfacialArea;
+        }
+
+        public void CalculateHTU(double L, double V)
+        {
+            double aph = Req(EffectiveInterfacialArea, nameof(EffectiveInterfacialArea));
+            double m = Req(EquilibriumSlope, nameof(EquilibriumSlope));
+
+            HTUGas = _uV / (GasMassTransferCoefficient.Value * aph);
+            HTULiquid = _uL / (LiquidMassTransferCoefficient.Value * aph);
+            StrippingFactor = m * V / L;                          // lambda
+            HTUOverallGas = HTUGas + StrippingFactor.Value * HTULiquid;
+            NTUGas = Req(PackingHeight, nameof(PackingHeight)) / HTUOverallGas.Value;
+        }
+
+        public void CalculateSeparationPerformance(double L, double V)
+        {
+            double lam = StrippingFactor.Value, ntu = NTUGas.Value, m = EquilibriumSlope.Value;
+            double yIn = GasMoleFractionInlet.Value, xIn = LiquidMoleFractionInlet.Value;
+
+            double yOut;
+            if (Math.Abs(1 - lam) < 1e-9)
+                yOut = m * xIn + (yIn - m * xIn) / (1 + ntu);
+            else
+                yOut = m * xIn + (yIn - m * xIn) * (1 - lam) / (Math.Exp((1 - lam) * ntu) - lam);
+
+            double xOut = xIn + V * (yIn - yOut) / L;             // solute balance (dilute)
+
+            GasMoleFractionOutlet = yOut;
+            LiquidMoleFractionOutlet = xOut;
+        }
+
         // convenience entry point
         public void CalculateHydraulics()
         {
@@ -442,20 +533,38 @@ namespace PackedColumn
             CalculatePressureDrop();
         }
     }
-}
 
-public class ColumnResults
-{
-    public bool Calculated;
-    public bool IsFlooded;
-    public double PressureDropPerHeight;   // Pa/m
-    public double PressureDrop;            // Pa
-    public double LiquidHoldup;            // -
-    public double LoadingVelocity;         // m/s
-    public double FloodingVelocity;        // m/s
-    public double PercentFlood;            // %
-    public double GasVelocity;             // m/s
-    public double LiquidVelocity;          // m/s
-    public double GasMassFlowOut;          // kg/s
-    public double LiquidMassFlowOut;       // kg/s
+    public class ColumnResults
+    {
+        public bool Calculated;
+        public bool IsFlooded;
+        public double PressureDropPerHeight;   // Pa/m
+        public double PressureDrop;            // Pa
+        public double LiquidHoldup;            // -
+        public double LoadingVelocity;         // m/s
+        public double FloodingVelocity;        // m/s
+        public double PercentFlood;            // %
+        public double GasVelocity;             // m/s
+        public double LiquidVelocity;          // m/s
+        public double GasMassFlowOut;          // kg/s
+        public double LiquidMassFlowOut;       // kg/s
+        public double GasMoleFractionOutlet;   // mol/mol
+        public double LiquidMoleFractionOutlet;// mol/mol
+        public double NTUGas, NTULiquid; // -
+        public double GasVolumetricMTC, LiquidVolumetricMTC; // 1/s
+        public double GasSuperficialVelocity, LiquidSuperficialVelocity; // m/s
+    }
+
+    public enum Phase { Gas, Liquid }
+
+    public enum Prop
+    {
+        Density,          // kg/m3
+        Viscosity,        // Pa.s
+        SurfaceTension,   // N/m
+        Diffusivity,      // m2/s
+        MolarMass,        // kg/mol
+        MassFlow,         // kg/s
+        MolarFlow         // mol/s
+    }
 }
