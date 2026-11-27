@@ -1,0 +1,40 @@
+{
+    "id": "VSP_50_M",
+    "identity": {
+        "name": "VSP Ring Metal No. 50",
+        "manufacturer": null,
+        "family": "VSP_RING",
+        "material": "Metal",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 7841,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 104.6,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.98,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.806,
+            "CFI": 1.689,
+            "Ch": 1.135,
+            "CP0": 0.773,
+            "CL": 1.222,
+            "CV": 0.42
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

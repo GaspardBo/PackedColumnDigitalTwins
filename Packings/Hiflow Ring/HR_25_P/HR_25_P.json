@@ -1,0 +1,40 @@
+{
+    "id": "HR_25_P",
+    "identity": {
+        "name": "Rauschert Hiflow Ring Plastic No. 25",
+        "manufacturer": "Rauschert",
+        "family": "HIFLOW_RING",
+        "material": "Plastic",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 46100,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 194.5,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.918,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.841,
+            "CFI": 1.989,
+            "Ch": null,
+            "CP0": 0.741,
+            "CL": 1.577,
+            "CV": 0.39
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

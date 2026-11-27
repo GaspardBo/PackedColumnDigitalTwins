@@ -1,0 +1,40 @@
+{
+    "id": "RX_15_P",
+    "identity": {
+        "name": "Raflux Ring Plastic No. 15",
+        "manufacturer": null,
+        "family": "RAFLUX_RING",
+        "material": "Plastic",
+        "nominalSize": 15
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 193522,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 307.9,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.894,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.825,
+            "CFI": 2.4,
+            "Ch": 0.491,
+            "CP0": 0.595,
+            "CL": 1.913,
+            "CV": 0.37
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

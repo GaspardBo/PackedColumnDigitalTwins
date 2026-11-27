@@ -1,0 +1,40 @@
+{
+    "id": "EP_80_P",
+    "identity": {
+        "name": "Envimac Envi Pac Ring Plastic No. 80",
+        "manufacturer": "Envimac",
+        "family": "ENVI_PAC_RING",
+        "material": "Plastic",
+        "nominalSize": 80
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 2000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 60.0,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.955,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.846,
+            "CFI": 1.522,
+            "Ch": 0.641,
+            "CP0": 0.358,
+            "CL": 1.603,
+            "CV": 0.257
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

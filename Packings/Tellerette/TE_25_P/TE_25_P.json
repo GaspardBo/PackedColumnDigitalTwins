@@ -1,0 +1,40 @@
+{
+    "id": "TE_25_P",
+    "identity": {
+        "name": "Tellerette Plastic No. 25",
+        "manufacturer": null,
+        "family": "TELLERETTE",
+        "material": "Plastic",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 37037,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 190.0,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.93,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.913,
+            "CFI": 2.132,
+            "Ch": 0.588,
+            "CP0": 0.538,
+            "CL": 0.899,
+            "CV": null
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

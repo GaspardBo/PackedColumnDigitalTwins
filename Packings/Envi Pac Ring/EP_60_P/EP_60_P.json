@@ -1,0 +1,40 @@
+{
+    "id": "EP_60_P",
+    "identity": {
+        "name": "Envimac Envi Pac Ring Plastic No. 60",
+        "manufacturer": "Envimac",
+        "family": "ENVI_PAC_RING",
+        "material": "Plastic",
+        "nominalSize": 60
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 6800,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 98.4,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.961,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.987,
+            "CFI": 1.864,
+            "Ch": 0.794,
+            "CP0": 0.338,
+            "CL": 1.522,
+            "CV": 0.296
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

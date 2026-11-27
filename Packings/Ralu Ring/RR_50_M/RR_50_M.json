@@ -1,0 +1,40 @@
+{
+    "id": "RR_50_M",
+    "identity": {
+        "name": "Raschig Ralu Ring Metal No. 50",
+        "manufacturer": "Raschig",
+        "family": "RALU_RING",
+        "material": "Metal",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 6300,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 105,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.975,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.725,
+            "CFI": 1.58,
+            "Ch": 0.784,
+            "CP0": 0.763,
+            "CL": 1.192,
+            "CV": 0.345
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

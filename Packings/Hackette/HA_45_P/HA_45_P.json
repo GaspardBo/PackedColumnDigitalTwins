@@ -1,0 +1,40 @@
+{
+    "id": "HA_45_P",
+    "identity": {
+        "name": "Hackette Plastic No. 45",
+        "manufacturer": null,
+        "family": "HACKETTE",
+        "material": "Plastic",
+        "nominalSize": 45
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 12000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 139.5,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.928,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.832,
+            "CFI": 1.966,
+            "Ch": 0.643,
+            "CP0": 0.399,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "id": "RSR_3_M",
+    "identity": {
+        "name": "Raschig Super-Ring Metal No. 3",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_SUPER_RING",
+        "material": "Metal",
+        "nominalSize": 3
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 4300,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 80,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.982,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.26,
+            "CFI": 2.1,
+            "Ch": 0.62,
+            "CP0": 0.43,
+            "CL": 0.85,
+            "CV": 0.3
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

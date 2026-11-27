@@ -1,0 +1,435 @@
+{
+  "library": {
+    "id": "DEFAULT-PACKING-LIBRARY",
+    "name": "Random Packings Library",
+    "version": "1.0.0",
+    "schemaVersion": "1.0",
+    "description": "Packing data for packed column calculations",
+    "author": "Amogh Krishnanand Atreya, Gaspard Bouchard"
+  },
+  "units": {
+    "specificSurfaceArea": "m2/m3",
+    "packing unit density": "1/m3",
+    "pressure": "Pa",
+    "pressureDropPerHeight": "Pa/m",
+    "hetp": "m"
+  },
+  "families": [
+    {
+      "id": "RASCHIG_SUPER_RING",
+      "name": "Raschig Super-Ring"
+    },
+    {
+      "id": "RALU_FLOW",
+      "name": "Ralu Flow"
+    },
+    {
+      "id": "PALL_RING",
+      "name": "Pall Ring"
+    },
+    {
+      "id": "RALU_RING",
+      "name": "Ralu Ring"
+    },
+    {
+      "id": "NOR_PAC_RING",
+      "name": "NOR PAC Ring"
+    },
+    {
+      "id": "HIFLOW_RING",
+      "name": "Hiflow Ring"
+    },
+    {
+      "id": "GLITSCH_RING",
+      "name": "Glitsch Ring"
+    },
+    {
+      "id": "GLITSCH_CMR_RING",
+      "name": "Glitsch CMR Ring"
+    },
+    {
+      "id": "TOP_PAK_RING",
+      "name": "TOP Pak Ring"
+    },
+    {
+      "id": "RASCHIG_RING",
+      "name": "Raschig Ring"
+    },
+    {
+      "id": "VSP_RING",
+      "name": "VSP Ring"
+    },
+    {
+      "id": "ENVI_PAC_RING",
+      "name": "Envi Pac Ring"
+    },
+    {
+      "id": "BIALECKI_RING",
+      "name": "Bialecki Ring"
+    },
+    {
+      "id": "TELLERETTE",
+      "name": "Tellerette"
+    },
+    {
+      "id": "HACKETTE",
+      "name": "Hackette"
+    },
+    {
+      "id": "RAFLUX_RING",
+      "name": "Raflux Ring"
+    },
+    {
+      "id": "BERL_SADDLE",
+      "name": "Berl Saddle"
+    },
+    {
+      "id": "DIN_PAK",
+      "name": "DIN-PAK"
+    }
+  ],
+  "packings": [
+    {
+      "id": "RSR_0_3_M",
+      "family": "RASCHIG_SUPER_RING",
+      "name": "Raschig Super-Ring Metal No. 0.3",
+      "path": "Raschig Super Ring/RSR_0_3_M"
+    },
+    {
+      "id": "RSR_0_5_M",
+      "family": "RASCHIG_SUPER_RING",
+      "name": "Raschig Super-Ring Metal No. 0.5",
+      "path": "Raschig Super Ring/RSR_0_5_M"
+    },
+    {
+      "id": "RSR_1_M",
+      "family": "RASCHIG_SUPER_RING",
+      "name": "Raschig Super-Ring Metal No. 1",
+      "path": "Raschig Super Ring/RSR_1_M"
+    },
+    {
+      "id": "RSR_2_M",
+      "family": "RASCHIG_SUPER_RING",
+      "name": "Raschig Super-Ring Metal No. 2",
+      "path": "Raschig Super Ring/RSR_2_M"
+    },
+    {
+      "id": "RSR_3_M",
+      "family": "RASCHIG_SUPER_RING",
+      "name": "Raschig Super-Ring Metal No. 3",
+      "path": "Raschig Super Ring/RSR_3_M"
+    },
+    {
+      "id": "RSR_2_P",
+      "family": "RASCHIG_SUPER_RING",
+      "name": "Raschig Super-Ring Plastic No. 2",
+      "path": "Raschig Super Ring/RSR_2_P"
+    },
+    {
+      "id": "RF_1_P",
+      "family": "RALU_FLOW",
+      "name": "Raschig Ralu Flow Plastic No. 1",
+      "path": "Ralu Flow/RF_1_P"
+    },
+    {
+      "id": "RF_2_P",
+      "family": "RALU_FLOW",
+      "name": "Raschig Ralu Flow Plastic No. 2",
+      "path": "Ralu Flow/RF_2_P"
+    },
+    {
+      "id": "PR_50_M",
+      "family": "PALL_RING",
+      "name": "Pall Ring Metal No. 50",
+      "path": "Pall Ring/PR_50_M"
+    },
+    {
+      "id": "PR_35_M",
+      "family": "PALL_RING",
+      "name": "Pall Ring Metal No. 35",
+      "path": "Pall Ring/PR_35_M"
+    },
+    {
+      "id": "PR_25_M",
+      "family": "PALL_RING",
+      "name": "Pall Ring Metal No. 25",
+      "path": "Pall Ring/PR_25_M"
+    },
+    {
+      "id": "PR_50_P",
+      "family": "PALL_RING",
+      "name": "Pall Ring Plastic No. 50",
+      "path": "Pall Ring/PR_50_P"
+    },
+    {
+      "id": "PR_35_P",
+      "family": "PALL_RING",
+      "name": "Pall Ring Plastic No. 35",
+      "path": "Pall Ring/PR_35_P"
+    },
+    {
+      "id": "PR_25_P",
+      "family": "PALL_RING",
+      "name": "Pall Ring Plastic No. 25",
+      "path": "Pall Ring/PR_25_P"
+    },
+    {
+      "id": "RR_50_M",
+      "family": "RALU_RING",
+      "name": "Raschig Ralu Ring Metal No. 50",
+      "path": "Ralu Ring/RR_50_M"
+    },
+    {
+      "id": "RR_38_M",
+      "family": "RALU_RING",
+      "name": "Raschig Ralu Ring Metal No. 38",
+      "path": "Ralu Ring/RR_38_M"
+    },
+    {
+      "id": "RR_25_M",
+      "family": "RALU_RING",
+      "name": "Raschig Ralu Ring Metal No. 25",
+      "path": "Ralu Ring/RR_25_M"
+    },
+    {
+      "id": "RR_50_P",
+      "family": "RALU_RING",
+      "name": "Raschig Ralu Ring Plastic No. 50",
+      "path": "Ralu Ring/RR_50_P"
+    },
+    {
+      "id": "RR_38_P",
+      "family": "RALU_RING",
+      "name": "Raschig Ralu Ring Plastic No. 38",
+      "path": "Ralu Ring/RR_38_P"
+    },
+    {
+      "id": "RR_25_P",
+      "family": "RALU_RING",
+      "name": "Raschig Ralu Ring Plastic No. 25",
+      "path": "Ralu Ring/RR_25_P"
+    },
+    {
+      "id": "NP_50_P",
+      "family": "NOR_PAC_RING",
+      "name": "NOR PAC Ring Plastic No. 50",
+      "path": "NOR PAC Ring/NP_50_P"
+    },
+    {
+      "id": "NP_35_P",
+      "family": "NOR_PAC_RING",
+      "name": "NOR PAC Ring Plastic No. 35",
+      "path": "NOR PAC Ring/NP_35_P"
+    },
+    {
+      "id": "NP_25_P_fn6",
+      "family": "NOR_PAC_RING",
+      "name": "NOR PAC Ring Plastic No. 25 (fn 6)",
+      "path": "NOR PAC Ring/NP_25_P_fn6"
+    },
+    {
+      "id": "NP_25_P_fn10",
+      "family": "NOR_PAC_RING",
+      "name": "NOR PAC Ring Plastic No. 25 (fn 10)",
+      "path": "NOR PAC Ring/NP_25_P_fn10"
+    },
+    {
+      "id": "HR_50_M",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Metal No. 50",
+      "path": "Hiflow Ring/HR_50_M"
+    },
+    {
+      "id": "HR_25_M",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Metal No. 25",
+      "path": "Hiflow Ring/HR_25_M"
+    },
+    {
+      "id": "HR_50_M_2",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Metal No. 50 (2nd entry)",
+      "path": "Hiflow Ring/HR_50_M_2"
+    },
+    {
+      "id": "HR_50_P_HYDR",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Plastic No. 50 hydr.",
+      "path": "Hiflow Ring/HR_50_P_HYDR"
+    },
+    {
+      "id": "HR_50_P_S",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Plastic No. 50 S",
+      "path": "Hiflow Ring/HR_50_P_S"
+    },
+    {
+      "id": "HR_25_P",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Plastic No. 25",
+      "path": "Hiflow Ring/HR_25_P"
+    },
+    {
+      "id": "HR_50_C",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Ceramic No. 50",
+      "path": "Hiflow Ring/HR_50_C"
+    },
+    {
+      "id": "HR_38_C",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Ceramic No. 38",
+      "path": "Hiflow Ring/HR_38_C"
+    },
+    {
+      "id": "HR_20_C",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Ceramic No. 20",
+      "path": "Hiflow Ring/HR_20_C"
+    },
+    {
+      "id": "GR_30_M_PMK",
+      "family": "GLITSCH_RING",
+      "name": "Glitsch Ring Metal No. 30 PMK",
+      "path": "Glitsch Ring/GR_30_M_PMK"
+    },
+    {
+      "id": "GR_30_M_P",
+      "family": "GLITSCH_RING",
+      "name": "Glitsch Ring Metal No. 30 P",
+      "path": "Glitsch Ring/GR_30_M_P"
+    },
+    {
+      "id": "CMR_1_5IN_M",
+      "family": "GLITSCH_CMR_RING",
+      "name": "Glitsch CMR Ring Metal No. 1.5\"",
+      "path": "Glitsch CMR Ring/CMR_1_5IN_M"
+    },
+    {
+      "id": "CMR_1_5IN_M_T",
+      "family": "GLITSCH_CMR_RING",
+      "name": "Glitsch CMR Ring Metal No. 1.5\" T",
+      "path": "Glitsch CMR Ring/CMR_1_5IN_M_T"
+    },
+    {
+      "id": "CMR_1_0IN_M",
+      "family": "GLITSCH_CMR_RING",
+      "name": "Glitsch CMR Ring Metal No. 1.0\"",
+      "path": "Glitsch CMR Ring/CMR_1_0IN_M"
+    },
+    {
+      "id": "CMR_0_5IN_M",
+      "family": "GLITSCH_CMR_RING",
+      "name": "Glitsch CMR Ring Metal No. 0.5\"",
+      "path": "Glitsch CMR Ring/CMR_0_5IN_M"
+    },
+    {
+      "id": "TP_50_A",
+      "family": "TOP_PAK_RING",
+      "name": "TOP Pak Ring Alu No. 50",
+      "path": "TOP Pak Ring/TP_50_A"
+    },
+    {
+      "id": "RA_50_C",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Ceramic No. 50",
+      "path": "Raschig Ring/RA_50_C"
+    },
+    {
+      "id": "RA_25_C",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Ceramic No. 25",
+      "path": "Raschig Ring/RA_25_C"
+    },
+    {
+      "id": "VSP_50_M",
+      "family": "VSP_RING",
+      "name": "VSP Ring Metal No. 50",
+      "path": "VSP Ring/VSP_50_M"
+    },
+    {
+      "id": "VSP_25_M",
+      "family": "VSP_RING",
+      "name": "VSP Ring Metal No. 25",
+      "path": "VSP Ring/VSP_25_M"
+    },
+    {
+      "id": "EP_80_P",
+      "family": "ENVI_PAC_RING",
+      "name": "Envimac Envi Pac Ring Plastic No. 80",
+      "path": "Envi Pac Ring/EP_80_P"
+    },
+    {
+      "id": "EP_60_P",
+      "family": "ENVI_PAC_RING",
+      "name": "Envimac Envi Pac Ring Plastic No. 60",
+      "path": "Envi Pac Ring/EP_60_P"
+    },
+    {
+      "id": "EP_32_P",
+      "family": "ENVI_PAC_RING",
+      "name": "Envimac Envi Pac Ring Plastic No. 32",
+      "path": "Envi Pac Ring/EP_32_P"
+    },
+    {
+      "id": "BR_50_M",
+      "family": "BIALECKI_RING",
+      "name": "Bialecki Ring Metal No. 50",
+      "path": "Bialecki Ring/BR_50_M"
+    },
+    {
+      "id": "BR_35_M",
+      "family": "BIALECKI_RING",
+      "name": "Bialecki Ring Metal No. 35",
+      "path": "Bialecki Ring/BR_35_M"
+    },
+    {
+      "id": "BR_25_M",
+      "family": "BIALECKI_RING",
+      "name": "Bialecki Ring Metal No. 25",
+      "path": "Bialecki Ring/BR_25_M"
+    },
+    {
+      "id": "TE_25_P",
+      "family": "TELLERETTE",
+      "name": "Tellerette Plastic No. 25",
+      "path": "Tellerette/TE_25_P"
+    },
+    {
+      "id": "HA_45_P",
+      "family": "HACKETTE",
+      "name": "Hackette Plastic No. 45",
+      "path": "Hackette/HA_45_P"
+    },
+    {
+      "id": "RX_15_P",
+      "family": "RAFLUX_RING",
+      "name": "Raflux Ring Plastic No. 15",
+      "path": "Raflux Ring/RX_15_P"
+    },
+    {
+      "id": "BS_25_C",
+      "family": "BERL_SADDLE",
+      "name": "Berl Saddle Ceramic No. 25",
+      "path": "Berl Saddle/BS_25_C"
+    },
+    {
+      "id": "BS_13_C",
+      "family": "BERL_SADDLE",
+      "name": "Berl Saddle Ceramic No. 13",
+      "path": "Berl Saddle/BS_13_C"
+    },
+    {
+      "id": "DP_70_P",
+      "family": "DIN_PAK",
+      "name": "DIN-PAK Plastic No. 70",
+      "path": "DIN PAK/DP_70_P"
+    },
+    {
+      "id": "DP_47_P",
+      "family": "DIN_PAK",
+      "name": "DIN-PAK Plastic No. 47",
+      "path": "DIN PAK/DP_47_P"
+    }
+  ]
+}

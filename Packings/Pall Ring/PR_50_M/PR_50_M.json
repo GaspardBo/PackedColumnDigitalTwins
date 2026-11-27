@@ -1,0 +1,40 @@
+{
+    "id": "PR_50_M",
+    "identity": {
+        "name": "Pall Ring Metal No. 50",
+        "manufacturer": null,
+        "family": "PALL_RING",
+        "material": "Metal",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 6242,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 112.6,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.951,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.725,
+            "CFI": 1.58,
+            "Ch": 0.784,
+            "CP0": 0.763,
+            "CL": 1.192,
+            "CV": 0.41
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

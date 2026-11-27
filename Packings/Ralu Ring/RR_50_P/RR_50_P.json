@@ -1,0 +1,40 @@
+{
+    "id": "RR_50_P",
+    "identity": {
+        "name": "Raschig Ralu Ring Plastic No. 50",
+        "manufacturer": "Raschig",
+        "family": "RALU_RING",
+        "material": "Plastic",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 5770,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 95.2,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.983,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.843,
+            "CFI": 1.812,
+            "Ch": 0.64,
+            "CP0": 0.468,
+            "CL": 1.52,
+            "CV": 0.303
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

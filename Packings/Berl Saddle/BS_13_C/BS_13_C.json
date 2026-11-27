@@ -1,0 +1,40 @@
+{
+    "id": "BS_13_C",
+    "identity": {
+        "name": "Berl Saddle Ceramic No. 13",
+        "manufacturer": null,
+        "family": "BERL_SADDLE",
+        "material": "Ceramic",
+        "nominalSize": 13
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 691505,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 545.0,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.65,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.833,
+            "CP0": null,
+            "CL": 1.364,
+            "CV": 0.232
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

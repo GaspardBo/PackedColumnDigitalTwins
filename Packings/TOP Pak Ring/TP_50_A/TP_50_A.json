@@ -1,0 +1,40 @@
+{
+    "id": "TP_50_A",
+    "identity": {
+        "name": "TOP Pak Ring Alu No. 50",
+        "manufacturer": null,
+        "family": "TOP_PAK_RING",
+        "material": "Alu",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 6871,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 105.5,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.956,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.528,
+            "CFI": 1.579,
+            "Ch": 0.881,
+            "CP0": 0.604,
+            "CL": 1.326,
+            "CV": 0.389
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

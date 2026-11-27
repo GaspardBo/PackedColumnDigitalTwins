@@ -1,0 +1,40 @@
+{
+    "id": "NP_35_P",
+    "identity": {
+        "name": "NOR PAC Ring Plastic No. 35",
+        "manufacturer": null,
+        "family": "NOR_PAC_RING",
+        "material": "Plastic",
+        "nominalSize": 35
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 17450,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 141.8,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.944,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.179,
+            "CFI": 2.242,
+            "Ch": 0.587,
+            "CP0": 0.371,
+            "CL": 0.756,
+            "CV": 0.425
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "id": "HR_50_C",
+    "identity": {
+        "name": "Rauschert Hiflow Ring Ceramic No. 50",
+        "manufacturer": "Rauschert",
+        "family": "HIFLOW_RING",
+        "material": "Ceramic",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 5120,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 89.7,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.809,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.819,
+            "CFI": 1.694,
+            "Ch": null,
+            "CP0": 0.538,
+            "CL": 1.377,
+            "CV": 0.379
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}

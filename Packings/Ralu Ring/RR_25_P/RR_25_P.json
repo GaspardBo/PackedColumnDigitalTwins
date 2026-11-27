@@ -1,0 +1,40 @@
+{
+    "id": "RR_25_P",
+    "identity": {
+        "name": "Raschig Ralu Ring Plastic No. 25",
+        "manufacturer": "Raschig",
+        "family": "RALU_RING",
+        "material": "Plastic",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 36000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 190,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.94,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.841,
+            "CFI": 1.989,
+            "Ch": 0.719,
+            "CP0": 0.8,
+            "CL": 1.32,
+            "CV": 0.333
+        },
+        "source": "Billet & Shultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "file": "models/hetp_model.onnx"
+    }
+}
