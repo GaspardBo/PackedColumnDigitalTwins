@@ -1,4 +1,4 @@
-# packlib: the shared packed-column library (D47)
+# packlib: the shared packed-column library
 # every packing notebook loads its own data, fills in a settings dict s, then calls these functions
 #
 # what a notebook has to supply
@@ -20,12 +20,12 @@ g = 9.81
 def make_settings(ap, eps, dc, rho_G, mu_G, props, C0, dry, rho_W=1000, mu_W=8.02e-4):
     # ap specific area m2/m3, eps void fraction, dc column diameter m
     # props: {system: (rho_L, mu_L)}, C0: level 0 constants {'Cp', 'Clp', 'Cfp', 'Ch'}
-    # dry: the dry rows Cp is fitted on (the notebook decides which, e.g. D45)
+    # dry: the dry rows Cp is fitted on (the notebook decides which)
     return {'ap': ap, 'eps': eps, 'dc': dc, 'rho_G': rho_G, 'mu_G': mu_G, 'props': props,
             'C0': C0, 'dry': dry, 'rho_W': rho_W, 'mu_W': mu_W}
 
 
-# rows may carry their own fluid properties (D49): columns rho_L, mu_L, rho_G, mu_G
+# rows may carry their own fluid properties: columns rho_L, mu_L, rho_G, mu_G
 # if they do, that row uses them, otherwise the packing settings are used
 def row_settings(s, row):
     if 'mu_L' not in row:
@@ -38,7 +38,7 @@ def row_settings(s, row):
 
 
 # which rows form one curve. a packing whose liquid load drifts within a run can give a curve_id
-# column (e.g. RSP 250Y, D50), otherwise a curve is one system at one liquid load
+# column (e.g. RSP 250Y), otherwise a curve is one system at one liquid load
 def curve_keys(rows):
     if 'curve_id' in rows.columns:
         return rows['curve_id']
@@ -102,7 +102,7 @@ def billet(system, uL, uG_s, C, s):
     else:
         holdup = ht_lp2 + (ht_fp2 - ht_lp2) * (uG_s / uG_fp) ** 13
 
-    # dry then wet pressure drop, billet divides by the wall factor (D13a)
+    # dry then wet pressure drop, billet divides by the wall factor
     Re_G = uG_s * d_part * rho_G / ((1 - eps) * mu_G) * fs
     xi_d = C['Cp'] * (64 / Re_G + 1.8 / Re_G ** 0.08)
     dp_dry = xi_d * ap / eps ** 3 * uG_s ** 2 / 2 * rho_G / fs
@@ -175,7 +175,7 @@ def fit_constants(train, outputs, s):
     dry = s['dry']
     base = dict(s['C0'])
 
-    # dry rows with their own gas properties use them (D49)
+    # dry rows with their own gas properties use them
     s_dry = dict(s)
     if 'mu_G' in dry.columns:
         s_dry['rho_G'] = dry['rho_G'].values
@@ -183,7 +183,9 @@ def fit_constants(train, outputs, s):
 
     def score_cp(Cp):
         return log_error(dry_dp(dry['uG_ms'].values, {'Cp': Cp}, s_dry), dry['dpdz_Pa_m'].values)
-    base['Cp'] = minimize_scalar(score_cp, bounds=(0.01, 1.0), method='bounded').x
+    # no dry rows (a user without dry-bed runs): keep the starting Cp
+    if len(dry) > 0:
+        base['Cp'] = minimize_scalar(score_cp, bounds=(0.01, 1.0), method='bounded').x
 
     lib = {}
     for system in train['system'].unique():
@@ -221,7 +223,7 @@ def fit_constants(train, outputs, s):
     return lib
 
 
-# level 1 on test rows. a liquid missing from train borrows water's constants (D31),
+# level 1 on test rows. a liquid missing from train borrows water's constants,
 # or the first trained liquid if there is no water
 def physics(train, test, outputs, s):
     lib = fit_constants(train, outputs, s)
@@ -235,7 +237,7 @@ def physics(train, test, outputs, s):
     return billet_lib(test, lib, s), lib
 
 
-# the four tests (D24). transfer=(train liquid, test liquid) only when the packing has two liquids
+# the four tests. transfer=(train liquid, test liquid) only when the packing has two liquids
 def make_splits(curve, transfer=None, top_frac=0.25):
     splits = {}
 
@@ -260,7 +262,7 @@ def make_splits(curve, transfer=None, top_frac=0.25):
     return splits
 
 
-# level 2 inputs: liquid reynolds number and gas velocity as a fraction of level 1 flood (D22)
+# level 2 inputs: liquid reynolds number and gas velocity as a fraction of level 1 flood
 def features(rows, lib, s):
     results = []
     for i in rows.index:
@@ -274,7 +276,7 @@ def features(rows, lib, s):
     return pd.DataFrame(results, columns=['Re_L', 'x'], index=rows.index)
 
 
-# the candidate corrections the tuned form chooses between (D46)
+# the candidate corrections the tuned form chooses between
 tuned_configs = [('linear', None, None)] + [('network', h, a) for h in [(10, 10), (5,), (3,)] for a in [0.1, 1.0, 10.0]]
 
 
@@ -293,7 +295,7 @@ def correction(config, X_train, y, X_test, seeds=(0,)):
     return np.mean(preds, axis=0)
 
 
-# level 1 on train and test, plus scaled level 2 inputs (D23: scaled with the training mean and sd)
+# level 1 on train and test, plus scaled level 2 inputs (scaled with the training mean and sd)
 def level1_parts(train, test, s):
     p_test, lib = physics(train, test, ['hold'], s)
     p_train = billet_lib(train, lib, s)
@@ -304,7 +306,7 @@ def level1_parts(train, test, s):
     return p_train, p_test, ((f_train - mean) / sd).values, ((f_test - mean) / sd).values
 
 
-# level 2 = level 1 x exp(correction). form 'linear', 'network' (notebook 6.2) or 'tuned' (D46)
+# level 2 = level 1 x exp(correction). form 'linear', 'network' (notebook 6.2) or 'tuned'
 def level2(train, test, form, s):
     p_train, p_test, X_train, X_test = level1_parts(train, test, s)
     out = pd.DataFrame(index=test.index, columns=['dp', 'hold'], dtype=float)
@@ -324,7 +326,7 @@ def level2(train, test, form, s):
     return out
 
 
-# D46: choose the correction using only the training rows, leaving one training curve out at a time
+# choose the correction using only the training rows, leaving one training curve out at a time
 def pick_config(train, col, true, s):
     errors = {config: [] for config in tuned_configs}
     for name, val in train.groupby(curve_keys(train)):
@@ -385,7 +387,7 @@ def results_table(tests, curve):
                                            'dp_abs_%', 'dp_bias_%', 'hold_abs_%', 'hold_bias_%'])
 
 
-# fold spread (D34): change in abs error of model against base, averaged per curve, on common points
+# fold spread: change in abs error of model against base, averaged per curve, on common points
 def spread_table(tests, curve, base, models):
     curve_name = curve_keys(curve)
     rows_out = []
@@ -406,3 +408,349 @@ def spread_table(tests, curve, base, models):
                 per_curve = (err1 - err0).groupby(curve_name[common]).mean()
                 rows_out.append([split, label, out, len(per_curve), per_curve.mean(), per_curve.std(), per_curve.min(), per_curve.max()])
     return pd.DataFrame(rows_out, columns=['split', 'model', 'output', 'curves', 'change_mean', 'change_sd', 'change_min', 'change_max'])
+
+
+# ---------------------------------------------------------------------------
+# mass transfer (step 7): billet (1995) ch. 5, as built by hand in mass_transfer/mass_transfer.ipynb
+# c_l and c_v are fitted to the products kl*a and kg*a with billet's own area inside
+# hold-up inside the mass-transfer equations is the film hold-up, eq 4-27
+# ---------------------------------------------------------------------------
+
+import io
+
+# liquid water at 0.101325 MPa, 0 to 40 C: NIST Chemistry WebBook, SRD 69 (Lemmon, McLinden and Friend), retrieved 17 Nov 2026
+water_table = pd.read_csv(io.StringIO("""T_C,rho_kg_m3,mu_Pa_s
+0.010000,999.84,0.0017911
+1.0100,999.90,0.0017304
+2.0100,999.94,0.0016730
+3.0100,999.97,0.0016185
+4.0100,999.97,0.0015668
+5.0100,999.97,0.0015177
+6.0100,999.94,0.0014710
+7.0100,999.90,0.0014266
+8.0100,999.85,0.0013843
+9.0100,999.78,0.0013440
+10.010,999.70,0.0013055
+11.010,999.61,0.0012688
+12.010,999.50,0.0012337
+13.010,999.38,0.0012001
+14.010,999.25,0.0011680
+15.010,999.10,0.0011373
+16.010,998.94,0.0011078
+17.010,998.78,0.0010795
+18.010,998.60,0.0010524
+19.010,998.41,0.0010264
+20.010,998.21,0.0010014
+21.010,997.99,0.00097730
+22.010,997.77,0.00095417
+23.010,997.54,0.00093191
+24.010,997.30,0.00091047
+25.010,997.05,0.00088982
+26.010,996.78,0.00086991
+27.010,996.51,0.00085072
+28.010,996.23,0.00083220
+29.010,995.94,0.00081432
+30.010,995.65,0.00079705
+31.010,995.34,0.00078037
+32.010,995.02,0.00076425
+33.010,994.70,0.00074866
+34.010,994.37,0.00073358
+35.010,994.03,0.00071898
+36.010,993.68,0.00070485
+37.010,993.33,0.00069117
+38.010,992.96,0.00067791
+39.010,992.59,0.00066506
+40.010,992.21,0.00065261
+"""))
+
+
+# water density, viscosity (nist table) and surface tension (iapws 2014) at T in C
+def water_props(T_C):
+    rho = np.interp(T_C, water_table['T_C'], water_table['rho_kg_m3'])
+    mu = np.interp(T_C, water_table['T_C'], water_table['mu_Pa_s'])
+    tau = 1 - (np.asarray(T_C) + 273.15) / 647.096
+    sigma = 235.8e-3 * tau ** 1.256 * (1 - 0.625 * tau)
+    return rho, mu, sigma
+
+
+# dry air density (ideal gas) and viscosity (sutherland, white's constants), as the hydraulics
+def air_props(T_C, P=101325):
+    T = np.asarray(T_C) + 273.15
+    rho = P * 0.0289644 / (8.314462 * T)
+    mu = 1.716e-5 * (T / 273.15) ** 1.5 * (273.15 + 110.4) / (T + 110.4)
+    return rho, mu
+
+
+# liquid diffusivity, wilke and chang (1955). mu in pa s, V solute molar volume at boiling point cm3/mol
+# returns m2/s. defaults: water solvent (phi 2.6, M 18.015), toluene (le bas 118.2)
+def diff_liquid(T_C, mu_L, V=118.2, phi=2.6, M_solvent=18.015):
+    T = np.asarray(T_C) + 273.15
+    return 7.4e-8 * (phi * M_solvent) ** 0.5 * T / (mu_L * 1000 * V ** 0.6) * 1e-4
+
+
+# gas diffusivity, fuller (1966) in the form of poling et al. (2001). returns m2/s
+# defaults: so2 (64.06 g/mol, diffusion volume 41.8) in air (28.96, 19.7)
+def diff_gas(T_C, P=101325, M_A=64.06, M_B=28.96, v_A=41.8, v_B=19.7):
+    T = np.asarray(T_C) + 273.15
+    M_AB = 2 / (1 / M_A + 1 / M_B)
+    return 0.00143 * T ** 1.75 / ((P / 1e5) * M_AB ** 0.5 * (v_A ** (1/3) + v_B ** (1/3)) ** 2) * 1e-4
+
+
+# film hold-up, eq 4-27, uL in m/s
+def film_holdup(uL_s, rho_L, mu_L, ap):
+    return (12 * mu_L * ap ** 2 * uL_s / (g * rho_L)) ** (1/3)
+
+
+# billet's phase-boundary area a_ph in m2/m3, eq 5-16 (froude exponent -0.45)
+def billet_area(uL_s, rho_L, mu_L, sigma, ap, eps):
+    Re = uL_s * rho_L / (ap * mu_L)
+    We = uL_s ** 2 * rho_L / (sigma * ap)
+    Fr = uL_s ** 2 * ap / g
+    return ap * 3 * eps ** 0.5 * Re ** -0.2 * We ** 0.75 * Fr ** -0.45
+
+
+# billet's liquid-side coefficient with c_l = 1, m/s: eq 5-4 / a_ph with the film hold-up
+def beta_L1(uL_s, h_L, D_L, ap, eps):
+    d_h = 4 * eps / ap
+    return 12 ** (1/6) * (uL_s / h_L) ** 0.5 * (D_L / d_h) ** 0.5
+
+
+# billet's gas-side coefficient with c_v = 1, m/s: eq 5-13 / a_ph
+def beta_V1(uG_s, rho_G, mu_G, D_V, h_L, ap, eps):
+    d_h = 4 * eps / ap
+    Re_V = uG_s * rho_G / (ap * mu_G)
+    Sc_V = mu_G / (rho_G * D_V)
+    return ap ** 0.5 / (d_h ** 0.5 * (eps - h_L) ** 0.5) * D_V * Re_V ** 0.75 * Sc_V ** (1/3)
+
+
+# loading point for each row: rows need uL_m3_m2h, uG_ms, rho_L, mu_L, rho_G, mu_G
+def below_loading(rows, ap, eps, Clp):
+    out = []
+    for i, row in rows.iterrows():
+        s = {'ap': ap, 'eps': eps, 'rho_G': row['rho_G'], 'mu_G': row['mu_G'],
+             'props': {'water': (row['rho_L'], row['mu_L'])}}
+        uG_lp = loading_uG('water', row['uL_m3_m2h'], row['uG_ms'], {'Clp': Clp}, s)
+        out.append([uG_lp, row['uG_ms'] <= uG_lp])
+    return pd.DataFrame(out, columns=['uG_lp', 'below_lp'], index=rows.index)
+
+
+# wang table d.2 rows -> per-run c_l on the kl*a basis. air temperature not given, set by T_air_C
+def liquid_side(kl_rows, ap, eps, Clp, T_air_C=None):
+    t = kl_rows.copy()
+    t['uL_m3_m2h'] = t['L_m3_m2h']
+    t['rho_L'], t['mu_L'], t['sigma'] = water_props(t['Twater_in_C'])
+    T_air = t['Twater_in_C'] if T_air_C is None else T_air_C
+    t['rho_G'], t['mu_G'] = air_props(T_air)
+    uL_s = t['L_m3_m2h'] / 3600
+    t['D_L'] = diff_liquid(t['Twater_in_C'], t['mu_L'])
+    t['h_L'] = film_holdup(uL_s, t['rho_L'], t['mu_L'], ap)
+    t['aPh'] = billet_area(uL_s, t['rho_L'], t['mu_L'], t['sigma'], ap, eps)
+    t['beta_1'] = beta_L1(uL_s, t['h_L'], t['D_L'], ap, eps)
+    t['ka_meas'] = t['kL_1e5_ms'] * 1e-5 * t['ae_m2_m3']
+    t['C_run'] = t['ka_meas'] / (t['beta_1'] * t['aPh'])
+    t[['uG_lp', 'below_lp']] = below_loading(t, ap, eps, Clp)
+    return t
+
+
+# wang table d.3 rows -> per-run c_v on the kg*a basis. liquid at T_liq_C, gas at air inlet T
+def gas_side(kg_rows, ap, eps, Clp, T_liq_C=25):
+    t = kg_rows.copy()
+    t['uL_m3_m2h'] = t['L_m3_m2h']
+    t['rho_L'], t['mu_L'], t['sigma'] = water_props(T_liq_C + 0 * t['L_m3_m2h'])
+    t['rho_G'], t['mu_G'] = air_props(t['Tair_in_C'])
+    uL_s = t['L_m3_m2h'] / 3600
+    t['D_V'] = diff_gas(t['Tair_in_C'])
+    t['h_L'] = film_holdup(uL_s, t['rho_L'], t['mu_L'], ap)
+    t['aPh'] = billet_area(uL_s, t['rho_L'], t['mu_L'], t['sigma'], ap, eps)
+    t['beta_1'] = beta_V1(t['uG_ms'], t['rho_G'], t['mu_G'], t['D_V'], t['h_L'], ap, eps)
+    t['ka_meas'] = t['kG_1e2_ms'] * 1e-2 * t['ae_m2_m3']
+    t['C_run'] = t['ka_meas'] / (t['beta_1'] * t['aPh'])
+    t[['uG_lp', 'below_lp']] = below_loading(t, ap, eps, Clp)
+    return t
+
+
+# fit one constant: geometric mean of C_run on the rows below loading
+# returns the constant, runs used, runs in total, mean abs % error on the runs used
+def fit_mt(t):
+    used = t[t['below_lp']]
+    if len(used) == 0:
+        return np.nan, 0, len(t), np.nan
+    C = np.exp(np.log(used['C_run']).mean())
+    err = (C / used['C_run'] - 1) * 100
+    return C, len(used), len(t), err.abs().mean()
+
+
+# any source: per-run c_l or c_v on the k*a basis. rows need uL_m3_m2h, uG_ms, T_L_C, T_G_C, ka_meas (1/s)
+# side 'L' (liquid diffusivity of the solute, molar volume V) or 'G' (so2 in air)
+def mt_side(rows, side, ap, eps, Clp, V=118.2):
+    t = rows.copy()
+    t['rho_L'], t['mu_L'], t['sigma'] = water_props(t['T_L_C'])
+    t['rho_G'], t['mu_G'] = air_props(t['T_G_C'])
+    uL_s = t['uL_m3_m2h'] / 3600
+    t['h_L'] = film_holdup(uL_s, t['rho_L'], t['mu_L'], ap)
+    t['aPh'] = billet_area(uL_s, t['rho_L'], t['mu_L'], t['sigma'], ap, eps)
+    if side == 'L':
+        t['D'] = diff_liquid(t['T_L_C'], t['mu_L'], V=V)
+        t['beta_1'] = beta_L1(uL_s, t['h_L'], t['D'], ap, eps)
+    else:
+        t['D'] = diff_gas(t['T_G_C'])
+        t['beta_1'] = beta_V1(t['uG_ms'], t['rho_G'], t['mu_G'], t['D'], t['h_L'], ap, eps)
+    t['C_run'] = t['ka_meas'] / (t['beta_1'] * t['aPh'])
+    t[['uG_lp', 'below_lp']] = below_loading(t, ap, eps, Clp)
+    return t
+
+
+# level 2 for mass transfer
+# candidates: no correction, then the hydraulics tuner's list
+mt_configs = [('none', None, None)] + tuned_configs
+
+# inputs per run: Re_L, and u_G / u_G,flood from level 1 (needs the packing's hydraulic constants C)
+def mt_features(t, C, ap, eps, dc=0.427):
+    t = t.copy()
+    t['Re_L'] = t['uL_m3_m2h'] / 3600 * t['rho_L'] / (ap * t['mu_L'])
+    x = []
+    for i, row in t.iterrows():
+        s = {'ap': ap, 'eps': eps, 'dc': dc, 'rho_G': row['rho_G'], 'mu_G': row['mu_G'],
+             'props': {'w': (row['rho_L'], row['mu_L'])}, 'rho_W': 998.21, 'mu_W': 1.0014e-3}
+        x.append(row['uG_ms'] / flood_uG('w', row['uL_m3_m2h'], row['uG_ms'], C, s))
+    t['x_fl'] = x
+    return t
+
+
+# one correction on scaled inputs: linear on one input (lin_col), network on both
+def mt_correction(config, train, test, lin_col, seeds):
+    if config[0] == 'none':
+        return np.zeros(len(test))
+    cols = [lin_col] if config[0] == 'linear' else ['Re_L', 'x_fl']
+    m = train[cols].mean()
+    sd = train[cols].std().replace(0, 1)
+    X_train = ((train[cols] - m) / sd).values
+    X_test = ((test[cols] - m) / sd).values
+    return correction(config, X_train, train['resid'].values, X_test, seeds)
+
+
+# leave one run out on the runs below loading; level 1 constant refitted on each training set;
+# tuner picks the form by an inner leave-one-out on the training runs only.
+# fewer than min_runs below loading: no level 2. returns per-run table and the chosen configs
+def mt_level2_test(t, lin_col, min_runs=4):
+    t = t[t['below_lp']].copy()
+    t['L1_err'] = np.nan
+    t['L2_err'] = np.nan
+    picks = []
+    if len(t) < min_runs:
+        return t, picks
+    for i in t.index:
+        train = t.drop(i).copy()
+        test = t.loc[[i]].copy()
+        C = np.exp(np.log(train['C_run']).mean())
+        t.loc[i, 'L1_err'] = 100 * (C / test['C_run'].iloc[0] - 1)
+        train['resid'] = np.log(train['C_run'] / C)
+        # inner choice
+        scores = {}
+        for config in mt_configs:
+            seeds = (0,) if config[0] != 'network' else (0, 1, 2)
+            errs = []
+            for j in train.index:
+                inner = train.drop(j)
+                val = train.loc[[j]]
+                corr = mt_correction(config, inner, val, lin_col, seeds)
+                errs.append(abs(np.exp(corr[0] - val['resid'].iloc[0]) - 1))
+            scores[config] = np.mean(errs)
+        best = min(scores, key=scores.get)
+        picks.append(best[0])
+        seeds = (0,) if best[0] != 'network' else (0, 1, 2)
+        corr = mt_correction(best, train, test, lin_col, seeds)
+        t.loc[i, 'L2_err'] = 100 * (C * np.exp(corr[0]) / test['C_run'].iloc[0] - 1)
+    return t, picks
+
+
+# ---------------------------------------------------------------------------
+# packing files (format: json_format.md). level 2 blocks are written and evaluated here,
+# so train.py and the example files use one copy of the code
+# ---------------------------------------------------------------------------
+
+FORMAT_VERSION = '1.0'
+
+
+# choose the mass-transfer correction form by leaving one run out on all runs
+# t needs C_run, Re_L, x_fl, below_lp. returns (config, scores) or (None, {}) under min_runs
+def mt_choose(t, lin_col, level1_constant, min_runs=4):
+    t = t[t['below_lp']].copy()
+    if len(t) < min_runs:
+        return None, {}
+    t['resid'] = np.log(t['C_run'] / level1_constant)
+    scores = {}
+    for config in mt_configs:
+        seeds = (0,) if config[0] != 'network' else (0, 1, 2)
+        errs = []
+        for j in t.index:
+            corr = mt_correction(config, t.drop(j), t.loc[[j]], lin_col, seeds)
+            errs.append(abs(np.exp(corr[0] - t.loc[j, 'resid']) - 1))
+        scores[config] = np.mean(errs)
+    return min(scores, key=scores.get), scores
+
+
+# fit the chosen correction on every row of t (columns Re_L, x_fl, resid) and return a level 2 block.
+# lin_cols: inputs of the linear form (mass transfer one input; hydraulics both). none -> None
+def make_block(t, config, lin_cols, output, level1_constants, scores=None):
+    form, layers, alpha = config
+    if form == 'none':
+        return None
+    cols = lin_cols if form == 'linear' else ['Re_L', 'x_fl']
+    names = ['Re_L' if c == 'Re_L' else 'x_flood' for c in cols]
+    m = t[cols].mean()
+    sd = t[cols].std().replace(0, 1)
+    X = ((t[cols] - m) / sd).values
+    y = t['resid'].values
+    block = {'output': output, 'form': form, 'inputs': names,
+             'scaling': {'mean': [float(v) for v in m], 'sd': [float(v) for v in sd]},
+             'valid_range': {'Re_L': [float(t['Re_L'].min()), float(t['Re_L'].max())],
+                             'x_flood': [float(t['x_fl'].min()), float(t['x_fl'].max())]},
+             'level1_constants': {k: float(v) for k, v in level1_constants.items()},
+             'trained_on_runs': int(len(t))}
+    if scores:
+        block['tuner_scores_mean_abs_frac'] = {str(k): float(v) for k, v in scores.items()}
+    if form == 'linear':
+        A = np.column_stack([np.ones(len(y)), X])
+        coef = np.linalg.lstsq(A, y, rcond=None)[0]
+        block['linear'] = {'intercept': float(coef[0]), 'coef': [float(c) for c in coef[1:]]}
+    else:
+        members = []
+        for seed in (0, 1, 2):
+            net = MLPRegressor(hidden_layer_sizes=layers, alpha=alpha, solver='lbfgs', random_state=seed, max_iter=2000)
+            net.fit(X, y)
+            members.append({'seed': seed, 'weights': [w.T.tolist() for w in net.coefs_],
+                            'biases': [b.tolist() for b in net.intercepts_]})
+            # our forward pass must equal sklearn's
+            assert abs(forward(members[-1], X[:1])[0] - net.predict(X[:1])[0]) < 1e-10
+        block['network'] = {'hidden_layers': list(layers), 'alpha': alpha, 'activation': 'relu',
+                            'output_activation': 'identity', 'average_over': 'seeds', 'members': members}
+    return block
+
+
+# plain forward pass, as the dll does it: rows of weights[k] are the output nodes of layer k
+def forward(member, X):
+    out = []
+    for x in X:
+        h = np.array(x, dtype=float)
+        n = len(member['weights'])
+        for k in range(n):
+            h = np.array(member['weights'][k]) @ h + np.array(member['biases'][k])
+            if k < n - 1:
+                h = np.maximum(h, 0)
+        out.append(float(h[0]))
+    return out
+
+
+# evaluate a level 2 block at one point: the correction factor, or None outside the training range
+def apply_block(block, inputs):
+    for name, (lo, hi) in block['valid_range'].items():
+        if inputs[name] < lo or inputs[name] > hi:
+            return None
+    x = np.array([inputs[n] for n in block['inputs']])
+    z = (x - np.array(block['scaling']['mean'])) / np.array(block['scaling']['sd'])
+    if block['form'] == 'linear':
+        y = block['linear']['intercept'] + float(np.dot(block['linear']['coef'], z))
+    else:
+        y = float(np.mean([forward(mb, [z])[0] for mb in block['network']['members']]))
+    return float(np.exp(y))

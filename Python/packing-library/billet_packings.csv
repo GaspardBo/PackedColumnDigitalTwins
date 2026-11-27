@@ -1,0 +1,143 @@
+packing,arrangement,material,size,N_per_m3,a_m2_m3,eps,C_S,C_Fl,C_h,C_P0,C_L,C_V,source,table,page,note,borrowed,fitted_on,version
+Raschig Super-Ring,dumped,Metal,0.3,180000,315.0,0.96,3.56,2.34,0.75,0.76,1.5,0.45,BS1999,2a,501,,,,
+Raschig Super-Ring,dumped,Metal,0.5,145000,250.0,0.975,3.35,2.2,0.62,0.78,1.45,0.43,BS1999,2a,501,,,,
+Raschig Super-Ring,dumped,Metal,1,32000,160.0,0.98,3.491,2.2,0.75,0.5,1.29,0.44,BS1999,2a,501,,,,
+Raschig Super-Ring,dumped,Metal,2,9500,97.6,0.985,3.326,2.096,0.72,0.464,1.323,0.4,BS1999,2a,501,,,,
+Raschig Super-Ring,dumped,Metal,3,4300,80.0,0.982,3.26,2.1,0.62,0.43,0.85,0.3,BS1999,2a,501,,,,
+Raschig Super-Ring,dumped,Plastic,2,9000,100.0,0.96,3.326,2.096,0.72,0.377,1.25,0.337,BS1999,2a,501,,,,
+Ralu Flow,dumped,Plastic,1,33000,165.0,0.94,3.612,2.401,0.64,0.485,1.486,0.36,BS1999,2a,501,,,,
+Ralu Flow,dumped,Plastic,2,4600,100.0,0.945,3.412,2.174,0.64,0.35,1.27,0.32,BS1999,2a,501,,,,
+Pall ring,dumped,Metal,50,6242,112.6,0.951,2.725,1.58,0.784,0.763,1.192,0.41,BS1999,2a,501,,,,
+Pall ring,dumped,Metal,35,19517,139.4,0.965,2.629,1.679,0.644,0.967,1.012,0.341,BS1999,2a,501,,,,
+Pall ring,dumped,Metal,25,53900,223.5,0.954,2.627,2.083,0.719,0.957,1.44,0.336,BS1999,2a,501,,,,
+Pall ring,dumped,Plastic,50,6765,111.1,0.919,2.816,1.757,0.593,0.698,1.239,0.368,BS1999,2a,501,,,,
+Pall ring,dumped,Plastic,35,17000,151.1,0.906,2.654,1.742,0.718,0.927,0.856,0.38,BS1999,2a,501,,,,
+Pall ring,dumped,Plastic,25,52300,225.0,0.887,2.696,2.064,0.528,0.865,0.905,0.446,BS1999,2a,501,,,,
+Ralu ring,dumped,Metal,50,6300,105.0,0.975,2.725,1.58,0.784,0.763,1.192,0.345,BS1999,2a,501,,,,
+Ralu ring,dumped,Metal,38,14500,135.0,0.965,2.629,1.679,0.644,1.003,1.277,0.341,BS1999,2a,501,,,,
+Ralu ring,dumped,Metal,25,51000,215.0,0.96,2.627,2.083,0.714,0.957,1.44,0.336,BS1999,2a,501,,,,
+Ralu ring,dumped,Plastic,50,5770,95.2,0.983,2.843,1.812,0.64,0.468,1.52,0.303,BS1999,2a,501,,,,
+Ralu ring,dumped,Plastic,38,13500,150.0,0.93,2.843,1.812,0.64,0.672,1.32,0.333,BS1999,2a,501,,,,
+Ralu ring,dumped,Plastic,25,36000,190.0,0.94,2.841,1.989,0.719,0.8,1.32,0.333,BS1999,2a,501,,,,
+NOR PAC ring,dumped,Plastic,50,7330,86.8,0.947,2.959,1.786,0.651,0.35,1.08,0.322,BS1999,2a,501,,,,
+NOR PAC ring,dumped,Plastic,35,17450,141.8,0.944,3.179,2.242,0.587,0.371,0.756,0.425,BS1999,2a,501,,,,
+NOR PAC ring,dumped,Plastic,25 (6),50000,202.0,0.953,3.277,2.472,0.601,0.397,0.883,0.366,BS1999,2a,501,"size printed as 25 with superscript 6; N, a, eps match ""25, type B"" in book Table 5.1",,,
+NOR PAC ring,dumped,Plastic,25 (10),48920,197.9,0.92,2.865,2.083,,0.383,0.976,0.41,BS1999,2a,501,"size printed as 25 with superscript 10; N, a, eps match ""25, 10 webs"" in book Table 5.1",,,
+Hiflow ring,dumped,Metal,50,5000,92.3,0.977,2.702,1.626,0.876,0.421,1.168,0.408,BS1999,2a,501,,,,
+Hiflow ring,dumped,Metal,25,40790,202.9,0.962,2.918,2.177,0.799,0.689,1.641,0.402,BS1999,2a,501,,,,
+Hiflow ring,dumped,Metal,50,6815,117.1,0.925,2.894,1.871,1.038,0.327,1.478,0.345,BS1999,2a,501,"second Metal 50 entry; book Tables 4.1, 4.3 and 5.1 list this exact sample (N 6815, a 117.1, eps 0.925) as Plastic 50, so the 1999 material label is probably a layout error (hypothesis)",,,
+Hiflow ring,dumped,Plastic,50 hydr.,6890,118.4,0.925,2.894,1.871,,0.311,1.553,0.369,BS1999,2a,501,hydr. = made hydrophilic,,,
+Hiflow ring,dumped,Plastic,50 S,6050,82.0,0.942,2.866,1.702,0.881,0.414,1.219,0.342,BS1999,2a,501,,,,
+Hiflow ring,dumped,Plastic,25,46100,194.5,0.918,2.841,1.989,,0.741,1.577,0.39,BS1999,2a,501,,,,
+Hiflow ring,dumped,Ceramic,50,5120,89.7,0.809,2.819,1.694,,0.538,1.377,0.379,BS1999,2a,501,,,,
+Hiflow ring,dumped,Ceramic,38,13241,111.8,0.788,2.84,1.93,,0.621,1.659,0.464,BS1999,2a,501,,,,
+Hiflow ring,dumped,Ceramic,20,121314,286.2,0.758,2.875,2.41,1.167,0.628,1.744,0.465,BS1999,2a,501,,,,
+Glitsch ring,dumped,Metal,30 PMK,29200,180.5,0.975,2.694,1.9,0.93,0.851,1.92,0.45,BS1999,2a,501,,,,
+Glitsch ring,dumped,Metal,30 P,31100,164.0,0.959,2.564,1.76,0.851,1.056,1.577,0.398,BS1999,2a,501,,,,
+Glitsch CMR ring,dumped,Metal,1.5in,60744,174.9,0.974,2.697,1.841,0.935,0.632,,,BS1999,2a,501,,,,
+Glitsch CMR ring,dumped,Metal,1.5in T,63547,188.0,0.972,2.79,1.87,0.87,0.627,,,BS1999,2a,501,,,,
+Glitsch CMR ring,dumped,Metal,1.0in,158467,232.5,0.971,2.703,1.996,1.04,0.641,,,BS1999,2a,501,,,,
+Glitsch CMR ring,dumped,Metal,0.5in,560811,356.0,0.952,2.644,2.178,,0.882,2.038,0.495,BS1999,2a,501,book Table 4.6 gives C_h 1.338 for a 0.5in CMR sample with eps 0.955,,,
+TOP Pak ring,dumped,Alu,50,6871,105.5,0.956,2.528,1.579,0.881,0.604,1.326,0.389,BS1999,2a,501,,,,
+Raschig ring,dumped,Ceramic,50,5990,95.0,0.83,2.482,1.547,,,1.416,0.21,BS1999,2a,501,book Table 4.1 gives C_Fl 1.574 (1999: 1.547); one of the two is a misprint,,,
+Raschig ring,dumped,Ceramic,25,47700,190.0,0.68,2.454,1.899,0.577,1.329,1.361,0.412,BS1999,2a,501,,,,
+VSP ring,dumped,Metal,50,7841,104.6,0.98,2.806,1.689,1.135,0.773,1.222,0.42,BS1999,2a,501,,,,
+VSP ring,dumped,Metal,25,33434,199.6,0.975,2.755,1.97,1.369,0.782,1.376,0.405,BS1999,2a,501,,,,
+Envi Pac ring,dumped,Plastic,80,2000,60.0,0.955,2.846,1.522,0.641,0.358,1.603,0.257,BS1999,2a,501,,,,
+Envi Pac ring,dumped,Plastic,60,6800,98.4,0.961,2.987,1.864,0.794,0.338,1.522,0.296,BS1999,2a,501,,,,
+Envi Pac ring,dumped,Plastic,32,53000,138.9,0.936,2.944,2.012,1.039,0.549,1.517,0.459,BS1999,2a,501,,,,
+Bialecki ring,dumped,Metal,50,6278,121.0,0.966,2.916,1.896,0.798,0.719,1.721,0.302,BS1999,2a,501,,,,
+Bialecki ring,dumped,Metal,35,18200,155.0,0.967,2.753,1.885,0.787,1.011,1.412,0.39,BS1999,2a,501,,,,
+Bialecki ring,dumped,Metal,25,48533,210.0,0.956,2.521,1.856,0.692,0.891,1.461,0.331,BS1999,2a,501,"book Table 5.1 also lists a Metal 25 sample with N 436096, a 419.5, eps 0.901 (C_L 1.431, C_V 0.288); size label looks inconsistent",,,
+Tellerette,dumped,Plastic,25,37037,190.0,0.93,2.913,2.132,0.588,0.538,0.899,,BS1999,2a,501,,,,
+Hackette,dumped,Plastic,45,12000,139.5,0.928,2.832,1.966,0.643,0.399,,,BS1999,2a,501,,,,
+Raflux ring,dumped,Plastic,15,193522,307.9,0.894,2.825,2.4,0.491,0.595,1.913,0.37,BS1999,2a,501,,,,
+Berl saddle,dumped,Ceramic,25,80080,260.0,0.68,,,0.62,,1.246,0.387,BS1999,2a,501,,,,
+Berl saddle,dumped,Ceramic,13,691505,545.0,0.65,,,0.833,,1.364,0.232,BS1999,2a,501,,,,
+DIN-PAK,dumped,Plastic,70,9763,110.7,0.938,2.97,1.912,0.991,0.378,1.527,0.326,BS1999,2a,501,,,,
+DIN-PAK,dumped,Plastic,47,28168,131.2,0.923,2.929,1.991,1.173,0.514,1.69,0.354,BS1999,2a,501,"book Table 4.6 gives C_h 1.173 for a size 45 sample with a 182.9, eps 0.922",,,
+Pall ring,regular,Ceramic,50,7502,155.2,0.754,3.793,3.024,1.066,0.233,1.278,0.333,BS1999,2b,502,,,,
+Bialecki ring,regular,Metal,35,20736,176.6,0.945,,,0.69,0.46,1.405,0.377,BS1999,2b,502,,,,
+Ralu pak,regular,Metal,YC-250,,250.0,0.945,3.178,2.558,,0.191,1.334,0.385,BS1999,2b,502,,,,
+Mellapak,regular,Metal,250Y,,250.0,0.97,3.157,2.464,0.554,0.292,,,BS1999,2b,502,,,,
+Gempack,regular,Metal,A2T-304,,202.0,0.977,2.986,2.099,0.678,0.344,,,BS1999,2b,502,,,,
+Impulse packing,regular,Metal,250,,250.0,0.975,2.61,1.996,0.431,0.262,0.983,0.27,BS1999,2b,502,,,,
+Impulse packing,regular,Ceramic,100,,91.4,0.838,2.664,1.655,1.9,0.417,1.317,0.327,BS1999,2b,502,,,,
+Montz packing,regular,Metal,B1-200,,200.0,0.979,3.116,2.339,0.547,0.355,0.971,0.39,BS1999,2b,502,,,,
+Montz packing,regular,Metal,B2-300,,300.0,0.93,3.098,2.464,0.482,0.295,1.165,0.422,BS1999,2b,502,"named B1-300 in the 1995 book (Tables 4.2, 4.4, 4.7, 5.2), same a and eps",,,
+Montz packing,regular,Plastic,C1-200,,200.0,0.954,,,,0.453,1.006,0.412,BS1999,2b,502,,,,
+Montz packing,regular,Plastic,C2-200,,200.0,0.9,2.653,1.973,,0.481,0.739,,BS1999,2b,502,,,,
+Euroform,regular,Plastic,PN-110,,110.0,0.936,3.075,1.975,0.511,0.25,0.973,0.167,BS1999,2b,502,,,,
+Pall ring,dumped,Metal,38,15772,149.6,0.952,,,,1.003,1.227,0.341,B1995,4.3+5.1,94+122,,,,
+Pall ring,dumped,Metal,15,229225,368.4,0.933,,,0.59,0.99,,,B1995,4.3+4.6,94+98,,,,
+Pall ring,dumped,Ceramic,50,6215,116.5,0.783,2.846,1.913,1.335,0.662,1.227,0.415,B1995,4.1+4.3+5.1+4.6,80+94+122+98,"combined with Table 4.6 sample (N 6455.0, a 121.0, eps 0.77); geometry of the C_S/C_Fl sample kept",,,
+Ralu ring,dumped,Plastic,50 hydr.,5720,95.2,0.939,2.843,1.812,,0.439,1.481,0.341,B1995,4.1+5.1+4.3,80+122+94,"combined with Table 4.3 sample (N 5720.0, a 94.3, eps 0.939); geometry of the C_S/C_Fl sample kept; hydr. = made hydrophilic",,,
+Hiflow ring,dumped,Plastic,90,1340,69.7,0.968,,,,0.276,,,B1995,4.3,94,,,,
+Hiflow ring,dumped,Ceramic,75,1904,54.1,0.868,,,,0.435,,,B1995,4.3,94,,,,
+Hiflow ring,dumped,Ceramic,35,16840,108.3,0.833,,,,0.621,,,B1995,4.3,94,1999 prints the same C_P (0.621) against a Ceramic 38 sample,,,
+Hiflow ring,dumped,Ceramic,"20, 6 ribs",110688,265.8,0.776,,,0.958,,,,B1995,4.6,98,,,,
+NOR PAC ring,dumped,Plastic,22,69274,249.0,0.913,,,,0.397,,,B1995,4.3,94,,,,
+NOR PAC ring,dumped,Plastic,15,193738,311.4,0.918,,,0.343,0.365,,,B1995,4.3+4.6,94+98,"combined with Table 4.6 sample (N 193738.0, a 319.7, eps 0.918); no C_S/C_Fl sample, so geometry of the C_P sample kept",,,
+NOR PAC ring,dumped,Plastic,"25, type A",52356,211.0,0.951,,,,,0.862,,B1995,5.1,122,,,,
+NOR PAC ring,dumped,Plastic,"25, type C",47619,192.0,0.922,,,,,0.888,,B1995,5.1,122,,,,
+INTALOX,dumped,Plastic,50,8656,122.1,0.908,,,,0.758,,,B1995,4.3,95,"header on p.95 reads ""Arranged packing"" but it continues Table 4.3 (random beds)",,,
+INTALOX,dumped,Ceramic,50,8882,114.6,0.761,,,,0.747,,,B1995,4.3,95,as above,,,
+Hiflow saddle,dumped,Plastic,50,9939,86.4,0.938,,,,0.454,,,B1995,4.3,95,as above,,,
+DIN-PAK,dumped,Plastic,45,28518,182.9,0.922,,,1.173,,,,B1995,4.6,98,named DINPAC ring in the book,,,
+Raschig ring,dumped,Metal,15,260778,378.4,0.917,,,0.455,,,,B1995,4.6,99,,,,
+Raschig ring,dumped,Ceramic,38,13275,118.0,0.68,,,,,1.536,0.23,B1995,5.1,122,,,,
+Raschig ring,dumped,Ceramic,15,220000,310.2,0.69,,,0.648,,1.276,0.401,B1995,4.6+5.1,99+122,"combined with Table 5.1 sample (N 189091.0, a 312.0, eps 0.69); no C_S/C_Fl or C_P sample, so geometry of the C_h sample kept",,,
+Raschig ring,dumped,Ceramic,13,378000,370.0,0.64,,,,,1.367,0.265,B1995,5.1,122,,,,
+Raschig ring,dumped,Ceramic,10,847552,492.1,0.57,,,0.791,,,,B1995,4.6,99,,,,
+Raschig ring,dumped,Ceramic,10,672000,440.0,0.65,,,,,1.303,0.272,B1995,5.1,122,,,,
+Raschig ring,dumped,Ceramic,8,1261000,550.0,0.65,,,,,1.21,,B1995,5.1,122,,,,
+Raschig ring,dumped,Ceramic,6,3022936,771.9,0.62,,,1.094,,1.13,,B1995,4.6+5.1,99+122,,,,
+Raschig ring,dumped,Carbon,25,51913,205.7,0.7,,,0.623,,1.379,0.471,B1995,4.6+5.1,99+122,"combined with Table 5.1 sample (N 50599.0, a 202.2, eps 0.72); no C_S/C_Fl or C_P sample, so geometry of the C_h sample kept",,,
+Raschig ring,dumped,Carbon,13,378000,370.0,0.64,,,,,1.419,,B1995,5.1,122,,,,
+Bialecki ring,dumped,Plastic,50,3900,100.0,0.972,,,,,1.798,,B1995,5.1,123,,,,
+Sphere,dumped,Glass,25,66664,134.5,0.43,,,,,1.335,,B1995,5.1,123,,,,
+Sphere,dumped,Glass,13,561877,282.2,0.4,,,,,1.364,,B1995,5.1,123,,,,
+Berl saddle,dumped,Ceramic,38,24928,164.0,0.7,,,,,1.568,0.244,B1995,5.1,123,,,,
+Intalox saddle,dumped,Ceramic,13,730000,625.0,0.78,,,,,1.677,0.488,B1995,5.1,123,,,,
+Hiflow ring,regular,Plastic,50,7640,131.3,0.916,,,,0.172,1.374,,B1995,4.4+5.2,95+123,stacked,,,
+Hiflow ring,regular,Plastic,50 hydr.,8150,140.1,0.911,,,,0.172,1.437,,B1995,4.4+5.2,95+123,stacked; hydr. = made hydrophilic,,,
+Bialecki ring,regular,Metal,25,63700,275.0,0.93,,,0.395,,,,B1995,4.7,99,,,,
+Montz packing,regular,Metal,B1-100,,100.0,0.987,,,0.626,,,,B1995,4.7,99,,,,
+Mellapak,regular,Plastic,250Y,,250.0,0.96,,,0.554,,,,B1995,4.7,99,,,,
+Impulse packing,regular,Ceramic,50,,55.0,0.806,,,,,0.939,,B1995,5.2,123,,,,
+Impulse packing,regular,Ceramic,"100, n",,102.7,0.816,,,,,1.17,0.383,B1995,5.2,123,n = newly stacked,,,
+Raschig Super-Pak,regular,Metal,250Y,,250.0,0.98,3.89,2.67,0.941,0.26,1.446,1.023,Rejl2015,2+3,,"Rejl et al. (2015) Chem Eng Res Des 99, 20-27; a and eps from their Table 2",,"air/water, 0.29 m absorption column",
+Raschig Super-Pak,regular,Metal,250Y,,250.0,0.98,3.89,3.3894,0.8044,0.2067,1.748,0.656,ThisWork,,,,C_S from Rejl2015 Super-Pak 250Y,"this work: air/water, SRP 0.427 m column (Tsai 2010 / Wang 2015 data); Wang 2015","L1 v1 (21 Nov 2026); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1 (27 Nov 2026)"
+Raschig Super-Ring,regular,Metal,0.3,,315.0,0.96,3.56,2.6039,1.1366,0.5445,1.419,1.152,ThisWork,,,,C_S from BS1999 Super-Ring 0.3,"this work: air/water, SRP 0.427 m column (Tsai 2010 / Wang 2015 data); Wang 2015","L1 v1 (21 Nov 2026); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1 (27 Nov 2026)"
+Mellapak,regular,Metal,250Y,,250.0,0.97,3.157,2.7849,0.6389,0.2016,,,ThisWork,,,,C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column (Tsai 2010 / Wang 2015 data); Tsai 2010",L1 v1 (21 Nov 2026)
+Mellapak,regular,Metal,500Y,,500.0,0.92,3.157,2.9189,0.7687,0.1568,,,ThisWork,,,,C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column (Tsai 2010 / Wang 2015 data); Tsai 2010",L1 v1 (21 Nov 2026)
+Mellapak,regular,Metal,125Y,,125.0,0.99,3.157,2.3034,0.4439,0.2105,,,ThisWork,,,,C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column (Tsai 2010 / Wang 2015 data); Tsai 2010",L1 v1 (21 Nov 2026)
+Mellapak,regular,Metal,250Y (Wang),,250.0,0.97,3.157,2.8155,0.698,0.1753,1.163,0.56,ThisWork,,,"Wang's MP250Y is plain Mellapak 250Y (Wang 2015 section 4.1); eps BS1999 (same packing)",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column (Tsai 2010 / Wang 2015 data); Wang 2015","L1 v1 (21 Nov 2026); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1 (27 Nov 2026)"
+GT-PAK,regular,Metal,350Y,,350.0,0.95,3.157,2.6466,0.7669,0.1604,1.159,0.841,ThisWork,,,"eps Song 2017 Table 3.11 (was 0.98)",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column (Tsai 2010 / Wang 2015 data); Wang 2015","L1 v2 (27 Nov 2026, eps 0.95); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1.1 (27 Nov 2026, new eps)"
+Raschig Super-Pak,regular,Metal,200X,,200.0,0.98,3.89,3.4046,0.7341,0.1494,0.427,0.71,ThisWork,,,,C_S from Rejl2015 Super-Pak 250Y,"this work: air/water, SRP 0.427 m column (Tsai 2010 / Wang 2015 data); Wang 2015","L1 v1 (21 Nov 2026); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1 (27 Nov 2026)"
+Flexipac,regular,Metal,350Y,,350.0,0.985,3.157,2.9239,1.0145,0.1525,,,ThisWork,,,"air/Kerosol fit: C_h 0.7588, C_Fl 2.9753. Erasmus Table 7.3 own Cp 0.172 (his wall-factor convention) = 0.154 in ours",C_S from BS1999 Mellapak 250Y (as Erasmus Table 7.3),"this work: Erasmus (2004) rig, 0.2 m column; air/water",L1 v1 (15 Nov 2026)
+Flexipac HC,regular,Metal,350Y,,350.0,0.984,3.157,3.2407,1.2771,0.1962,,,ThisWork,,,"air/Kerosol fit: C_h 0.8625, C_Fl 3.1879",C_S from BS1999 Mellapak 250Y (as Erasmus Table 7.3),"this work: Erasmus (2004) rig, 0.2 m column; air/water",L1 v1 (16 Nov 2026)
+Mellapak,regular,Metal,250X,,250.0,0.98,3.157,3.2796,0.338,0.0877,,,ThisWork,,,"eps Tsai Table 6.1; hold-up fit poor (L1 LOCO 31.5%), data check pending",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Tsai 2010",L1 v1 (22 Nov 2026)
+MellapakPlus,regular,Metal,252Y,,250.0,0.98,3.157,3.3885,0.3875,0.1409,,,ThisWork,,,"eps Tsai Table 6.1; hold-up fit poor (L1 LOCO 31.1%), data check pending",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Tsai 2010",L1 v1 (22 Nov 2026)
+Mellapak,regular,Metal,250Y smooth,,250.0,0.97,3.157,2.888,0.2504,0.1663,,,ThisWork,,,"eps set to our M250Y; hold-up fit poor (L1 LOCO 67.4%), data check pending",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Tsai 2010",L1 v1 (22 Nov 2026)
+Mellapak,regular,Metal,2Y,,205.0,0.99,3.157,2.5979,0.636,0.2026,,,ThisWork,,,eps Tsai Table 6.1 (his eq 6.2),C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Tsai 2010",L1 v1 (22 Nov 2026)
+Prototype 500,regular,Metal,500,,500.0,0.92,3.157,2.8641,0.5845,0.1777,,,ThisWork,,,eps assumed same as Mellapak 500Y (Tsai Table 6.1),C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Tsai 2010",L1 v1 (22 Nov 2026)
+Mellapak,regular,Metal,250X (Wang),,250.0,0.98,3.157,3.2672,0.6666,0.0845,0.674,0.46,ThisWork,,,"Wang's MP250X is plain Mellapak 250X; eps Tsai 2010 Table 6.1 (Suess and Spiegel 1992), was 0.97",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Wang 2015","L1 v2 (27 Nov 2026, eps 0.98); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1.1 (27 Nov 2026, new eps)"
+Mellapak,regular,Metal,2X,,205.0,0.99,3.157,3.1839,0.6043,0.0937,1.027,0.398,ThisWork,,,eps borrowed from M2Y,C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Wang 2015","L1 v1 (22 Nov 2026); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1 (27 Nov 2026)"
+GT-PAK,regular,Metal,350Z,,350.0,0.95,3.157,3.9489,0.7645,0.0511,0.665,0.504,ThisWork,,,"eps Song 2017 Table 3.11 (was 0.98)",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Wang 2015","L1 v2 (27 Nov 2026, eps 0.95); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1.1 (27 Nov 2026, new eps)"
+GT-PAK,regular,Metal,500Y,,500.0,0.95,3.157,3.026,0.7051,0.1822,1.566,1.027,ThisWork,,,"eps Song 2017 Table 3.11 (was 0.98); L1 dP worse than L0 (LOCO 40.5% vs 15.4%)",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Wang 2015","L1 v2 (27 Nov 2026, eps 0.95); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1.1 (27 Nov 2026, new eps)"
+Prototype A,regular,Metal,350Y,,350.0,0.983,3.157,3.4643,0.9074,0.2502,0.958,0.829,ThisWork,,,"eps our Tsai eq 6.2 estimate (sheet 0.1 mm assumed); not dropdown-ready, report only; L1 dP worse than L0 (34.9% vs 30.9%)",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Wang 2015","L1 v1 (22 Nov 2026); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1 (27 Nov 2026)"
+Prototype B,regular,Metal,350X,,350.0,0.983,3.157,3.4504,0.6136,0.0955,1.062,0.657,ThisWork,,,"eps our Tsai eq 6.2 estimate (sheet 0.1 mm assumed); not dropdown-ready, report only",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Wang 2015","L1 v1 (22 Nov 2026); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1 (27 Nov 2026)"
+Raschig Super-Ring,dumped,Metal,0.7,,180.0,0.98,3.46,2.8252,0.4871,0.2867,1.468,0.663,ThisWork,,,a and eps Wang Table 4.1,C_S interpolated in a between BS1999 Super-Ring metal 0.5 and 1,"this work: air/water, SRP 0.427 m column; Wang 2015","L1 v1 (22 Nov 2026); C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1 (27 Nov 2026)"
+Flexipac,regular,Metal,1Y,,410.0,0.91,,,,0.163,,,ThisWork,,,"only dry data, so only C_P0 fitted; a and eps Tsai Table 6.1",,"this work: air/water, SRP 0.427 m column; Tsai 2010 (dry runs only)",L1 v1 (22 Nov 2026)
+Mellapak,regular,Metal,125Y (Wang),,125.0,0.99,3.157,,,,1.366,0.357,ThisWork,,,Wang's MP125Y is plain Mellapak 125Y; a Wang Table 5.1; mass transfer only (hydraulics for this packing: Tsai row Mellapak 125Y),eps 0.99 Tsai 2010 Table 6.1 (same packing); C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Wang 2015 (mass transfer only, no hydraulics fit)","C_L, C_V: this work, fitted to Wang 2015 k_L·a, k_G·a (Tables D.2, D.3), MT v1 (27 Nov 2026)"
+RVT Mellapak-type (RMP N),regular,Metal,250Y,,250.0,0.988,3.157,2.6684,0.5398,0.217,1.035,0.774,ThisWork,,,"a, eps Baumfrisch 2022 Table 3",C_S from BS1999 Mellapak 250Y,"this work: air/water, Leoben 0.422 m column (V-422); Baumfrisch 2022 (hydraulics Tables 12, 13; k_L·a by CO2 desorption, k_G·a by SO2/NaOH)",L1 v1 (27 Nov 2026); MT v1 (27 Nov 2026)
+RVT Mellapak-type (RMP N),regular,Metal,250X,,250.0,0.987,3.157,3.0996,0.6945,0.0801,1.054,0.632,ThisWork,,,"a, eps Baumfrisch 2022 Table 3",C_S from BS1999 Mellapak 250Y,"this work: air/water, Leoben 0.422 m column (V-422); Baumfrisch 2022 (hydraulics Tables 12, 13; k_L·a by CO2 desorption, k_G·a by SO2/NaOH)",L1 v1 (27 Nov 2026); MT v1 (27 Nov 2026)
+RVT high-performance (RMP SP),regular,Metal,250,,250.0,0.989,3.157,3.4099,0.8302,0.1281,1.064,0.639,ThisWork,,,"a, eps Baumfrisch 2022 Table 3",C_S from BS1999 Mellapak 250Y,"this work: air/water, Leoben 0.422 m column (V-422); Baumfrisch 2022 (hydraulics Tables 12, 13; k_L·a by CO2 desorption, k_G·a by SO2/NaOH)",L1 v1 (27 Nov 2026); MT v1 (27 Nov 2026)
+Mellapak Grid,regular,Metal,64Y,,64.0,0.99,3.157,2.2774,0.3372,0.2925,1.114,0.217,ThisWork,,,"a, eps Song 2017 Table 3.11; hold-up printed to two decimals, 38% of wet rows 0.01-0.02, so C_h and C_Fl rest on coarse readings; L1 wet dP about 2x too high (LOCO 108%), Billet wet-bed model poor for this open grid",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Song 2017 (hydraulics Table C.2; k_L·a by toluene stripping, k_G·a by SO2/NaOH)",L1 v1 (27 Nov 2026); MT v1 (27 Nov 2026)
+GT-OPTIMPak,regular,Metal,250Y,,250.0,0.98,,,,,,,ThisWork,,,withdrawn: no source for eps (Song 2017 Table 3.11 prints ?),,"this work: air/water, SRP pilot column; Song 2017 (k_L·a by toluene stripping, k_G·a by SO2/NaOH)",
+Montz packing,regular,Metal,B1-250MN,,250.0,0.98,3.116,3.0879,0.6202,0.2391,1.246,0.601,ThisWork,,,"a Song 2017 Table 3.11; eps 0.98 from Song Table 3.11 standard Montz B1 250 row (same maker, area, angle)",C_S from BS1999 Montz B1-200,"this work: air/water, SRP 0.427 m column; Song 2017 (hydraulics Table C.2; k_L·a by toluene stripping, k_G·a by SO2/NaOH)",L1 v1 (27 Nov 2026); MT v1 (27 Nov 2026)
+HFP (hybrid),regular,Plastic,2,,100.0,0.95,3.157,2.7337,0.4089,0.1879,0.935,0.333,ThisWork,,,"a, eps Song 2017 Table 3.11",C_S from BS1999 Mellapak 250Y,"this work: air/water, SRP 0.427 m column; Song 2017 (hydraulics Table C.2; k_L·a by toluene stripping, k_G·a by SO2/NaOH)",L1 v1 (27 Nov 2026); MT v1 (27 Nov 2026)
+Raschig Super-Ring,dumped,Metal,1.5,,120.0,0.98,3.385,2.6289,0.4214,0.3394,1.245,0.428,ThisWork,,,"a, eps Song 2017 Table 3.11","C_S interpolated in a between BS1999 Super-Ring metal 1 and 2","this work: air/water, SRP 0.427 m column; Song 2017 (hydraulics Table C.2; k_L·a by toluene stripping, k_G·a by SO2/NaOH)",L1 v1 (27 Nov 2026); MT v1 (27 Nov 2026)
+Raschig Super-Pak,regular,Metal,250Y (Baumfrisch 2022),,250.0,0.98,3.89,2.8892,0.6607,0.1979,1.28,0.941,ThisWork,,,"second fit of RSP 250Y, other lab; main row uses Wang",C_S from Rejl 2015,"this work: air/water, Leoben 0.422 m column (V-422); Baumfrisch 2022 (hydraulics Tables 12, 13; k_L·a by CO2 desorption, k_G·a by SO2/NaOH)",L1 v1 (27 Nov 2026); MT v1 (27 Nov 2026)
+Raschig Super-Pak,regular,Metal,250Y (Song 2017),,250.0,0.98,3.89,,,,1.358,,ThisWork,,,"third fit of RSP 250Y, same rig as Wang, later campaign; liquid side only; C_L on 6/7 runs (5.0%); main row uses Wang",C_S from Rejl 2015 (loading cut only),"this work: air/water, SRP pilot column; Song 2017 (k_L·a by toluene stripping, water runs)",MT v1 (27 Nov 2026)
