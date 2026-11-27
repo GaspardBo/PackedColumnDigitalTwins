@@ -1,44 +1,61 @@
-# Packing library (Python)
+# Packing library for the packed-column DLL
 
-Packed-column hydraulics library behind the digital twin: pressure drop and liquid hold-up for a packing, at three levels.
+Billet and Schultes constants for 142 packing entries, the Billet model in Python, and the tool that fits a user's own data. Everything the DLL needs is in this folder; the research notebooks, raw data and papers are kept separately and are not needed here.
 
-- **Level 0:** the Billet and Schultes model with published constants.
-- **Level 1:** the same model with its constants (Cp, Ch, Cfp) fitted to test data for the packing.
-- **Level 2:** a correction on top of Level 1, trained on a user's own column data (linear, or a small neural network chosen automatically per packing).
+## You only need these
 
-Each level is tested with four splits (leave one point out, leave one curve out, train on one liquid and test on another where available, and hold out the top 25% of gas load per curve), always on the points every model answers.
+| File | What it is | Who needs it |
+|---|---|---|
+| `billet_packings.csv` | **the constants**: one row per packing and source (columns below) | the DLL's library and interpolation |
+| `json_format.md` | the packing file format, and exactly what the DLL computes for one operating point | DLL |
+| `examples/` | a demo packing file, 32 test points the DLL must reproduce, a check of the Level 2 maths, and an example of user data | DLL |
+| `make_packing_files.py` | **draft** generator: one library packing file per real packing (several CSV rows for the same packing are merged, see `json_format.md`). Use, adapt or replace | DLL |
+| `train.py` | user data → fitted constants and Level 2 → a packing file | users with their own data |
+| `user_data_format.md` | the columns `train.py` reads (a proposal, to agree) | DLL export, users |
+| `packlib.py` | the model in Python (Billet hydraulics and mass transfer, Level 2); used by the two scripts | the scripts |
+| `requirements.txt` | Python packages for the scripts | users |
 
-## Folder map
+## The three levels
+- **Level 0:** a packing from the list with published constants (Billet and Schultes 1999, Billet 1995, Rejl et al. 2015). A packing not in the list is interpolated from its family in the CSV.
+- **Level 1:** constants fitted to data: our fits ("ThisWork" rows), or a user's own through `train.py`.
+- **Level 2:** a correction trained on a user's own plant data, on top of Level 1. Library files carry none; `train.py` writes it.
 
-| Where | What |
-|---|---|
-| `packlib.py` | The shared library: Billet model, constant fitting, test splits, Level 2, results tables. Every packing notebook imports it. |
-| `flexipac/` | Flexipac 350Y and 350Y HC (Erasmus 2004 data, 0.2 m column, water and Kerosol). `flexipac.ipynb` is the original step-by-step build; `PLAN.md` is the project plan. |
-| `rsp250y/`, `rsp200x/` | Raschig Super-Pak 250Y and 200X. |
-| `superring03/` | Raschig Super-Ring #0.3 (random packing). |
-| `m250y/`, `m500y/`, `m125y/`, `mp250y/` | Mellapak 250Y, 500Y, 125Y (Tsai 2010) and Mellapak 250Y (Wang 2015). |
-| `gtpak350y/` | GT-PAK 350Y (void fraction still provisional). |
-| `srp_data/` | Hydraulic and mass-transfer tables extracted from the Tsai (2010) and Wang (2015) theses (UT Austin SRP column, 0.427 m), the extraction scripts, and NIST water properties. See `srp_data/README.md`. |
-| `billet_digitised/` | Data digitised from Billet (1995) figures, used to check the model against Billet's own data. |
-| `docs/` | Explainers: Level 2 (notebook section 6) and a line-by-line walkthrough of `packlib.py`. |
-
-## Running a notebook
-
+## Running the scripts
 ```
 pip install -r requirements.txt
+python make_packing_files.py packings
+python train.py packings/raschig-super-ring_metal_0.7.json examples/user_data_example.csv my_packing.json --dc 0.427
 ```
+The second line takes about a minute; it prints the fitted constants and the Level 1 and Level 2 errors on the user's rows.
 
-Open a packing notebook (e.g. `superring03/superring03.ipynb`) from inside its own folder and run all cells. Each one reads `../packlib.py` and `../srp_data/`. The leave-one-point-out split and the auto-tuned Level 2 refit the model many times, so a full run takes from a few minutes to about half an hour for the larger Mellapak data sets.
+## The constants file
+| Column | Meaning | Unit |
+|---|---|---|
+| packing, material, size | as printed in the source (size is text: mm, Super-Ring number, inches or a product code) | |
+| arrangement | `dumped` (random) or `regular` (arranged, structured) | |
+| N_per_m3 | elements per m³ (blank for structured packings) | 1/m³ |
+| a_m2_m3, eps | specific surface area, void fraction | m²/m³, m³/m³ |
+| C_S, C_Fl | loading and flood point constants | |
+| C_h | hold-up constant | |
+| C_P0 | dry pressure-drop constant | |
+| C_L, C_V | liquid- and gas-side mass-transfer constants | |
+| source | `BS1999`, `B1995`, `Rejl2015` or `ThisWork` | |
+| table, page | where in the source; `4.3+5.1` means book tables combined | |
+| note, borrowed, fitted_on, version | cross-checks, which constants are borrowed and from where, what our fits used, model version | |
 
-## Sources (not stored here, for copyright)
+A blank cell means the source gives no value; nothing is filled in. A row is ready for the dropdown when C_S, C_Fl, C_h and C_P0 are all present and the note does not say "not dropdown-ready" (86 rows, which merge into 81 dropdown entries; the two unnamed prototype packings are kept for reference only). Rows with only C_L and C_V are mass-transfer fits for packings whose hydraulics are not fitted yet.
 
-- Billet, R. (1995). *Packed Towers in Processing and Environmental Technology*. VCH.
-- Billet, R. and Schultes, M. (1999). Prediction of mass transfer columns with dumped and arranged packings. *Trans IChemE* 77(A), 498–504.
-- Erasmus, A. B. (2004). *Mass transfer in structured packing*. PhD thesis, University of Stellenbosch.
-- Tsai, R. E. (2010). *Mass Transfer Area of Structured Packing*. PhD thesis, UT Austin. https://sites.utexas.edu/rochelle/files/2015/02/Mass_Transfer_Area_of_Structured_Packing.pdf
-- Wang, C. (2015). *Mass Transfer Coefficients and Effective Area of Packing*. PhD thesis, UT Austin. https://sites.utexas.edu/rochelle/files/2015/02/PhD-Dissertation_Wang-Chao.pdf
-- Rejl, F. J. et al. (2015). Hydraulic and mass-transfer characteristics of Raschig Super-Pak 250Y. *Chem. Eng. Res. Des.* 99, 20–27.
-- Koch-Glitsch structured packing brochure (2010); Raschig Super-Pak data sheet (Raschig USA, 2014).
-- NIST Chemistry WebBook, SRD 69 (water properties).
+**C_L and C_V** were fitted to measured k_L·a and k_G·a with Billet's own interfacial area inside the model, so they are valid only with Billet's area equation. The area itself is not an output.
 
-Code comments cite decision numbers (D13a, D46 and so on) from the project's methodology notes, which are kept separately for the report.
+## Sources
+- Billet, R. and Schultes, M. (1999) 'Prediction of mass transfer columns with dumped and arranged packings: updated summary of the calculation method of Billet and Schultes', *Trans IChemE*, 77(A), pp. 498–504. Tables 2a and 2b.
+- Billet, R. (1995) *Packed Towers in Processing and Environmental Technology*. Weinheim: VCH. Tables 4.1–4.4, 4.6–4.7, 5.1–5.2.
+- Rejl, F. et al. (2015) 'Hydraulic and mass-transfer characteristics of Raschig Super-Pak 250Y', *Chem. Eng. Res. Des.* 99, pp. 20–27, Table 3.
+- ThisWork fits use data from Tsai (2010), Wang (2015) and Song (2017), PhD dissertations, University of Texas at Austin; Baumfrisch (2022), Dipl.-Ing. thesis, Montanuniversität Leoben; Erasmus (2004), PhD dissertation, University of Stellenbosch.
+
+## Known issues in the published tables (see the `note` column)
+- Hiflow ring, N 6815: printed as Metal in 1999, Plastic in three book tables.
+- Raschig ring ceramic 50: C_Fl 1.547 (1999) against 1.574 (book).
+- Montz B2-300 (1999) is called B1-300 in the book.
+- NOR PAC 25 superscripts 6 and 10 in 1999 are "type B" and "10 webs" in the book.
+
