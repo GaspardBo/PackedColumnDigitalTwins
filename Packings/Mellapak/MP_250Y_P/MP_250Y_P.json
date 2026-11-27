@@ -1,0 +1,41 @@
+{
+    "id": "MP_250Y_P",
+    "identity": {
+        "name": "Sulzer Mellapak Plastic 250Y",
+        "manufacturer": "Sulzer",
+        "family": "MELLAPAK",
+        "material": "Plastic",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 250,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.96,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.554,
+            "CP0": null,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

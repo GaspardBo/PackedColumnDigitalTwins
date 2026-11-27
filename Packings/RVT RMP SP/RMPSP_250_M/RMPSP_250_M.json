@@ -1,0 +1,45 @@
+{
+    "id": "RMPSP_250_M",
+    "identity": {
+        "name": "RVT RMP SP Metal 250",
+        "manufacturer": "RVT Process Equipment",
+        "family": "RVT_RMP_SP",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 250,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.989,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 3.409888632415576,
+            "Ch": 0.8301975163769937,
+            "CP0": 0.12814670279328202,
+            "CL": 1.0640555136826393,
+            "CV": 0.6389755568192925
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on RMPSP_250_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "RVT RMP SP/RMPSP_250_M/RMPSP_250_M_dp.onnx",
+            "holdup": "RVT RMP SP/RMPSP_250_M/RMPSP_250_M_holdup.onnx",
+            "kGa": "RVT RMP SP/RMPSP_250_M/RMPSP_250_M_kGa.onnx"
+        }
+    }
+}

@@ -5,6 +5,7 @@
         "manufacturer": "Envimac",
         "family": "ENVI_PAC_RING",
         "material": "Plastic",
+        "arrangement": "dumped",
         "nominalSize": 32
     },
     "physicalProperties": {
@@ -31,10 +32,10 @@
             "CL": 1.517,
             "CV": 0.459
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

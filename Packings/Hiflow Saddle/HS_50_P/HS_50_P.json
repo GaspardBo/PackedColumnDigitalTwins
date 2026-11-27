@@ -1,0 +1,41 @@
+{
+    "id": "HS_50_P",
+    "identity": {
+        "name": "Rauschert Hiflow Saddle Plastic No. 50",
+        "manufacturer": "Rauschert",
+        "family": "HIFLOW_SADDLE",
+        "material": "Plastic",
+        "arrangement": "dumped",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 9939,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 86.4,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.938,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": 0.454,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

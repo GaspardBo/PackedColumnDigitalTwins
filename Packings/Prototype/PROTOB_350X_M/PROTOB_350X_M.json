@@ -1,0 +1,45 @@
+{
+    "id": "PROTOB_350X_M",
+    "identity": {
+        "name": "Prototype B Metal 350X",
+        "manufacturer": null,
+        "family": "PROTOTYPE",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 350,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.983,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 3.300570914033566,
+            "Ch": 0.6136051929305919,
+            "CP0": 0.0955396326423493,
+            "CL": 1.0617700737879192,
+            "CV": 0.6567019557322917
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on PROTOB_350X_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Prototype/PROTOB_350X_M/PROTOB_350X_M_dp.onnx",
+            "holdup": "Prototype/PROTOB_350X_M/PROTOB_350X_M_holdup.onnx",
+            "kLa": "Prototype/PROTOB_350X_M/PROTOB_350X_M_kLa.onnx"
+        }
+    }
+}

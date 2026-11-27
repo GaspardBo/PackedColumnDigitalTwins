@@ -1,0 +1,41 @@
+{
+    "id": "IP_250_M",
+    "identity": {
+        "name": "Impulse Packing Metal 250",
+        "manufacturer": null,
+        "family": "IMPULSE_PACKING",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 250,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.975,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.61,
+            "CFI": 1.996,
+            "Ch": 0.431,
+            "CP0": 0.262,
+            "CL": 0.983,
+            "CV": 0.27
+        },
+        "source": "Billet & Schultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

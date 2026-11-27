@@ -1,0 +1,41 @@
+{
+    "id": "RP_YC_250_M",
+    "identity": {
+        "name": "Raschig Ralu Pak Metal YC-250",
+        "manufacturer": "Raschig",
+        "family": "RALU_PAK",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 250,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.945,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.178,
+            "CFI": 2.558,
+            "Ch": null,
+            "CP0": 0.191,
+            "CL": 1.334,
+            "CV": 0.385
+        },
+        "source": "Billet & Schultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

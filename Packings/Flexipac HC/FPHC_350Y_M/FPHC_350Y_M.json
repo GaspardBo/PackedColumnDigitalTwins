@@ -1,0 +1,44 @@
+{
+    "id": "FPHC_350Y_M",
+    "identity": {
+        "name": "Koch-Glitsch Flexipac HC Metal 350Y",
+        "manufacturer": "Koch-Glitsch",
+        "family": "FLEXIPAC_HC",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 350,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.984,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 3.2324730071871492,
+            "Ch": 1.277123164611511,
+            "CP0": 0.19620339014092264,
+            "CL": null,
+            "CV": null
+        },
+        "source": "This work (fitted); CFI, Ch, CP0 refit on FPHC_350Y_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Flexipac HC/FPHC_350Y_M/FPHC_350Y_M_dp.onnx",
+            "holdup": "Flexipac HC/FPHC_350Y_M/FPHC_350Y_M_holdup.onnx"
+        }
+    }
+}

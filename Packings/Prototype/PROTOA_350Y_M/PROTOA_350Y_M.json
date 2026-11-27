@@ -1,0 +1,45 @@
+{
+    "id": "PROTOA_350Y_M",
+    "identity": {
+        "name": "Prototype A Metal 350Y",
+        "manufacturer": null,
+        "family": "PROTOTYPE",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 350,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.983,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 3.46428072108025,
+            "Ch": 0.9074296042164037,
+            "CP0": 0.25015445002352155,
+            "CL": 0.9575442397895844,
+            "CV": 0.8285441106895961
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on PROTOA_350Y_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Prototype/PROTOA_350Y_M/PROTOA_350Y_M_dp.onnx",
+            "holdup": "Prototype/PROTOA_350Y_M/PROTOA_350Y_M_holdup.onnx",
+            "kLa": "Prototype/PROTOA_350Y_M/PROTOA_350Y_M_kLa.onnx"
+        }
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "id": "RSR_1_5_M",
+    "identity": {
+        "name": "Raschig Super-Ring Metal No. 1.5",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_SUPER_RING",
+        "material": "Metal",
+        "arrangement": "dumped",
+        "nominalSize": 1.5
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 120,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.98,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.385,
+            "CFI": 2.6289383379365274,
+            "Ch": 0.4213675029407682,
+            "CP0": 0.33936548286149265,
+            "CL": 1.2447673249055367,
+            "CV": 0.4284466290768689
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on RSR_1_5_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Raschig Super Ring/RSR_1_5_M/RSR_1_5_M_dp.onnx",
+            "holdup": "Raschig Super Ring/RSR_1_5_M/RSR_1_5_M_holdup.onnx"
+        }
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "id": "GTP_350Y_M",
+    "identity": {
+        "name": "GT-PAK Metal 350Y",
+        "manufacturer": "GTC Technology",
+        "family": "GT_PAK",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 350,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.95,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 2.646575170958648,
+            "Ch": 0.7669161898521873,
+            "CP0": 0.16035205614673703,
+            "CL": 1.1353359426827125,
+            "CV": 0.8408511291645479
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on GTP_350Y_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "GT PAK/GTP_350Y_M/GTP_350Y_M_dp.onnx",
+            "holdup": "GT PAK/GTP_350Y_M/GTP_350Y_M_holdup.onnx",
+            "kGa": "GT PAK/GTP_350Y_M/GTP_350Y_M_kGa.onnx"
+        }
+    }
+}

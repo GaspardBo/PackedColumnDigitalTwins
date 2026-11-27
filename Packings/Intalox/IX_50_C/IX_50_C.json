@@ -1,0 +1,41 @@
+{
+    "id": "IX_50_C",
+    "identity": {
+        "name": "Intalox Ceramic No. 50",
+        "manufacturer": null,
+        "family": "INTALOX",
+        "material": "Ceramic",
+        "arrangement": "dumped",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 8882,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 114.6,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.761,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": 0.747,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

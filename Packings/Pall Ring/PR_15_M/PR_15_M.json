@@ -1,0 +1,41 @@
+{
+    "id": "PR_15_M",
+    "identity": {
+        "name": "Pall Ring Metal No. 15",
+        "manufacturer": null,
+        "family": "PALL_RING",
+        "material": "Metal",
+        "arrangement": "dumped",
+        "nominalSize": 15
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 229225,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 368.4,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.933,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.59,
+            "CP0": 0.99,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

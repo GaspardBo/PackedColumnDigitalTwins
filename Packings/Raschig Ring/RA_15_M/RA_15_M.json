@@ -1,0 +1,41 @@
+{
+    "id": "RA_15_M",
+    "identity": {
+        "name": "Raschig Raschig Ring Metal No. 15",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_RING",
+        "material": "Metal",
+        "arrangement": "dumped",
+        "nominalSize": 15
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 260778,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 378.4,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.917,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.455,
+            "CP0": null,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

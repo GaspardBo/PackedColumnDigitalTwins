@@ -224,9 +224,13 @@ def fit_constants(train, outputs, s):
 
 
 # level 1 on test rows. a liquid missing from train borrows water's constants,
-# or the first trained liquid if there is no water
+# or the first trained liquid if there is no water.
+# s['fixed_C'] (optional, {'Cp', 'Clp', 'Cfp', 'Ch'}): use these constants for every liquid instead of fitting
 def physics(train, test, outputs, s):
-    lib = fit_constants(train, outputs, s)
+    if s.get('fixed_C') is not None:
+        lib = {system: dict(s['fixed_C']) for system in train['system'].unique()}
+    else:
+        lib = fit_constants(train, outputs, s)
     if 'air/water' in lib:
         first = 'air/water'
     else:

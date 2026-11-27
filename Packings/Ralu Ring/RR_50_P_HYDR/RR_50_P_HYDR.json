@@ -1,0 +1,41 @@
+{
+    "id": "RR_50_P_HYDR",
+    "identity": {
+        "name": "Raschig Ralu Ring Plastic No. 50 hydr.",
+        "manufacturer": "Raschig",
+        "family": "RALU_RING",
+        "material": "Plastic",
+        "arrangement": "dumped",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 5720,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 95.2,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.939,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.843,
+            "CFI": 1.812,
+            "Ch": null,
+            "CP0": 0.439,
+            "CL": 1.481,
+            "CV": 0.341
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

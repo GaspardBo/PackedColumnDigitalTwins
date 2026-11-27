@@ -1,0 +1,45 @@
+{
+    "id": "MP_250Y_M",
+    "identity": {
+        "name": "Sulzer Mellapak Metal 250Y",
+        "manufacturer": "Sulzer",
+        "family": "MELLAPAK",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 250,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.97,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 2.8154448570948407,
+            "Ch": 0.6508591677691631,
+            "CP0": 0.19454489296832422,
+            "CL": 1.0677703604344901,
+            "CV": 0.5596061585154612
+        },
+        "source": "Billet & Schultes (1999) (hydraulics); This work (fitted) (mass transfer); CFI, Ch, CP0, CL, CV refit on MP_250Y_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Mellapak/MP_250Y_M/MP_250Y_M_dp.onnx",
+            "holdup": "Mellapak/MP_250Y_M/MP_250Y_M_holdup.onnx",
+            "kLa": "Mellapak/MP_250Y_M/MP_250Y_M_kLa.onnx"
+        }
+    }
+}

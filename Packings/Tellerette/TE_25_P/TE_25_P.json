@@ -5,6 +5,7 @@
         "manufacturer": null,
         "family": "TELLERETTE",
         "material": "Plastic",
+        "arrangement": "dumped",
         "nominalSize": 25
     },
     "physicalProperties": {
@@ -13,7 +14,7 @@
             "unit": "1/m3"
         },
         "specificSurfaceArea": {
-            "value": 190.0,
+            "value": 190,
             "unit": "m2/m3"
         },
         "voidFraction": {
@@ -31,10 +32,10 @@
             "CL": 0.899,
             "CV": null
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

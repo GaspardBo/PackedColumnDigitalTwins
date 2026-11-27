@@ -1,0 +1,41 @@
+{
+    "id": "PR_50_C_ARR",
+    "identity": {
+        "name": "Pall Ring Ceramic No. 50 (arranged)",
+        "manufacturer": null,
+        "family": "PALL_RING",
+        "material": "Ceramic",
+        "arrangement": "regular",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 7502,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 155.2,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.754,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.793,
+            "CFI": 3.024,
+            "Ch": 1.066,
+            "CP0": 0.233,
+            "CL": 1.278,
+            "CV": 0.333
+        },
+        "source": "Billet & Schultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

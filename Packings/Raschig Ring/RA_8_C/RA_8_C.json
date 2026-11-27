@@ -1,0 +1,41 @@
+{
+    "id": "RA_8_C",
+    "identity": {
+        "name": "Raschig Raschig Ring Ceramic No. 8",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_RING",
+        "material": "Ceramic",
+        "arrangement": "dumped",
+        "nominalSize": 8
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 1261000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 550,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.65,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": null,
+            "CL": 1.21,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

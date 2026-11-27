@@ -1,0 +1,41 @@
+{
+    "id": "NP_15_P",
+    "identity": {
+        "name": "NOR PAC Ring Plastic No. 15",
+        "manufacturer": null,
+        "family": "NOR_PAC_RING",
+        "material": "Plastic",
+        "arrangement": "dumped",
+        "nominalSize": 15
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 193738,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 311.4,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.918,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.343,
+            "CP0": 0.365,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

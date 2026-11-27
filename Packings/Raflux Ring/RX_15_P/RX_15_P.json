@@ -5,6 +5,7 @@
         "manufacturer": null,
         "family": "RAFLUX_RING",
         "material": "Plastic",
+        "arrangement": "dumped",
         "nominalSize": 15
     },
     "physicalProperties": {
@@ -31,10 +32,10 @@
             "CL": 1.913,
             "CV": 0.37
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

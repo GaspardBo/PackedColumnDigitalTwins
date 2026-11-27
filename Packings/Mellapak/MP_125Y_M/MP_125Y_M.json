@@ -1,0 +1,46 @@
+{
+    "id": "MP_125Y_M",
+    "identity": {
+        "name": "Sulzer Mellapak Metal 125Y",
+        "manufacturer": "Sulzer",
+        "family": "MELLAPAK",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 125,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.99,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 2.3034248127229904,
+            "Ch": 0.4438655066091202,
+            "CP0": 0.21045555531725899,
+            "CL": 1.260959289300616,
+            "CV": 0.35676323602914867
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on MP_125Y_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Mellapak/MP_125Y_M/MP_125Y_M_dp.onnx",
+            "holdup": "Mellapak/MP_125Y_M/MP_125Y_M_holdup.onnx",
+            "kLa": "Mellapak/MP_125Y_M/MP_125Y_M_kLa.onnx",
+            "kGa": "Mellapak/MP_125Y_M/MP_125Y_M_kGa.onnx"
+        }
+    }
+}

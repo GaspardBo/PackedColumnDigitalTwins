@@ -5,6 +5,7 @@
         "manufacturer": null,
         "family": "PALL_RING",
         "material": "Metal",
+        "arrangement": "dumped",
         "nominalSize": 35
     },
     "physicalProperties": {
@@ -31,10 +32,10 @@
             "CL": 1.012,
             "CV": 0.341
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

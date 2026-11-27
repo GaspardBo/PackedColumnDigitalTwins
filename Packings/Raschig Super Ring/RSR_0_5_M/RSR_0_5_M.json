@@ -5,6 +5,7 @@
         "manufacturer": "Raschig",
         "family": "RASCHIG_SUPER_RING",
         "material": "Metal",
+        "arrangement": "dumped",
         "nominalSize": 0.5
     },
     "physicalProperties": {
@@ -31,10 +32,10 @@
             "CL": 1.45,
             "CV": 0.43
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

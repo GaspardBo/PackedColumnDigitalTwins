@@ -5,6 +5,7 @@
         "manufacturer": null,
         "family": "TOP_PAK_RING",
         "material": "Alu",
+        "arrangement": "dumped",
         "nominalSize": 50
     },
     "physicalProperties": {
@@ -31,10 +32,10 @@
             "CL": 1.326,
             "CV": 0.389
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

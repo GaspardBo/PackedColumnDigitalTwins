@@ -1,0 +1,41 @@
+{
+    "id": "HR_50_P_HYDR_ARR",
+    "identity": {
+        "name": "Rauschert Hiflow Ring Plastic No. 50 hydr. (arranged)",
+        "manufacturer": "Rauschert",
+        "family": "HIFLOW_RING",
+        "material": "Plastic",
+        "arrangement": "regular",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 8150,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 140.1,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.911,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": 0.172,
+            "CL": 1.437,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

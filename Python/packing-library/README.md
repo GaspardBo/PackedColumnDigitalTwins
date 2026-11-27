@@ -9,8 +9,10 @@ Billet and Schultes constants for 142 packing entries, the Billet model in Pytho
 | `billet_packings.csv` | **the constants**: one row per packing and source (columns below) | the DLL's library and interpolation |
 | `json_format.md` | the packing file format, and exactly what the DLL computes for one operating point | DLL |
 | `examples/` | a demo packing file, 32 test points the DLL must reproduce, a check of the Level 2 maths, and an example of user data | DLL |
-| `make_packing_files.py` | **draft** generator: one library packing file per real packing (several CSV rows for the same packing are merged, see `json_format.md`). Use, adapt or replace | DLL |
-| `train.py` | user data → fitted constants and Level 2 → a packing file | users with their own data |
+| `make_packing_files.py` | builds the DLL's packing library (`../../Packings`: `library.json`, one folder and file per packing; several CSV rows for the same packing are merged, see `json_format.md`) and trains the predictive models listed in `training_data/training_data.csv` | DLL |
+| `train.py` | user data → fitted constants and Level 2 → a packing file, plus one `.onnx` model per Level 2 output next to it | users with their own data |
+| `onnx_export.py` | writes a Level 2 block as an ONNX model (interface at the top of the file); used by `train.py` | the scripts |
+| `training_data/` | `training_data.csv`: which packings have measured data for `make_packing_files.py` to train on | DLL |
 | `user_data_format.md` | the columns `train.py` reads (a proposal, to agree) | DLL export, users |
 | `packlib.py` | the model in Python (Billet hydraulics and mass transfer, Level 2); used by the two scripts | the scripts |
 | `requirements.txt` | Python packages for the scripts | users |
@@ -23,10 +25,14 @@ Billet and Schultes constants for 142 packing entries, the Billet model in Pytho
 ## Running the scripts
 ```
 pip install -r requirements.txt
-python make_packing_files.py packings
-python train.py packings/raschig-super-ring_metal_0.7.json examples/user_data_example.csv my_packing.json --dc 0.427
+python make_packing_files.py --train-files packings
+python train.py packings/RSR_0_7_M.json examples/user_data_example.csv my_packing.json --dc 0.427
 ```
-The second line takes about a minute; it prints the fitted constants and the Level 1 and Level 2 errors on the user's rows.
+The first line rewrites the repository's `Packings` library: every dumped and regular (arranged or structured) packing, with `identity.arrangement` saying which; a value the database lacks (packing density, the nominal size of a structured packing) is written as null. For every packing in `training_data/training_data.csv` it runs `train.py`: the Billet-Schultes constants the data supports are refit and written to the packing file (noted in `billetSchultes.source`), and Level 2 is trained on top of them and stored as `<ID>_<output>.onnx` next to the packing file, listed in its `predictiveModel` section. (`train.py --keep-constants` trains Level 2 without refitting.) `--train-files packings` also writes the `json_format.md` files that `train.py` starts from; `--no-train` skips the training.
+
+The `train.py` line takes about a minute; it prints the fitted constants and the Level 1 and Level 2 errors on the user's rows, and writes `my_packing_<output>.onnx` next to `my_packing.json`.
+
+Each `.onnx` model takes `X` = [Re_L, x_flood] (double, one row per point) and returns `log_correction`, `correction_factor` (corrected output = Level 1 × factor) and `in_valid_range` (use Level 1 where false). The model metadata holds the block's `valid_range` and `level1_constants`.
 
 ## The constants file
 | Column | Meaning | Unit |

@@ -1,0 +1,31 @@
+# packings with measured data for make_packing_files.py to train predictive models on (columns: user_data_format.md)
+# packing_id: library id; data_file: relative to this folder; dc_m: column diameter of the measurements, m
+# sources and preparation: README.md in this folder
+packing_id,data_file,dc_m
+MP_250Y_M,MP_250Y_M.csv,0.427
+MP_250X_M,MP_250X_M.csv,0.427
+MP_125Y_M,MP_125Y_M.csv,0.427
+MP_500Y_M,MP_500Y_M.csv,0.427
+MPP_252Y_M,MPP_252Y_M.csv,0.427
+MP_250Y_SMOOTH_M,MP_250Y_SMOOTH_M.csv,0.427
+MP_2Y_M,MP_2Y_M.csv,0.427
+PROTO500_500_M,PROTO500_500_M.csv,0.427
+MP_2X_M,MP_2X_M.csv,0.427
+GTP_350Y_M,GTP_350Y_M.csv,0.427
+GTP_350Z_M,GTP_350Z_M.csv,0.427
+GTP_500Y_M,GTP_500Y_M.csv,0.427
+PROTOA_350Y_M,PROTOA_350Y_M.csv,0.427
+PROTOB_350X_M,PROTOB_350X_M.csv,0.427
+RSP_200X_M,RSP_200X_M.csv,0.427
+RSP_250Y_M,RSP_250Y_M.csv,0.427
+RSR_0_3_M,RSR_0_3_M.csv,0.427
+RSR_0_7_M,RSR_0_7_M.csv,0.427
+MPG_64Y_M,MPG_64Y_M.csv,0.427
+MZ_B1_250MN_M,MZ_B1_250MN_M.csv,0.427
+HFP_2_P,HFP_2_P.csv,0.427
+RSR_1_5_M,RSR_1_5_M.csv,0.427
+RMPN_250Y_M,RMPN_250Y_M.csv,0.422
+RMPN_250X_M,RMPN_250X_M.csv,0.422
+RMPSP_250_M,RMPSP_250_M.csv,0.422
+FP_350Y_M,FP_350Y_M.csv,0.2
+FPHC_350Y_M,FPHC_350Y_M.csv,0.2

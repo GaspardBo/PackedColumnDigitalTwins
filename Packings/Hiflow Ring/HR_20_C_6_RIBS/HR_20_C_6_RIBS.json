@@ -1,0 +1,41 @@
+{
+    "id": "HR_20_C_6_RIBS",
+    "identity": {
+        "name": "Rauschert Hiflow Ring Ceramic No. 20 6 ribs",
+        "manufacturer": "Rauschert",
+        "family": "HIFLOW_RING",
+        "material": "Ceramic",
+        "arrangement": "dumped",
+        "nominalSize": 20
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 110688,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 265.8,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.776,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.958,
+            "CP0": null,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

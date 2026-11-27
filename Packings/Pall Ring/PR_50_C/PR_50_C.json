@@ -1,0 +1,41 @@
+{
+    "id": "PR_50_C",
+    "identity": {
+        "name": "Pall Ring Ceramic No. 50",
+        "manufacturer": null,
+        "family": "PALL_RING",
+        "material": "Ceramic",
+        "arrangement": "dumped",
+        "nominalSize": 50
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 6215,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 116.5,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.783,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.846,
+            "CFI": 1.913,
+            "Ch": 1.335,
+            "CP0": 0.662,
+            "CL": 1.227,
+            "CV": 0.415
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

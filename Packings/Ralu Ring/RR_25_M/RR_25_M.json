@@ -5,6 +5,7 @@
         "manufacturer": "Raschig",
         "family": "RALU_RING",
         "material": "Metal",
+        "arrangement": "dumped",
         "nominalSize": 25
     },
     "physicalProperties": {
@@ -31,10 +32,10 @@
             "CL": 1.44,
             "CV": 0.336
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

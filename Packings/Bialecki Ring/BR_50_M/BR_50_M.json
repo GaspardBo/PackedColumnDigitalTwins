@@ -5,6 +5,7 @@
         "manufacturer": null,
         "family": "BIALECKI_RING",
         "material": "Metal",
+        "arrangement": "dumped",
         "nominalSize": 50
     },
     "physicalProperties": {
@@ -13,7 +14,7 @@
             "unit": "1/m3"
         },
         "specificSurfaceArea": {
-            "value": 121.0,
+            "value": 121,
             "unit": "m2/m3"
         },
         "voidFraction": {
@@ -31,10 +32,10 @@
             "CL": 1.721,
             "CV": 0.302
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

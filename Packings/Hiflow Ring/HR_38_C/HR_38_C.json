@@ -5,6 +5,7 @@
         "manufacturer": "Rauschert",
         "family": "HIFLOW_RING",
         "material": "Ceramic",
+        "arrangement": "dumped",
         "nominalSize": 38
     },
     "physicalProperties": {
@@ -31,10 +32,10 @@
             "CL": 1.659,
             "CV": 0.464
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

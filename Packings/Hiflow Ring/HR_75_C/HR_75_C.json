@@ -1,0 +1,41 @@
+{
+    "id": "HR_75_C",
+    "identity": {
+        "name": "Rauschert Hiflow Ring Ceramic No. 75",
+        "manufacturer": "Rauschert",
+        "family": "HIFLOW_RING",
+        "material": "Ceramic",
+        "arrangement": "dumped",
+        "nominalSize": 75
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 1904,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 54.1,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.868,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": 0.435,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

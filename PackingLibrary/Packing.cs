@@ -1,5 +1,7 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace PackingLibrary
@@ -43,13 +45,20 @@ namespace PackingLibrary
         /// <summary>Void fraction epsilon, m3/m3.</summary>
         [JsonIgnore] public double VoidFraction => PhysicalProperties.VoidFraction.Value;
 
-        /// <summary>Packing density N, 1/m3.</summary>
+        /// <summary>Packing density N, 1/m3. NaN when the library gives no value.</summary>
         [JsonIgnore] public double PackingDensity => PhysicalProperties.PackingDensity.Value;
 
         /// <summary>True when Billet-Schultes data is flagged available and all six constants are present.</summary>
         [JsonIgnore]
         public bool HasCompleteBilletSchultesData =>
             BilletSchultes.Available && BilletSchultes.Constants.IsComplete;
+
+        /// <summary>True when predictive models are flagged available and at least one model file is listed.</summary>
+        [JsonIgnore]
+        public bool HasPredictiveModels => PredictiveModel.Available && PredictiveModel.Properties.Any();
+
+        /// <summary>True when predictive models are available and one is listed for <paramref name="property"/>.</summary>
+        public bool HasPredictiveModel(string property) => PredictiveModel.HasModel(property);
 
         public override string ToString() => $"{Id} ({Name})";
     }
@@ -70,9 +79,16 @@ namespace PackingLibrary
         [JsonPropertyName("material")]
         public string Material { get; set; } = string.Empty;
 
-        /// <summary>Nominal size in mm.</summary>
+        /// <summary>"dumped" (random) or "regular" (arranged or structured).</summary>
+        [JsonPropertyName("arrangement")]
+        public string Arrangement { get; set; } = "dumped";
+
+        [JsonIgnore]
+        public bool IsStructured => string.Equals(Arrangement, "regular", StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>Nominal size in mm (a size number for Super-Rings); null when the packing has none (structured packings).</summary>
         [JsonPropertyName("nominalSize")]
-        public double NominalSize { get; set; }
+        public double? NominalSize { get; set; }
     }
 
     public sealed class PhysicalProperties
@@ -87,16 +103,31 @@ namespace PackingLibrary
         public QuantityValue VoidFraction { get; set; } = new QuantityValue();
     }
 
-    /// <summary>A number with its unit, e.g. { "value": 165, "unit": "m2/m3" }.</summary>
+    /// <summary>
+    /// A number with its unit, e.g. { "value": 165, "unit": "m2/m3" }.
+    /// "value" may be null when the source gives no value (e.g. no packing density for some fitted packings).
+    /// </summary>
     public sealed class QuantityValue
     {
+        /// <summary>The value as stored in the file; null when not known.</summary>
         [JsonPropertyName("value")]
-        public double Value { get; set; }
+        public double? RawValue { get; set; }
+
+        /// <summary>The value, or <see cref="double.NaN"/> when it is not known (see <see cref="HasValue"/>).</summary>
+        [JsonIgnore]
+        public double Value
+        {
+            get => RawValue ?? double.NaN;
+            set => RawValue = value;
+        }
+
+        [JsonIgnore]
+        public bool HasValue => RawValue.HasValue;
 
         [JsonPropertyName("unit")]
         public string Unit { get; set; } = string.Empty;
 
-        public override string ToString() => $"{Value} {Unit}";
+        public override string ToString() => HasValue ? $"{Value} {Unit}" : $"(unknown) {Unit}";
     }
 
     public sealed class BilletSchultesData
@@ -151,13 +182,96 @@ namespace PackingLibrary
         }
     }
 
+    /// <summary>
+    /// Predictive (ONNX) models for a packing, one file per predicted property, e.g.
+    /// <code>
+    /// "predictiveModel": {
+    ///     "available": true,
+    ///     "models": {
+    ///         "HETP": "models/hetp_model.onnx",
+    ///         "pressureDrop": "models/dp_model.onnx"
+    ///     }
+    /// }
+    /// </code>
+    /// A single <see cref="Available"/> flag says whether any of them may be used.
+    /// The older single-file form (<c>"file": "..."</c>) is still read and is stored under
+    /// <see cref="LegacyModelKey"/>.
+    /// </summary>
     public sealed class PredictiveModelInfo
     {
+        /// <summary>Key under which a legacy <c>"file"</c> entry is stored in <see cref="Models"/>.</summary>
+        public const string LegacyModelKey = "default";
+
+        private Dictionary<string, string> _models = NewModelDictionary();
+        private string? _legacyFile;
+
+        /// <summary>True when the packing's predictive models may be used.</summary>
         [JsonPropertyName("available")]
         public bool Available { get; set; }
 
-        /// <summary>Model file path, relative to the library directory (e.g. "models/hetp_model.onnx").</summary>
+        /// <summary>
+        /// Model file per predicted property (keys are case-insensitive). Paths are relative to the
+        /// library directory (e.g. "models/hetp_model.onnx").
+        /// </summary>
+        [JsonPropertyName("models")]
+        public Dictionary<string, string> Models
+        {
+            get => _models;
+            set
+            {
+                _models = value is null ? NewModelDictionary() : new Dictionary<string, string>(value, StringComparer.OrdinalIgnoreCase);
+                AddLegacyFile();
+            }
+        }
+
+        /// <summary>
+        /// Legacy single model file. Read only for backward compatibility; it is added to
+        /// <see cref="Models"/> under <see cref="LegacyModelKey"/> unless that key already exists.
+        /// </summary>
         [JsonPropertyName("file")]
-        public string? File { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? File
+        {
+            get => null;
+            set
+            {
+                _legacyFile = value;
+                AddLegacyFile();
+            }
+        }
+
+        /// <summary>Properties that have a model file listed (regardless of <see cref="Available"/>).</summary>
+        [JsonIgnore]
+        public IEnumerable<string> Properties =>
+            _models.Where(kv => !string.IsNullOrWhiteSpace(kv.Value)).Select(kv => kv.Key);
+
+        /// <summary>True when models are available and one is listed for <paramref name="property"/>.</summary>
+        public bool HasModel(string property) => TryGetModelFile(property, out _);
+
+        /// <summary>
+        /// Gets the (library-relative) model file for <paramref name="property"/>.
+        /// Returns false when models are not available or none is listed for that property.
+        /// </summary>
+        public bool TryGetModelFile(string property, out string? file)
+        {
+            if (Available && property != null &&
+                _models.TryGetValue(property, out var found) && !string.IsNullOrWhiteSpace(found))
+            {
+                file = found;
+                return true;
+            }
+
+            file = null;
+            return false;
+        }
+
+        private void AddLegacyFile()
+        {
+            if (!string.IsNullOrWhiteSpace(_legacyFile) && !_models.ContainsKey(LegacyModelKey))
+                _models[LegacyModelKey] = _legacyFile!;
+        }
+
+        private static Dictionary<string, string> NewModelDictionary() =>
+            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     }
 }

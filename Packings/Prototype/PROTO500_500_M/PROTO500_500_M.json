@@ -1,0 +1,44 @@
+{
+    "id": "PROTO500_500_M",
+    "identity": {
+        "name": "Prototype 500 Metal 500",
+        "manufacturer": null,
+        "family": "PROTOTYPE",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 500,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.92,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 2.8641356510736835,
+            "Ch": 0.5844850985762539,
+            "CP0": 0.1777207588866145,
+            "CL": null,
+            "CV": null
+        },
+        "source": "This work (fitted); CFI, Ch, CP0 refit on PROTO500_500_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Prototype/PROTO500_500_M/PROTO500_500_M_dp.onnx",
+            "holdup": "Prototype/PROTO500_500_M/PROTO500_500_M_holdup.onnx"
+        }
+    }
+}

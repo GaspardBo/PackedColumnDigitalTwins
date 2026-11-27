@@ -1,0 +1,41 @@
+{
+    "id": "RA_6_C",
+    "identity": {
+        "name": "Raschig Raschig Ring Ceramic No. 6",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_RING",
+        "material": "Ceramic",
+        "arrangement": "dumped",
+        "nominalSize": 6
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 3022936,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 771.9,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.62,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 1.094,
+            "CP0": null,
+            "CL": 1.13,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

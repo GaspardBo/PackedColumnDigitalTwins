@@ -1,0 +1,41 @@
+{
+    "id": "EF_PN_110_P",
+    "identity": {
+        "name": "Euroform Plastic PN-110",
+        "manufacturer": null,
+        "family": "EUROFORM",
+        "material": "Plastic",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 110,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.936,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.075,
+            "CFI": 1.975,
+            "Ch": 0.511,
+            "CP0": 0.25,
+            "CL": 0.973,
+            "CV": 0.167
+        },
+        "source": "Billet & Schultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

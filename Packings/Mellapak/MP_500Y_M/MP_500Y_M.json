@@ -1,0 +1,44 @@
+{
+    "id": "MP_500Y_M",
+    "identity": {
+        "name": "Sulzer Mellapak Metal 500Y",
+        "manufacturer": "Sulzer",
+        "family": "MELLAPAK",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 500,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.92,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 2.9189362776160066,
+            "Ch": 0.7686544954812204,
+            "CP0": 0.1568442908790145,
+            "CL": null,
+            "CV": null
+        },
+        "source": "This work (fitted); CFI, Ch, CP0 refit on MP_500Y_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Mellapak/MP_500Y_M/MP_500Y_M_dp.onnx",
+            "holdup": "Mellapak/MP_500Y_M/MP_500Y_M_holdup.onnx"
+        }
+    }
+}

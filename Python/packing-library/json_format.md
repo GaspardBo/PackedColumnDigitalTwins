@@ -8,8 +8,8 @@ For Gaspard, to read packing files in the C# DLL and check the results against P
 | `examples/raschig-superring-0.7_demo.json` | a packing file with Level 2 blocks for k_L·a (network) and k_G·a (linear): Wang 2015 data for Super-Ring #0.7 treated as a user's plant |
 | `examples/raschig-superring-0.7_tests.json` | 32 operating points with every property given and the Python results; the DLL must match to 1e-6 relative |
 | `examples/format_check.json` | a linear and a network block whose outputs clearly vary, with 6 cases (two outside the training range), to test the evaluator alone; match to 1e-9 relative |
-| `make_packing_files.py` | draft generator: one library file per real packing, merged from the rows of `billet_packings.csv` |
-| `train.py` | writes user files from a user's data |
+| `make_packing_files.py` | builds the DLL library (`Packings/`, the C# format read by `PackingManager`), merged from the rows of `billet_packings.csv`; with `--train-files` it also writes the files in this format |
+| `train.py` | writes user files from a user's data, and each Level 2 block as `<file stem>_<output>.onnx` (`onnx_export.py`) |
 
 Library files (from the database) have the same layout with every `level2` entry `null`. The database has one row per source, so one packing can have several rows; the generator merges them into one file. The hydraulic set (C_S, C_Fl, C_h, C_P0) comes whole from one row and C_L, C_V from one row, published sources first (BS1999, B1995, Rejl2015), then our fits; a row whose note says "data check pending" is used only when there is no other. A mass-transfer pair is only combined with a hydraulic set from a row with the same a and ε. Samples with different a or ε get separate files, and the second has `-2` on its id. In a user file, an output also has `null` when the tuner found that no correction does best.
 

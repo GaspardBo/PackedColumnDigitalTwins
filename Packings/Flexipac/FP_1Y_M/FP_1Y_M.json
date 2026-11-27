@@ -1,0 +1,41 @@
+{
+    "id": "FP_1Y_M",
+    "identity": {
+        "name": "Koch-Glitsch Flexipac Metal 1Y",
+        "manufacturer": "Koch-Glitsch",
+        "family": "FLEXIPAC",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 410,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.91,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": 0.163,
+            "CL": null,
+            "CV": null
+        },
+        "source": "This work (fitted)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

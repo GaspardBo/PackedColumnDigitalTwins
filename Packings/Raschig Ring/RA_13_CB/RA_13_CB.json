@@ -1,0 +1,41 @@
+{
+    "id": "RA_13_CB",
+    "identity": {
+        "name": "Raschig Raschig Ring Carbon No. 13",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_RING",
+        "material": "Carbon",
+        "arrangement": "dumped",
+        "nominalSize": 13
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 378000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 370,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.64,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": null,
+            "CL": 1.419,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

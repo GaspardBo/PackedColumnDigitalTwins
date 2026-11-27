@@ -1,0 +1,41 @@
+{
+    "id": "BR_25_M_ARR",
+    "identity": {
+        "name": "Bialecki Ring Metal No. 25 (arranged)",
+        "manufacturer": null,
+        "family": "BIALECKI_RING",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 63700,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 275,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.93,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.395,
+            "CP0": null,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

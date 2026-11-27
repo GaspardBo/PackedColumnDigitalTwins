@@ -1,0 +1,41 @@
+{
+    "id": "NP_25_P_TYPE_C",
+    "identity": {
+        "name": "NOR PAC Ring Plastic No. 25 type C",
+        "manufacturer": null,
+        "family": "NOR_PAC_RING",
+        "material": "Plastic",
+        "arrangement": "dumped",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 47619,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 192,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.922,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": null,
+            "CL": 0.888,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

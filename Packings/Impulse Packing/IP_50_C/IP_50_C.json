@@ -1,0 +1,41 @@
+{
+    "id": "IP_50_C",
+    "identity": {
+        "name": "Impulse Packing Ceramic 50",
+        "manufacturer": null,
+        "family": "IMPULSE_PACKING",
+        "material": "Ceramic",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 55,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.806,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": null,
+            "CL": 0.939,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

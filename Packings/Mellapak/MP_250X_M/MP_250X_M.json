@@ -1,0 +1,45 @@
+{
+    "id": "MP_250X_M",
+    "identity": {
+        "name": "Sulzer Mellapak Metal 250X",
+        "manufacturer": "Sulzer",
+        "family": "MELLAPAK",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 250,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.98,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 3.2671572425511926,
+            "Ch": 0.6666388999333325,
+            "CP0": 0.08452109867501692,
+            "CL": 0.9918675289141516,
+            "CV": 0.45952023289673993
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on MP_250X_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Mellapak/MP_250X_M/MP_250X_M_dp.onnx",
+            "holdup": "Mellapak/MP_250X_M/MP_250X_M_holdup.onnx",
+            "kGa": "Mellapak/MP_250X_M/MP_250X_M_kGa.onnx"
+        }
+    }
+}

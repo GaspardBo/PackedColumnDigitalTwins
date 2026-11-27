@@ -1,0 +1,46 @@
+{
+    "id": "RSR_0_7_M",
+    "identity": {
+        "name": "Raschig Super-Ring Metal No. 0.7",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_SUPER_RING",
+        "material": "Metal",
+        "arrangement": "dumped",
+        "nominalSize": 0.7
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 180,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.98,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.46,
+            "CFI": 2.825239503305769,
+            "Ch": 0.4870992767217728,
+            "CP0": 0.2866722822755767,
+            "CL": 1.4681376207883228,
+            "CV": 0.6626718302053098
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on RSR_0_7_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Raschig Super Ring/RSR_0_7_M/RSR_0_7_M_dp.onnx",
+            "holdup": "Raschig Super Ring/RSR_0_7_M/RSR_0_7_M_holdup.onnx",
+            "kLa": "Raschig Super Ring/RSR_0_7_M/RSR_0_7_M_kLa.onnx",
+            "kGa": "Raschig Super Ring/RSR_0_7_M/RSR_0_7_M_kGa.onnx"
+        }
+    }
+}

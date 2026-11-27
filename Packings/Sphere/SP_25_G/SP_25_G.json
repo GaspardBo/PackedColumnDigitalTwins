@@ -1,0 +1,41 @@
+{
+    "id": "SP_25_G",
+    "identity": {
+        "name": "Sphere Glass No. 25",
+        "manufacturer": null,
+        "family": "SPHERE",
+        "material": "Glass",
+        "arrangement": "dumped",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 66664,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 134.5,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.43,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": null,
+            "CL": 1.335,
+            "CV": null
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

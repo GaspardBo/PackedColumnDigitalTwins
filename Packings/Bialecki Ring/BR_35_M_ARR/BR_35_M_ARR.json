@@ -1,0 +1,41 @@
+{
+    "id": "BR_35_M_ARR",
+    "identity": {
+        "name": "Bialecki Ring Metal No. 35 (arranged)",
+        "manufacturer": null,
+        "family": "BIALECKI_RING",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": 35
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 20736,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 176.6,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.945,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.69,
+            "CP0": 0.46,
+            "CL": 1.405,
+            "CV": 0.377
+        },
+        "source": "Billet & Schultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

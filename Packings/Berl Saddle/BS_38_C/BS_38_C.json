@@ -1,0 +1,41 @@
+{
+    "id": "BS_38_C",
+    "identity": {
+        "name": "Berl Saddle Ceramic No. 38",
+        "manufacturer": null,
+        "family": "BERL_SADDLE",
+        "material": "Ceramic",
+        "arrangement": "dumped",
+        "nominalSize": 38
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 24928,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 164,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.7,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": null,
+            "CL": 1.568,
+            "CV": 0.244
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

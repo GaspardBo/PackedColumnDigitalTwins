@@ -1,0 +1,41 @@
+{
+    "id": "IS_13_C",
+    "identity": {
+        "name": "Intalox Saddle Ceramic No. 13",
+        "manufacturer": null,
+        "family": "INTALOX_SADDLE",
+        "material": "Ceramic",
+        "arrangement": "dumped",
+        "nominalSize": 13
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 730000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 625,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.78,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": null,
+            "CP0": null,
+            "CL": 1.677,
+            "CV": 0.488
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

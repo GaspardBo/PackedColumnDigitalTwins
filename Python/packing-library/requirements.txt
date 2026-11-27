@@ -2,3 +2,6 @@ numpy>=2.0
 pandas>=2.0
 scipy>=1.11
 scikit-learn>=1.4
+onnx>=1.14
+# optional: train.py uses it to check every exported model against the level 2 block
+onnxruntime>=1.16

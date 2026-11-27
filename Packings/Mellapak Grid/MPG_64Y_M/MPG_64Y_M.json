@@ -1,0 +1,46 @@
+{
+    "id": "MPG_64Y_M",
+    "identity": {
+        "name": "Sulzer Mellapak Grid Metal 64Y",
+        "manufacturer": "Sulzer",
+        "family": "MELLAPAK_GRID",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 64,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.99,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 2.2774054542064497,
+            "Ch": 0.33721298729006466,
+            "CP0": 0.2924596399762417,
+            "CL": 1.114116780857021,
+            "CV": 0.21658170020671785
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on MPG_64Y_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Mellapak Grid/MPG_64Y_M/MPG_64Y_M_dp.onnx",
+            "holdup": "Mellapak Grid/MPG_64Y_M/MPG_64Y_M_holdup.onnx",
+            "kLa": "Mellapak Grid/MPG_64Y_M/MPG_64Y_M_kLa.onnx",
+            "kGa": "Mellapak Grid/MPG_64Y_M/MPG_64Y_M_kGa.onnx"
+        }
+    }
+}

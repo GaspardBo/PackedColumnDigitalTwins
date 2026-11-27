@@ -272,16 +272,43 @@ namespace PackingLibrary
             CheckUnit(p, "packingDensity", props.PackingDensity, "1/m3");
             CheckUnit(p, "voidFraction", props.VoidFraction, "-");
 
-            if (props.SpecificSurfaceArea.Value <= 0)
+            if (!props.SpecificSurfaceArea.HasValue || props.SpecificSurfaceArea.Value <= 0)
                 _warnings.Add($"{p.Id}: specific surface area must be positive.");
 
-            if (props.VoidFraction.Value <= 0 || props.VoidFraction.Value >= 1)
+            if (!props.VoidFraction.HasValue || props.VoidFraction.Value <= 0 || props.VoidFraction.Value >= 1)
                 _warnings.Add($"{p.Id}: void fraction {props.VoidFraction.Value} is outside (0, 1).");
 
             if (p.BilletSchultes.Available && !p.BilletSchultes.Constants.IsComplete)
             {
                 var missing = string.Join(", ", p.BilletSchultes.Constants.GetMissingConstants());
                 _warnings.Add($"{p.Id}: Billet-Schultes data is incomplete (missing: {missing}).");
+            }
+
+            ValidatePredictiveModels(p);
+        }
+
+        private void ValidatePredictiveModels(Packing p)
+        {
+            var models = p.PredictiveModel;
+            if (!models.Available)
+                return;
+
+            if (!models.Properties.Any())
+            {
+                _warnings.Add($"{p.Id}: predictive models are flagged available but no model files are listed.");
+                return;
+            }
+
+            foreach (var property in models.Properties)
+            {
+                var file = models.Models[property];
+
+                if (!string.Equals(Path.GetExtension(file), ".onnx", StringComparison.OrdinalIgnoreCase))
+                    _warnings.Add($"{p.Id}: model file '{file}' for '{property}' is not an .onnx file.");
+
+                var full = ResolveModelPath(file);
+                if (!File.Exists(full))
+                    _warnings.Add($"{p.Id}: model file for '{property}' not found at '{full}'.");
             }
         }
 
@@ -332,16 +359,39 @@ namespace PackingLibrary
             _packings.Where(p => string.Equals(p.Identity.Material, material, StringComparison.OrdinalIgnoreCase)).ToList();
 
         /// <summary>
-        /// Full path of the packing's predictive model file, or null if no model is available.
+        /// Full path of the packing's predictive model file for <paramref name="property"/> (e.g. "HETP"),
+        /// or null if models are not available or none is listed for that property.
         /// The path in the packing file is resolved against the directory containing library.json.
         /// </summary>
-        public string? GetModelPath(Packing packing)
+        public string? GetModelPath(Packing packing, string property)
         {
-            if (!packing.PredictiveModel.Available || string.IsNullOrWhiteSpace(packing.PredictiveModel.File))
-                return null;
+            if (packing is null) throw new ArgumentNullException(nameof(packing));
 
-            return Path.GetFullPath(Path.Combine(LibraryDirectory, packing.PredictiveModel.File));
+            return packing.PredictiveModel.TryGetModelFile(property, out var file)
+                ? ResolveModelPath(file!)
+                : null;
         }
+
+        /// <summary>
+        /// Full paths of all the packing's predictive model files, keyed by property (case-insensitive).
+        /// Empty when models are not available.
+        /// </summary>
+        public IReadOnlyDictionary<string, string> GetModelPaths(Packing packing)
+        {
+            if (packing is null) throw new ArgumentNullException(nameof(packing));
+
+            var paths = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            if (!packing.PredictiveModel.Available)
+                return paths;
+
+            foreach (var property in packing.PredictiveModel.Properties)
+                paths[property] = ResolveModelPath(packing.PredictiveModel.Models[property]);
+
+            return paths;
+        }
+
+        private string ResolveModelPath(string relativeFile) =>
+            Path.GetFullPath(Path.Combine(LibraryDirectory, relativeFile));
 
         // Helper to find relative path
         private static string GetRelativePath(string relativeTo, string path)

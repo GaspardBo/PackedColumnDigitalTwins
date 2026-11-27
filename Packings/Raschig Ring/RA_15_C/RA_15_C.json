@@ -1,0 +1,41 @@
+{
+    "id": "RA_15_C",
+    "identity": {
+        "name": "Raschig Raschig Ring Ceramic No. 15",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_RING",
+        "material": "Ceramic",
+        "arrangement": "dumped",
+        "nominalSize": 15
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 220000,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 310.2,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.69,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.648,
+            "CP0": null,
+            "CL": 1.276,
+            "CV": 0.401
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

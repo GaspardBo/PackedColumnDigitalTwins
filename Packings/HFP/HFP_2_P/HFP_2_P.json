@@ -1,0 +1,46 @@
+{
+    "id": "HFP_2_P",
+    "identity": {
+        "name": "HFP (hybrid) Plastic 2",
+        "manufacturer": null,
+        "family": "HFP",
+        "material": "Plastic",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 100,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.95,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.157,
+            "CFI": 2.7220188558222014,
+            "Ch": 0.408873270658778,
+            "CP0": 0.18785716636070143,
+            "CL": 0.9348245628962295,
+            "CV": 0.3327475465849353
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on HFP_2_P.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "HFP/HFP_2_P/HFP_2_P_dp.onnx",
+            "holdup": "HFP/HFP_2_P/HFP_2_P_holdup.onnx",
+            "kLa": "HFP/HFP_2_P/HFP_2_P_kLa.onnx",
+            "kGa": "HFP/HFP_2_P/HFP_2_P_kGa.onnx"
+        }
+    }
+}

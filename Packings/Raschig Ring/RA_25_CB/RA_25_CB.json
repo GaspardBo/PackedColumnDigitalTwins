@@ -1,0 +1,41 @@
+{
+    "id": "RA_25_CB",
+    "identity": {
+        "name": "Raschig Raschig Ring Carbon No. 25",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_RING",
+        "material": "Carbon",
+        "arrangement": "dumped",
+        "nominalSize": 25
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": 51913,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 205.7,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.7,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": null,
+            "CFI": null,
+            "Ch": 0.623,
+            "CP0": null,
+            "CL": 1.379,
+            "CV": 0.471
+        },
+        "source": "Billet (1995)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

@@ -5,6 +5,7 @@
         "manufacturer": "Raschig",
         "family": "RASCHIG_SUPER_RING",
         "material": "Metal",
+        "arrangement": "dumped",
         "nominalSize": 0.3
     },
     "physicalProperties": {
@@ -25,16 +26,20 @@
         "available": true,
         "constants": {
             "CS": 3.56,
-            "CFI": 2.34,
-            "Ch": 0.75,
-            "CP0": 0.76,
-            "CL": 1.5,
-            "CV": 0.45
+            "CFI": 2.603945418222367,
+            "Ch": 1.1366383841156624,
+            "CP0": 0.5445251353661658,
+            "CL": 1.4192999996789128,
+            "CV": 1.1516490136896604
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999); CFI, Ch, CP0, CL, CV refit on RSR_0_3_M.csv (2026-11-27)"
     },
     "predictiveModel": {
-        "available": false,
-        "file": "models/hetp_model.onnx"
+        "available": true,
+        "models": {
+            "dp": "Raschig Super Ring/RSR_0_3_M/RSR_0_3_M_dp.onnx",
+            "holdup": "Raschig Super Ring/RSR_0_3_M/RSR_0_3_M_holdup.onnx",
+            "kGa": "Raschig Super Ring/RSR_0_3_M/RSR_0_3_M_kGa.onnx"
+        }
     }
 }

@@ -5,6 +5,7 @@
         "manufacturer": null,
         "family": "DIN_PAK",
         "material": "Plastic",
+        "arrangement": "dumped",
         "nominalSize": 47
     },
     "physicalProperties": {
@@ -31,10 +32,10 @@
             "CL": 1.69,
             "CV": 0.354
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

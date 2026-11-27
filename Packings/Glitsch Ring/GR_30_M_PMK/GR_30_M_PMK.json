@@ -5,6 +5,7 @@
         "manufacturer": "Glitsch",
         "family": "GLITSCH_RING",
         "material": "Metal",
+        "arrangement": "dumped",
         "nominalSize": 30
     },
     "physicalProperties": {
@@ -31,10 +32,10 @@
             "CL": 1.92,
             "CV": 0.45
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }

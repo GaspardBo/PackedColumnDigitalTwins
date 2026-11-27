@@ -1,0 +1,41 @@
+{
+    "id": "GP_A2T_304_M",
+    "identity": {
+        "name": "Gempack Metal A2T-304",
+        "manufacturer": null,
+        "family": "GEMPACK",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 202,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.977,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 2.986,
+            "CFI": 2.099,
+            "Ch": 0.678,
+            "CP0": 0.344,
+            "CL": null,
+            "CV": null
+        },
+        "source": "Billet & Schultes (1999)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

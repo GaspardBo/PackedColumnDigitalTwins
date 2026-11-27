@@ -1,0 +1,41 @@
+{
+    "id": "RSR_0_3_M_ARR",
+    "identity": {
+        "name": "Raschig Super-Ring Metal No. 0.3 (arranged)",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_SUPER_RING",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": 0.3
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 315,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.96,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.56,
+            "CFI": 2.6039,
+            "Ch": 1.1366,
+            "CP0": 0.5445,
+            "CL": 1.419,
+            "CV": 1.152
+        },
+        "source": "This work (fitted)"
+    },
+    "predictiveModel": {
+        "available": false,
+        "models": {}
+    }
+}

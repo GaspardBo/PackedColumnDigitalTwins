@@ -1,0 +1,44 @@
+{
+    "id": "RSP_200X_M",
+    "identity": {
+        "name": "Raschig Super-Pak Metal 200X",
+        "manufacturer": "Raschig",
+        "family": "RASCHIG_SUPER_PAK",
+        "material": "Metal",
+        "arrangement": "regular",
+        "nominalSize": null
+    },
+    "physicalProperties": {
+        "packingDensity": {
+            "value": null,
+            "unit": "1/m3"
+        },
+        "specificSurfaceArea": {
+            "value": 200,
+            "unit": "m2/m3"
+        },
+        "voidFraction": {
+            "value": 0.98,
+            "unit": "-"
+        }
+    },
+    "billetSchultes": {
+        "available": true,
+        "constants": {
+            "CS": 3.89,
+            "CFI": 3.1455142961595777,
+            "Ch": 0.7341101804983768,
+            "CP0": 0.14939001109406075,
+            "CL": 0.42679180823203,
+            "CV": 0.7097686074585887
+        },
+        "source": "This work (fitted); CFI, Ch, CP0, CL, CV refit on RSP_200X_M.csv (2026-11-27)"
+    },
+    "predictiveModel": {
+        "available": true,
+        "models": {
+            "dp": "Raschig Super Pak/RSP_200X_M/RSP_200X_M_dp.onnx",
+            "holdup": "Raschig Super Pak/RSP_200X_M/RSP_200X_M_holdup.onnx"
+        }
+    }
+}

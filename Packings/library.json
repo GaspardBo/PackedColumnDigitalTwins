@@ -1,8 +1,8 @@
 {
   "library": {
     "id": "DEFAULT-PACKING-LIBRARY",
-    "name": "Random Packings Library",
-    "version": "1.0.0",
+    "name": "Random and Structured Packings Library",
+    "version": "1.2.0",
     "schemaVersion": "1.0",
     "description": "Packing data for packed column calculations",
     "author": "Amogh Krishnanand Atreya, Gaspard Bouchard"
@@ -86,6 +86,90 @@
     {
       "id": "DIN_PAK",
       "name": "DIN-PAK"
+    },
+    {
+      "id": "RALU_PAK",
+      "name": "Ralu Pak"
+    },
+    {
+      "id": "MELLAPAK",
+      "name": "Mellapak"
+    },
+    {
+      "id": "GEMPACK",
+      "name": "Gempack"
+    },
+    {
+      "id": "IMPULSE_PACKING",
+      "name": "Impulse Packing"
+    },
+    {
+      "id": "MONTZ_PAK",
+      "name": "Montz-Pak"
+    },
+    {
+      "id": "EUROFORM",
+      "name": "Euroform"
+    },
+    {
+      "id": "INTALOX",
+      "name": "Intalox"
+    },
+    {
+      "id": "HIFLOW_SADDLE",
+      "name": "Hiflow Saddle"
+    },
+    {
+      "id": "SPHERE",
+      "name": "Sphere"
+    },
+    {
+      "id": "INTALOX_SADDLE",
+      "name": "Intalox Saddle"
+    },
+    {
+      "id": "RASCHIG_SUPER_PAK",
+      "name": "Raschig Super-Pak"
+    },
+    {
+      "id": "GT_PAK",
+      "name": "GT-PAK"
+    },
+    {
+      "id": "FLEXIPAC",
+      "name": "Flexipac"
+    },
+    {
+      "id": "FLEXIPAC_HC",
+      "name": "Flexipac HC"
+    },
+    {
+      "id": "MELLAPAK_PLUS",
+      "name": "MellapakPlus"
+    },
+    {
+      "id": "PROTOTYPE",
+      "name": "Prototype"
+    },
+    {
+      "id": "RVT_RMP_N",
+      "name": "RVT RMP N"
+    },
+    {
+      "id": "RVT_RMP_SP",
+      "name": "RVT RMP SP"
+    },
+    {
+      "id": "MELLAPAK_GRID",
+      "name": "Mellapak Grid"
+    },
+    {
+      "id": "GT_OPTIMPAK",
+      "name": "GT-OPTIMPak"
+    },
+    {
+      "id": "HFP",
+      "name": "HFP (hybrid)"
     }
   ],
   "packings": [
@@ -240,16 +324,16 @@
       "path": "Hiflow Ring/HR_50_M"
     },
     {
-      "id": "HR_25_M",
-      "family": "HIFLOW_RING",
-      "name": "Rauschert Hiflow Ring Metal No. 25",
-      "path": "Hiflow Ring/HR_25_M"
-    },
-    {
       "id": "HR_50_M_2",
       "family": "HIFLOW_RING",
       "name": "Rauschert Hiflow Ring Metal No. 50 (2nd entry)",
       "path": "Hiflow Ring/HR_50_M_2"
+    },
+    {
+      "id": "HR_25_M",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Metal No. 25",
+      "path": "Hiflow Ring/HR_25_M"
     },
     {
       "id": "HR_50_P_HYDR",
@@ -430,6 +514,474 @@
       "family": "DIN_PAK",
       "name": "DIN-PAK Plastic No. 47",
       "path": "DIN PAK/DP_47_P"
+    },
+    {
+      "id": "PR_50_C_ARR",
+      "family": "PALL_RING",
+      "name": "Pall Ring Ceramic No. 50 (arranged)",
+      "path": "Pall Ring/PR_50_C_ARR"
+    },
+    {
+      "id": "BR_35_M_ARR",
+      "family": "BIALECKI_RING",
+      "name": "Bialecki Ring Metal No. 35 (arranged)",
+      "path": "Bialecki Ring/BR_35_M_ARR"
+    },
+    {
+      "id": "RP_YC_250_M",
+      "family": "RALU_PAK",
+      "name": "Raschig Ralu Pak Metal YC-250",
+      "path": "Ralu Pak/RP_YC_250_M"
+    },
+    {
+      "id": "MP_250Y_M",
+      "family": "MELLAPAK",
+      "name": "Sulzer Mellapak Metal 250Y",
+      "path": "Mellapak/MP_250Y_M"
+    },
+    {
+      "id": "GP_A2T_304_M",
+      "family": "GEMPACK",
+      "name": "Gempack Metal A2T-304",
+      "path": "Gempack/GP_A2T_304_M"
+    },
+    {
+      "id": "IP_250_M",
+      "family": "IMPULSE_PACKING",
+      "name": "Impulse Packing Metal 250",
+      "path": "Impulse Packing/IP_250_M"
+    },
+    {
+      "id": "IP_100_C",
+      "family": "IMPULSE_PACKING",
+      "name": "Impulse Packing Ceramic 100",
+      "path": "Impulse Packing/IP_100_C"
+    },
+    {
+      "id": "MZ_B1_200_M",
+      "family": "MONTZ_PAK",
+      "name": "Montz-Pak Metal B1-200",
+      "path": "Montz Pak/MZ_B1_200_M"
+    },
+    {
+      "id": "MZ_B2_300_M",
+      "family": "MONTZ_PAK",
+      "name": "Montz-Pak Metal B2-300",
+      "path": "Montz Pak/MZ_B2_300_M"
+    },
+    {
+      "id": "MZ_C1_200_P",
+      "family": "MONTZ_PAK",
+      "name": "Montz-Pak Plastic C1-200",
+      "path": "Montz Pak/MZ_C1_200_P"
+    },
+    {
+      "id": "MZ_C2_200_P",
+      "family": "MONTZ_PAK",
+      "name": "Montz-Pak Plastic C2-200",
+      "path": "Montz Pak/MZ_C2_200_P"
+    },
+    {
+      "id": "EF_PN_110_P",
+      "family": "EUROFORM",
+      "name": "Euroform Plastic PN-110",
+      "path": "Euroform/EF_PN_110_P"
+    },
+    {
+      "id": "PR_38_M",
+      "family": "PALL_RING",
+      "name": "Pall Ring Metal No. 38",
+      "path": "Pall Ring/PR_38_M"
+    },
+    {
+      "id": "PR_15_M",
+      "family": "PALL_RING",
+      "name": "Pall Ring Metal No. 15",
+      "path": "Pall Ring/PR_15_M"
+    },
+    {
+      "id": "PR_50_C",
+      "family": "PALL_RING",
+      "name": "Pall Ring Ceramic No. 50",
+      "path": "Pall Ring/PR_50_C"
+    },
+    {
+      "id": "RR_50_P_HYDR",
+      "family": "RALU_RING",
+      "name": "Raschig Ralu Ring Plastic No. 50 hydr.",
+      "path": "Ralu Ring/RR_50_P_HYDR"
+    },
+    {
+      "id": "HR_90_P",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Plastic No. 90",
+      "path": "Hiflow Ring/HR_90_P"
+    },
+    {
+      "id": "HR_75_C",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Ceramic No. 75",
+      "path": "Hiflow Ring/HR_75_C"
+    },
+    {
+      "id": "HR_35_C",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Ceramic No. 35",
+      "path": "Hiflow Ring/HR_35_C"
+    },
+    {
+      "id": "HR_20_C_6_RIBS",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Ceramic No. 20 6 ribs",
+      "path": "Hiflow Ring/HR_20_C_6_RIBS"
+    },
+    {
+      "id": "NP_22_P",
+      "family": "NOR_PAC_RING",
+      "name": "NOR PAC Ring Plastic No. 22",
+      "path": "NOR PAC Ring/NP_22_P"
+    },
+    {
+      "id": "NP_15_P",
+      "family": "NOR_PAC_RING",
+      "name": "NOR PAC Ring Plastic No. 15",
+      "path": "NOR PAC Ring/NP_15_P"
+    },
+    {
+      "id": "NP_25_P_TYPE_A",
+      "family": "NOR_PAC_RING",
+      "name": "NOR PAC Ring Plastic No. 25 type A",
+      "path": "NOR PAC Ring/NP_25_P_TYPE_A"
+    },
+    {
+      "id": "NP_25_P_TYPE_C",
+      "family": "NOR_PAC_RING",
+      "name": "NOR PAC Ring Plastic No. 25 type C",
+      "path": "NOR PAC Ring/NP_25_P_TYPE_C"
+    },
+    {
+      "id": "IX_50_P",
+      "family": "INTALOX",
+      "name": "Intalox Plastic No. 50",
+      "path": "Intalox/IX_50_P"
+    },
+    {
+      "id": "IX_50_C",
+      "family": "INTALOX",
+      "name": "Intalox Ceramic No. 50",
+      "path": "Intalox/IX_50_C"
+    },
+    {
+      "id": "HS_50_P",
+      "family": "HIFLOW_SADDLE",
+      "name": "Rauschert Hiflow Saddle Plastic No. 50",
+      "path": "Hiflow Saddle/HS_50_P"
+    },
+    {
+      "id": "DP_45_P",
+      "family": "DIN_PAK",
+      "name": "DIN-PAK Plastic No. 45",
+      "path": "DIN PAK/DP_45_P"
+    },
+    {
+      "id": "RA_15_M",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Metal No. 15",
+      "path": "Raschig Ring/RA_15_M"
+    },
+    {
+      "id": "RA_38_C",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Ceramic No. 38",
+      "path": "Raschig Ring/RA_38_C"
+    },
+    {
+      "id": "RA_15_C",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Ceramic No. 15",
+      "path": "Raschig Ring/RA_15_C"
+    },
+    {
+      "id": "RA_13_C",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Ceramic No. 13",
+      "path": "Raschig Ring/RA_13_C"
+    },
+    {
+      "id": "RA_10_C",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Ceramic No. 10",
+      "path": "Raschig Ring/RA_10_C"
+    },
+    {
+      "id": "RA_10_C_2",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Ceramic No. 10 (2nd entry)",
+      "path": "Raschig Ring/RA_10_C_2"
+    },
+    {
+      "id": "RA_8_C",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Ceramic No. 8",
+      "path": "Raschig Ring/RA_8_C"
+    },
+    {
+      "id": "RA_6_C",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Ceramic No. 6",
+      "path": "Raschig Ring/RA_6_C"
+    },
+    {
+      "id": "RA_25_CB",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Carbon No. 25",
+      "path": "Raschig Ring/RA_25_CB"
+    },
+    {
+      "id": "RA_13_CB",
+      "family": "RASCHIG_RING",
+      "name": "Raschig Raschig Ring Carbon No. 13",
+      "path": "Raschig Ring/RA_13_CB"
+    },
+    {
+      "id": "BR_50_P",
+      "family": "BIALECKI_RING",
+      "name": "Bialecki Ring Plastic No. 50",
+      "path": "Bialecki Ring/BR_50_P"
+    },
+    {
+      "id": "SP_25_G",
+      "family": "SPHERE",
+      "name": "Sphere Glass No. 25",
+      "path": "Sphere/SP_25_G"
+    },
+    {
+      "id": "SP_13_G",
+      "family": "SPHERE",
+      "name": "Sphere Glass No. 13",
+      "path": "Sphere/SP_13_G"
+    },
+    {
+      "id": "BS_38_C",
+      "family": "BERL_SADDLE",
+      "name": "Berl Saddle Ceramic No. 38",
+      "path": "Berl Saddle/BS_38_C"
+    },
+    {
+      "id": "IS_13_C",
+      "family": "INTALOX_SADDLE",
+      "name": "Intalox Saddle Ceramic No. 13",
+      "path": "Intalox Saddle/IS_13_C"
+    },
+    {
+      "id": "HR_50_P_ARR",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Plastic No. 50 (arranged)",
+      "path": "Hiflow Ring/HR_50_P_ARR"
+    },
+    {
+      "id": "HR_50_P_HYDR_ARR",
+      "family": "HIFLOW_RING",
+      "name": "Rauschert Hiflow Ring Plastic No. 50 hydr. (arranged)",
+      "path": "Hiflow Ring/HR_50_P_HYDR_ARR"
+    },
+    {
+      "id": "BR_25_M_ARR",
+      "family": "BIALECKI_RING",
+      "name": "Bialecki Ring Metal No. 25 (arranged)",
+      "path": "Bialecki Ring/BR_25_M_ARR"
+    },
+    {
+      "id": "MZ_B1_100_M",
+      "family": "MONTZ_PAK",
+      "name": "Montz-Pak Metal B1-100",
+      "path": "Montz Pak/MZ_B1_100_M"
+    },
+    {
+      "id": "MP_250Y_P",
+      "family": "MELLAPAK",
+      "name": "Sulzer Mellapak Plastic 250Y",
+      "path": "Mellapak/MP_250Y_P"
+    },
+    {
+      "id": "IP_50_C",
+      "family": "IMPULSE_PACKING",
+      "name": "Impulse Packing Ceramic 50",
+      "path": "Impulse Packing/IP_50_C"
+    },
+    {
+      "id": "IP_100_C_N",
+      "family": "IMPULSE_PACKING",
+      "name": "Impulse Packing Ceramic 100, n",
+      "path": "Impulse Packing/IP_100_C_N"
+    },
+    {
+      "id": "RSP_250Y_M",
+      "family": "RASCHIG_SUPER_PAK",
+      "name": "Raschig Super-Pak Metal 250Y",
+      "path": "Raschig Super Pak/RSP_250Y_M"
+    },
+    {
+      "id": "RSR_0_3_M_ARR",
+      "family": "RASCHIG_SUPER_RING",
+      "name": "Raschig Super-Ring Metal No. 0.3 (arranged)",
+      "path": "Raschig Super Ring/RSR_0_3_M_ARR"
+    },
+    {
+      "id": "MP_500Y_M",
+      "family": "MELLAPAK",
+      "name": "Sulzer Mellapak Metal 500Y",
+      "path": "Mellapak/MP_500Y_M"
+    },
+    {
+      "id": "MP_125Y_M",
+      "family": "MELLAPAK",
+      "name": "Sulzer Mellapak Metal 125Y",
+      "path": "Mellapak/MP_125Y_M"
+    },
+    {
+      "id": "GTP_350Y_M",
+      "family": "GT_PAK",
+      "name": "GT-PAK Metal 350Y",
+      "path": "GT PAK/GTP_350Y_M"
+    },
+    {
+      "id": "RSP_200X_M",
+      "family": "RASCHIG_SUPER_PAK",
+      "name": "Raschig Super-Pak Metal 200X",
+      "path": "Raschig Super Pak/RSP_200X_M"
+    },
+    {
+      "id": "FP_350Y_M",
+      "family": "FLEXIPAC",
+      "name": "Koch-Glitsch Flexipac Metal 350Y",
+      "path": "Flexipac/FP_350Y_M"
+    },
+    {
+      "id": "FPHC_350Y_M",
+      "family": "FLEXIPAC_HC",
+      "name": "Koch-Glitsch Flexipac HC Metal 350Y",
+      "path": "Flexipac HC/FPHC_350Y_M"
+    },
+    {
+      "id": "MP_250X_M",
+      "family": "MELLAPAK",
+      "name": "Sulzer Mellapak Metal 250X",
+      "path": "Mellapak/MP_250X_M"
+    },
+    {
+      "id": "MPP_252Y_M",
+      "family": "MELLAPAK_PLUS",
+      "name": "Sulzer MellapakPlus Metal 252Y",
+      "path": "MellapakPlus/MPP_252Y_M"
+    },
+    {
+      "id": "MP_250Y_SMOOTH_M",
+      "family": "MELLAPAK",
+      "name": "Sulzer Mellapak Metal 250Y smooth",
+      "path": "Mellapak/MP_250Y_SMOOTH_M"
+    },
+    {
+      "id": "MP_2Y_M",
+      "family": "MELLAPAK",
+      "name": "Sulzer Mellapak Metal 2Y",
+      "path": "Mellapak/MP_2Y_M"
+    },
+    {
+      "id": "PROTO500_500_M",
+      "family": "PROTOTYPE",
+      "name": "Prototype 500 Metal 500",
+      "path": "Prototype/PROTO500_500_M"
+    },
+    {
+      "id": "MP_2X_M",
+      "family": "MELLAPAK",
+      "name": "Sulzer Mellapak Metal 2X",
+      "path": "Mellapak/MP_2X_M"
+    },
+    {
+      "id": "GTP_350Z_M",
+      "family": "GT_PAK",
+      "name": "GT-PAK Metal 350Z",
+      "path": "GT PAK/GTP_350Z_M"
+    },
+    {
+      "id": "GTP_500Y_M",
+      "family": "GT_PAK",
+      "name": "GT-PAK Metal 500Y",
+      "path": "GT PAK/GTP_500Y_M"
+    },
+    {
+      "id": "PROTOA_350Y_M",
+      "family": "PROTOTYPE",
+      "name": "Prototype A Metal 350Y",
+      "path": "Prototype/PROTOA_350Y_M"
+    },
+    {
+      "id": "PROTOB_350X_M",
+      "family": "PROTOTYPE",
+      "name": "Prototype B Metal 350X",
+      "path": "Prototype/PROTOB_350X_M"
+    },
+    {
+      "id": "RSR_0_7_M",
+      "family": "RASCHIG_SUPER_RING",
+      "name": "Raschig Super-Ring Metal No. 0.7",
+      "path": "Raschig Super Ring/RSR_0_7_M"
+    },
+    {
+      "id": "FP_1Y_M",
+      "family": "FLEXIPAC",
+      "name": "Koch-Glitsch Flexipac Metal 1Y",
+      "path": "Flexipac/FP_1Y_M"
+    },
+    {
+      "id": "RMPN_250Y_M",
+      "family": "RVT_RMP_N",
+      "name": "RVT RMP N Metal 250Y",
+      "path": "RVT RMP N/RMPN_250Y_M"
+    },
+    {
+      "id": "RMPN_250X_M",
+      "family": "RVT_RMP_N",
+      "name": "RVT RMP N Metal 250X",
+      "path": "RVT RMP N/RMPN_250X_M"
+    },
+    {
+      "id": "RMPSP_250_M",
+      "family": "RVT_RMP_SP",
+      "name": "RVT RMP SP Metal 250",
+      "path": "RVT RMP SP/RMPSP_250_M"
+    },
+    {
+      "id": "MPG_64Y_M",
+      "family": "MELLAPAK_GRID",
+      "name": "Sulzer Mellapak Grid Metal 64Y",
+      "path": "Mellapak Grid/MPG_64Y_M"
+    },
+    {
+      "id": "GTO_250Y_M",
+      "family": "GT_OPTIMPAK",
+      "name": "GT-OPTIMPak Metal 250Y",
+      "path": "GT OPTIMPak/GTO_250Y_M"
+    },
+    {
+      "id": "MZ_B1_250MN_M",
+      "family": "MONTZ_PAK",
+      "name": "Montz-Pak Metal B1-250MN",
+      "path": "Montz Pak/MZ_B1_250MN_M"
+    },
+    {
+      "id": "HFP_2_P",
+      "family": "HFP",
+      "name": "HFP (hybrid) Plastic 2",
+      "path": "HFP/HFP_2_P"
+    },
+    {
+      "id": "RSR_1_5_M",
+      "family": "RASCHIG_SUPER_RING",
+      "name": "Raschig Super-Ring Metal No. 1.5",
+      "path": "Raschig Super Ring/RSR_1_5_M"
     }
   ]
 }

@@ -5,6 +5,7 @@
         "manufacturer": "Raschig",
         "family": "RALU_FLOW",
         "material": "Plastic",
+        "arrangement": "dumped",
         "nominalSize": 2
     },
     "physicalProperties": {
@@ -31,10 +32,10 @@
             "CL": 1.27,
             "CV": 0.32
         },
-        "source": "Billet & Shultes (1999)"
+        "source": "Billet & Schultes (1999)"
     },
     "predictiveModel": {
         "available": false,
-        "file": "models/hetp_model.onnx"
+        "models": {}
     }
 }
